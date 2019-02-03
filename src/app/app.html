@@ -1,0 +1,20 @@
+<ion-menu [content]="content">
+  <ion-content class="menu-content">
+    <div class="menu-img-con">
+      <img class="menu-img" src="../assets/imgs/nanny.jpg">
+      <p class="menu-img-text">susant.patra.77@gmail.com</p>
+    </div>
+    <ion-list class="jobtek-menu-list">
+      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        <img class="jobtek-menu-img" [src]="p.imagepath"><p class="jobtek-menu-text">&nbsp;&nbsp;{{p.title}}</p>
+      </button>
+      <button menuClose ion-item  (click)="logout()">
+          <img class="jobtek-menu-img" src="../assets/imgs/menu/logout.png"><p class="jobtek-menu-text">&nbsp;&nbsp;Logout</p>
+        </button>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false" class="page-body"></ion-nav>
