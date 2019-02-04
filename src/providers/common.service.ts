@@ -23,13 +23,14 @@ export class CommonServices {
     public _toastCtrl: ToastController,
     public appCtrl: App
   ) {
-    this.apiServiceUrl = "http://54.84.255.41:8174/"; //PG Api
+    this.apiServiceUrl = "http://localhost:60114/"; //PG Api
     this.appTtitle = "";
     this._appVersion = "1.0.6";
+
     //Cache Key URL. This is used to maintain all cach  e data using cache key url.
     this._cacheKeyList["getCities"] = this.apiServiceUrl + "cities";
     //These API are used to get response from Elastic serach.
-    this._apiList["getMedication"] = { controller: "", method: "Elastic", api: "" };
+    this._apiList["getActiveCategories"] = { controller: "JobTekApi", method: "GetJobCategories", api: "api/JobTekApi/GetJobCategories" };
   }
   setStoreDataIncache(url, data) {
     let cacheKey = url;

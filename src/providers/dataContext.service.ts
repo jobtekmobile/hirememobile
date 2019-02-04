@@ -15,8 +15,14 @@ export class DataContext {
     ) { }
 
     //Login
-    UserLogin = (userData:any): Observable<any> => {
-       return this._http.post(this.commonService.getApiControllerName("userLogin").toString(), "")
+    UserLogin = (userData: any): Observable<any> => {
+        return this._http.post(this.commonService.getApiControllerName("userLogin").toString(), "")
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    //Get Active search categories
+    GetActiveCategories = (): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getActiveCategories").toString())
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }

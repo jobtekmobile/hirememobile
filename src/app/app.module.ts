@@ -9,6 +9,13 @@ import { MyApp } from './app.component';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
+import { CommonServices } from '../providers/common.service';
+import { DataContext } from '../providers/dataContext.service';
+import { IonicStorageModule } from '@ionic/storage';
+import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CacheModule } from 'ionic-cache';
+import { HttpService } from '../providers/http.service';
 @NgModule({
   declarations: [
     MyApp,
@@ -17,18 +24,26 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
-    IonicImageViewerModule
+    IonicStorageModule.forRoot(),
+    IonicImageViewerModule,
+    CacheModule.forRoot(),
+    BrowserAnimationsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
    // HomePage,
     //ListPage
+    
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    CommonServices,
+    DataContext,
+    HttpService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
