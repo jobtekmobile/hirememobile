@@ -57,4 +57,10 @@ export class DataContext {
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
+    //Get all my favourite offers
+    GetMyFavouriteOffers= (userId: number): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getMyFavouriteOffers").toString() + "/" + userId + "/FavouriteJobOffers/")
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
 }

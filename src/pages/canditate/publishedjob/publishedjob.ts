@@ -31,8 +31,7 @@ export class PublishedJob {
   }
   ionViewDidEnter() {
     this.tabValue = 0;
-   // this.getPublishedJobRequest();
-   this.makeFavourite(2);
+    this.getPublishedJobRequest();
     this.getLoggedInUserDetailsFromCache();
   }
   getLoggedInUserDetailsFromCache(){

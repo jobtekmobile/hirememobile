@@ -234,3 +234,12 @@ ion-loading>.loading-wrapper {
     box-shadow: none !important;
     padding: 24px;
 }
+.error .toast-container {
+    background: var(--danger-color) !important;
+}
+.success .toast-container {
+        background: var(--success-color) !important;
+}
+.warning .toast-container {
+        background:var(--warning-color) !important;
+}
