@@ -25,152 +25,95 @@
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
-  <ion-row *ngIf="isAvailable">
+  <ion-row *ngIf="myFavListByCategoryId.length > 0">
     <ion-col col-12>
-      <div [ngSwitch]="tabValue">
-        <ion-list *ngSwitchCase="0">
-          <div *ngIf="publishedJobResult.length > 0">
-            <ion-card class="job-card-con" *ngFor="let item of publishedJobResult">
-              <ion-item class="">
-                <ion-avatar item-start class="avatar-top">
-                  <img class="img-size" [src]="item.Image" />
-                </ion-avatar>
-                <div class="card">
-                  <h4 class="para-overflow-hidden margin-bottom-5">
-                    <span class="margin-right-10 font-weight-500 font-size-16 ">
-                      <img src="assets/imgs/publishedjob/location.svg" class="img-sub-size"> {{item.Name}}</span>
-                    <span class="req-type-color">
-                      ( {{item.RequestType}} )
-                    </span>
-                  </h4>
-                  <!-- <p class="para-overflow-hidden">
-                        <rating class="rating-sec" [(ngModel)]="item.Rating" readOnly="true" max="5" emptyStarIconName="star-outline" halfStarIconName="star-half"
-                          starIconName="star" nullable="false"></rating>
-                      </p> -->
+      <ion-card class="job-card-con" *ngFor="let item of myFavListByCategoryId">
+        <ion-item class="">
+          <ion-avatar item-start class="avatar-top">
+            <img class="img-size" *ngIf="item.Employer.ProfilePicUrl == '' && item.Employer.Gender == 1" src="data:image/png;base64,{{item.Employer.ProfilePicUrl}}"
+            />
+            <img class="img-size" *ngIf="item.Employer.ProfilePicUrl == '' && item.Employer.Gender == 2" src="data:image/png;base64,{{item.Employer.ProfilePicUrl}}"
+            />
+            <img class="img-size" *ngIf="item.Employer.ProfilePicUrl != ''" src="data:image/png;base64,{{item.Employer.ProfilePicUrl}}"
+            />
 
-                  <p class="para-overflow-hidden">
-                    <span>
-                      <img src="assets/imgs/publishedjob/location.svg" class="img-sub-size">
-                    </span>
-                    <span class=""> {{item.Location}}</span>
-                  </p>
-                  <p class="para-overflow-hidden">
-                    <span>
-                      <img src="assets/imgs/publishedjob/location.svg" class="img-sub-size">
-                    </span>
-                    <span class=""> Salary Proposed: {{item.Salary}}</span>
-                  </p>
-                  <!-- <p class="para-overflow-hidden">
-                        <span>
-                          <img src="assets/imgs/publishedjob/mail_icon.svg" class="img-sub-size">
-                        </span>
-                        <span class=""> {{item.Email}}</span>
-                      </p>
-                      <p class="para-overflow-hidden">
-                        <span>
-                          <img src="assets/imgs/publishedjob/mobile_icon.svg" class="img-sub-size">
-                        </span>
-                        <span class=""> {{item.ContactNo}}</span>
-                      </p> -->
-                  <p class="para-overflow-hidden">
-                    <span class="margin-right-10">
-                      Age: {{item.Age}} Yrs.
-                    </span>
-                  </p>
-                  <p class="para-overflow-hidden">
-                    <span>
-                      Published {{item.PublishedDate}}
-                    </span>
-                  </p>
-                </div>
-              </ion-item>
-              <ion-item class="border-bottom-1 margin-top--10" *ngIf="item.Description && item.Description!=''">
-                <p>
-                  <span class="sub-header-title">Description: </span>
-                  <span class="font-size-13 white-space-initial">{{item.Description}}</span>
-                </p>
-              </ion-item>
-              <ion-row no-padding class="action-con">
-                <ion-col class="action-con-inner" (click)="deleteFavouriteJobOffer(item.JobRequestId)">
-                  <button ion-button clear small icon-start class="action-btn">
-                    <ion-icon name="trash"></ion-icon>
-                    Delete
-                  </button>
-                </ion-col>
+            <img src="assets/imgs/verified.png" class="verified-img" *ngIf="item.VerifiedByAdmin" alt="">
 
-                <ion-col text-right class="action-con-inner">
-                  <button ion-button clear small icon-start class="action-btn">
-                    <ion-icon name="information-circle"></ion-icon>
-                    Detail
-                  </button>
-                </ion-col>
-              </ion-row>
-            </ion-card>
+          </ion-avatar>
+          <div class="card">
+            <h4 class="para-overflow-hidden margin-bottom-5">
+              <img src="assets/imgs/woman.svg" *ngIf="item.Employer.Gender == 2" class="card-name-geneder-icon">
+              <img src="assets/imgs/male.svg" *ngIf="item.Employer.Gender == 1" class="card-name-geneder-icon">
+              <span class="margin-right-10 font-weight-500 font-size-16 ">{{item.Employer.FirstName}} {{item.Employer.LastName}}</span>
+            </h4>
+            <ion-row no-padding class="">
+              <ion-col col-8 class="card-job-item-con">
+                <p class="card-job-item-name">{{item.Job.JobName}}</p>
+              </ion-col>
+
+              <ion-col col-4 class="card-job-item-con">
+                <p class="req-type-color" *ngIf="item.StaffType == 1">( Individual )</p>
+                <p class="req-type-color" *ngIf="item.StaffType == 2">( Agency )</p>
+              </ion-col>
+            </ion-row>
+            <p class="para-overflow-hidden">
+              <span>
+                <img src="assets/imgs/location.svg" class="img-sub-size">
+              </span>
+              <span class=""> {{item.Employer.Country}}, {{item.Employer.City}}, {{item.Employer.District}}</span>
+            </p>
+            <p class="para-overflow-hidden">
+              <span>
+                <img src="assets/imgs/location.svg" class="img-sub-size">
+              </span>
+              <span class=""> Salary : {{item.ExpectedMinSalary}} - {{item.ExpectedMaxSalary}}</span>
+            </p>
+
+            <p class="para-overflow-hidden">
+              <span>
+                <img src="assets/imgs/age.svg" class="img-sub-size">
+              </span>
+
+              <span class="margin-right-10">
+                Age Limit: {{item.MinAge}} Yrs - {{item.MaxAge}} Yrs
+              </span>
+              <!-- <span class="">
+                Exp: {{item.Candidate.ExperienceInYears}} Yrs.
+              </span> -->
+            </p>
+            <p class="para-overflow-hidden">
+              <span>
+                Published: {{item.Employer.CreatedDate}}
+              </span>
+            </p>
           </div>
-        </ion-list>
-        <ion-list *ngSwitchCase="1">
-          <div *ngIf="publishedJobResult.length > 0">
-            <ion-card class="job-card-con" *ngFor="let item of publishedJobResult">
-              <ion-item class="">
-                <ion-avatar item-start class="avatar-top">
-                  <img class="img-size" [src]="item.Image" />
-                </ion-avatar>
-                <div class="card">
-                  <h4 class="para-overflow-hidden margin-bottom-5">
-                    <span class="margin-right-10 font-weight-500 font-size-16 ">{{item.Name}}</span>
-                    <span class="req-type-color">
-                      {{item.RequestType}}
-                    </span>
-                  </h4>
-                  <p class="para-overflow-hidden">
-                    <rating class="rating-sec" [(ngModel)]="item.Rating" readOnly="true" max="5" emptyStarIconName="star-outline" halfStarIconName="star-half"
-                      starIconName="star" nullable="false"></rating>
-                  </p>
-                  <p class="para-overflow-hidden">
-                    <span class="margin-right-10">
-                      Age: {{item.Age}} Yrs.
-                    </span>
-                    <span class="">
-                      Exp: {{item.Experience}} Yrs.
-                    </span>
-                  </p>
-                  <p class="para-overflow-hidden">
-                    <span>
-                      <img src="assets/imgs/publishedjob/location.svg" class="img-sub-size">
-                    </span>
-                    <span class=""> {{item.Location}}</span>
-                  </p>
-                  <p class="para-overflow-hidden">
-                    <span>
-                      <img src="assets/imgs/publishedjob/mail_icon.svg" class="img-sub-size">
-                    </span>
-                    <span class=""> {{item.Email}}</span>
-                  </p>
-                  <p class="para-overflow-hidden">
-                    <span>
-                      <img src="assets/imgs/publishedjob/mobile_icon.svg" class="img-sub-size">
-                    </span>
-                    <span class=""> {{item.ContactNo}}</span>
-                  </p>
-                  <p class="para-overflow-hidden">
-                    <span>
-                      Published {{item.PublishedDate}}
-                    </span>
-                    <span class="">
-                      Disponability {{item.Disponability}}
-                    </span>
-                  </p>
-                </div>
-              </ion-item>
-            </ion-card>
-          </div>
-        </ion-list>
-      </div>
+        </ion-item>
+        <ion-row no-padding class="action-con">
+          <ion-col class="action-con-inner">
+            <button ion-button clear small icon-start class="action-btn" (click)="deleteFavouriteJobOffer(item.JobOfferId)">
+              <ion-icon name="trash"></ion-icon>
+              Delete
+            </button>
+          </ion-col>
+          <ion-col class="action-con-inner">
+            <button ion-button clear small icon-start class="action-btn" (click)="addNote(item.JobOfferId)">
+              <ion-icon name="create"></ion-icon>
+              Note
+            </button>
+          </ion-col>
+          <ion-col text-right class="action-con-inner">
+            <button ion-button clear small icon-start class="action-btn" (click)="selectedFavDetails(item.JobOfferId)">
+              <ion-icon name="checkmark"></ion-icon>
+              details
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-card>
     </ion-col>
   </ion-row>
-  <ion-row *ngIf="!isAvailable">
+  <ion-row *ngIf="!isAvailable && myFavListByCategoryId.length==0">
     <ion-col col-12 text-center>
-      <p class="not-found-text">Empty Result!</p>
+      <p class="not-available">No result found!</p>
     </ion-col>
   </ion-row>
 </ion-content>

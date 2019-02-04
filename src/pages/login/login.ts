@@ -16,7 +16,7 @@ export class LoginPage {
     this.onSetAuthToken({userId:1,type:"canditate"});
   }
   onSetAuthToken(response) {
-    localStorage.setItem('loggedInUserCredential', response);
+    localStorage.setItem('loggedInUserCredential', JSON.stringify(response));
     this.gotoDashboard();
   }
   gotoDashboard(){

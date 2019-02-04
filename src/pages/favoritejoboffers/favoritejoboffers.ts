@@ -25,7 +25,9 @@ export class FavoritejoboffersPage {
   tabValue: number;
   isAvailable: boolean = true;
   publishedJobResult: any = [];
-  selectedJobByCategoryId: any = {};
+  myFavListByCategoryId: any = {};
+  allMyFavouriteList: any = [];
+  loggedInUserDetails: any = {};
   constructor(
     public injector: Injector,
     public navCtrl: NavController,
@@ -37,6 +39,10 @@ export class FavoritejoboffersPage {
   }
   // ...
   ionViewWillEnter() {
+    this.getLoggedInUserDetailsFromCache();
+  }
+  getLoggedInUserDetailsFromCache() {
+    this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));
     this.getActiveCategories();
   }
   //Get all active categories for search job
@@ -46,7 +52,7 @@ export class FavoritejoboffersPage {
         if (response.length > 0) {
           this.categories = response;
           this.selectedCategory = this.categories[0];
-          this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
+          this.getMyFavOffers();
         }
         else
           this.commonService.onMessageHandler("No category found.", 0);
@@ -57,24 +63,44 @@ export class FavoritejoboffersPage {
   }
   public filterDataBySelectedCategory(categoryId: number): void {
     // Handle what to do when a category is selected
+    this.myFavListByCategoryId = [];
     let pageNo = categoryId - 1;
     this.slides.slideTo(pageNo, 500);
-    this.categories.filter(item => {
-      if (item.JobCategoryId == categoryId)
-        this.selectedJobByCategoryId = item.Jobs;
+    this.allMyFavouriteList.filter(item => {
+      if (item.Job.JobCategoryId == categoryId)
+        this.myFavListByCategoryId.push(item);
     });
   }
-  deleteFavouriteJobOffer(id){
-    this._dataContext.DeleteFavourite(2, id)
-    .subscribe(response => {
-      if (response.length > 0) {
-      }
-      else
-        this.commonService.onMessageHandler("Something went wrong. Please try again", 0);
-    },
-      error => {
-        this.commonService.onMessageHandler("Failed to add favourite. Please try again", 0);
-      });
+  getMyFavOffers() {
+    this._dataContext.GetMyFavouriteOffers(this.loggedInUserDetails.userId)
+      .subscribe(response => {
+        if (response.length > 0) {
+          this.isAvailable = true;
+          this.allMyFavouriteList = response;
+          this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
+        }
+        else {
+          this.myFavListByCategoryId = [];
+          this.isAvailable = false;
+          this.commonService.onMessageHandler("No category found.", 0);
+        }
+      },
+        error => {
+          this.commonService.onMessageHandler("Failed to retrieve categories. Please try again", 0);
+        });
+  }
+  deleteFavouriteJobOffer(id) {
+    this._dataContext.DeleteFavourite(this.loggedInUserDetails.userId, id)
+      .subscribe(response => {
+        if (response.length > 0) {
+          this.commonService.onMessageHandler("You have successfully removed.", 0);
+        }
+        else
+          this.commonService.onMessageHandler("Something went wrong. Please try again", 0);
+      },
+        error => {
+          this.commonService.onMessageHandler("Failed to remove. Please try again", 0);
+        });
   }
   private initializeCategories(): void {
     // Select it by defaut
