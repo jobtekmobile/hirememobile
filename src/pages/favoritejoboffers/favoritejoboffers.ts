@@ -42,7 +42,7 @@ export class FavoritejoboffersPage {
     this.getLoggedInUserDetailsFromCache();
   }
   getLoggedInUserDetailsFromCache() {
-    this.loggedInUserDetails = localStorage.getItem("loggedInUserCredential");
+    this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));
     this.getActiveCategories();
   }
   //Get all active categories for search job
@@ -63,15 +63,16 @@ export class FavoritejoboffersPage {
   }
   public filterDataBySelectedCategory(categoryId: number): void {
     // Handle what to do when a category is selected
+    this.myFavListByCategoryId = [];
     let pageNo = categoryId - 1;
     this.slides.slideTo(pageNo, 500);
     this.allMyFavouriteList.filter(item => {
       if (item.Job.JobCategoryId == categoryId)
-        this.myFavListByCategoryId = item;
+        this.myFavListByCategoryId.push(item);
     });
   }
   getMyFavOffers() {
-    this._dataContext.GetMyFavouriteOffers(1)
+    this._dataContext.GetMyFavouriteOffers(this.loggedInUserDetails.userId)
       .subscribe(response => {
         if (response.length > 0) {
           this.isAvailable = true;
@@ -79,7 +80,7 @@ export class FavoritejoboffersPage {
           this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
         }
         else {
-          this.myFavListByCategoryId=[];
+          this.myFavListByCategoryId = [];
           this.isAvailable = false;
           this.commonService.onMessageHandler("No category found.", 0);
         }
@@ -89,15 +90,16 @@ export class FavoritejoboffersPage {
         });
   }
   deleteFavouriteJobOffer(id) {
-    this._dataContext.DeleteFavourite(2, id)
+    this._dataContext.DeleteFavourite(this.loggedInUserDetails.userId, id)
       .subscribe(response => {
         if (response.length > 0) {
+          this.commonService.onMessageHandler("You have successfully removed.", 0);
         }
         else
           this.commonService.onMessageHandler("Something went wrong. Please try again", 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to add favourite. Please try again", 0);
+          this.commonService.onMessageHandler("Failed to remove. Please try again", 0);
         });
   }
   private initializeCategories(): void {

@@ -52,18 +52,16 @@ page-favoritejoboffers {
 
 
 
-    /*card*/
-
     .job-card-con{
         margin: 5px;
         width: calc(100% - 10px);
     }
     .img-sub-size{
-        width: 17px;
+        width: 15px;
         margin-top: 5px;
         display: inline;
         vertical-align: bottom;
-        margin-left: -2px;
+       
     }
     .rating-sec > ul {
         padding: 0px;
@@ -96,11 +94,40 @@ page-favoritejoboffers {
         border-top: 1px solid #e8e8e8;
     }
     .action-con-inner{
-       padding: 5px;
+       padding: 0;
     }
     .action-btn{
         background: transparent;
         color: #f5005b;
+    }
+    
+    .action-con-image-size{
+        height: 80px;
+        border: 1px solid #b0a5a5;
+        padding: 2px;
+    }
+    
+    .card-name-geneder-icon{
+        width: 13px;
+        display: inline;
+    }
+    
+    .verified-img{
+        
+        height: 20px !important;
+        width: 20px !important;
+        margin-left: 15px;
+        margin-top: 5px;
+    }
+    
+    .card-job-item-name{
+        background: #fe005a;
+        text-align: center;
+        padding: 0px 3px 3px 3px;
+        color: white;
+    }
+    .card-job-item-con{
+        padding: 0px 5px 0px 5px;
     }
     .not-available{
         color: #f5005b;
