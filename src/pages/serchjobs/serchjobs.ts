@@ -13,6 +13,8 @@ import { Injector, ViewChild } from '@angular/core';
 
 // Ionic
 import { Slides } from 'ionic-angular';
+import { CommonServices } from '../../providers/common.service';
+import { DataContext } from '../../providers/dataContext.service';
 
 
 @IonicPage()
@@ -20,43 +22,58 @@ import { Slides } from 'ionic-angular';
   selector: 'page-serchjobs',
   templateUrl: 'serchjobs.html',
 })
-export class SerchjobsPage {
-
-
+export class SearchjobsPage {
   @ViewChild(Slides) slides: Slides;
-
   public selectedCategory: any;
-  public categories: Array<any>;
+  public categories: Array<any> = [];
   public showLeftButton: boolean;
   public showRightButton: boolean;
+  selectedJobByCategoryId: Array<any> = [];
+  constructor(
+    public injector: Injector,
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public _dataContext: DataContext,
+    private commonService: CommonServices
+  ) {
 
-  constructor(public injector: Injector,public navCtrl: NavController, public navParams: NavParams) {
-    this.categories = [
-      { id: 1, name: "Home Job" }, 
-      { id: 2, name: "Troubleshooting" }, 
-      { id: 3, name: "HairStyle/Care" }, 
-      { id: 4, name: "Ceremony" }, 
-      { id: 5, name: "Course" }
-    ];
-    this.selectedCategory = this.categories[0];
   }
-  // ...
+  ionViewWillEnter() {
+    this.getActiveCategories();
+  }
+  //Get all active categories for search job
+  getActiveCategories() {
+    this._dataContext.GetActiveCategories()
+      .subscribe(response => {
+        if (response.length > 0) {
+          this.categories = response;
+          this.selectedCategory = this.categories[0];
+          this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
+        }
+        else
+          this.commonService.onMessageHandler("No category found.", 0);
+      },
+        error => {
+          this.commonService.onMessageHandler("Failed to retrieve categories. Please try again", 0);
+        });
+  }
 
   private initializeCategories(): void {
-
     // Select it by defaut
     this.selectedCategory = this.categories[0];
-
     // Check which arrows should be shown
     this.showLeftButton = false;
     this.showRightButton = this.categories.length > 3;
   }
 
-  public filterData(categoryId: number): void {
+  public filterDataBySelectedCategory(categoryId: number): void {
     // Handle what to do when a category is selected
-    let pageNo = categoryId-1;
+    let pageNo = categoryId - 1;
     this.slides.slideTo(pageNo, 500);
-    
+    this.categories.filter(item => {
+      if (item.JobCategoryId == categoryId)
+        this.selectedJobByCategoryId = item.Jobs;
+    });
   }
 
   // Method executed when the slides are changed
@@ -75,13 +92,9 @@ export class SerchjobsPage {
   public slidePrev(): void {
     this.slides.slidePrev();
   }
-  
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SerchjobsPage');
-  }
-  goto(){
-    this.navCtrl.push("PublishedJob");
+  //get selected job id and get all the published jobs.
+  gotoSelectedCategory(id) {
+    this.navCtrl.push("PublishedJob", { jobId: id });
   }
 
 }

@@ -38,86 +38,34 @@
   </ion-navbar>
   <ion-toolbar class="segment-toolbar">
     <ion-row class="filters">
-   
       <ion-col no-padding col-12>
         <ion-slides (ionSlideDidChange)="slideChanged()" slidesPerView="3">
-          <ion-slide (click)="filterData(category.id)" *ngFor="let category of categories">
-            <p [class.selected]="selectedCategory?.id === category.id" style="text-transform: uppercase;">{{
-              category.name }}</p>
+          <ion-slide (click)="filterDataBySelectedCategory(category.JobCategoryId)" *ngFor="let category of categories">
+            <p [class.selected]="selectedCategory?.JobCategoryId === category.JobCategoryId" style="text-transform: uppercase;">{{
+              category.CategoryName }}</p>
           </ion-slide>
         </ion-slides>
       </ion-col>
-      
     </ion-row>
-
   </ion-toolbar>
 </ion-header>
-
 <ion-content padding>
-
   <div class="background-img">
    <p style="margin: 0px;">HOME JOBS</p>
   </div>
   <div>
-
-
-
     <ion-item>
       <ion-label>Browse Categories</ion-label>
     </ion-item>
-
-
     <ion-grid>
-      <ion-row>
-        <ion-col col-6 (click)="goto()">
-         
+      <ion-row *ngIf="selectedJobByCategoryId.length > 0">
+        <ion-col col-6 (click)="gotoSelectedCategory(job.JobId)" *ngFor="let job of selectedJobByCategoryId">
           <ion-card class="job-card">
-            <img src="../assets/imgs/nanny.jpg"/>
-            <div class="card-title">Nanny</div>
-           
+            <img [src]="job.IconImage"/>
+            <div class="card-title">{{job.JobName}}</div>
           </ion-card>
         </ion-col>
-        <ion-col col-6 (click)="goto()">
-          <ion-card class="job-card">
-            <img src="../assets/imgs/nanny.jpg"/>
-            <div class="card-title">Cook</div>
-           
-          </ion-card>
-        </ion-col>
-        <ion-col col-6 (click)="goto()">
-          <ion-card class="job-card">
-            <img src="../assets/imgs/nanny.jpg"/>
-            <div class="card-title">Guardian</div>
-           
-          </ion-card>
-        </ion-col>
-        <!-- <ion-col col-6 (click)="goto()">
-          <ion-card class="job-card">
-            <img src="../assets/imgs/nanny.jpg"/>
-            <div class="card-title">São Paulo</div>
-          
-          </ion-card>
-        </ion-col>
-        <ion-col col-6 (click)="goto()">
-          <ion-card class="job-card">
-            <img src="../assets/imgs/nanny.jpg"/>
-            <div class="card-title">São Paulo</div>
-         
-          </ion-card>
-        </ion-col> -->
       </ion-row>
     </ion-grid>
-
-
-
-
-
   </div>
-
-
-
-
-
-
-
 </ion-content>

@@ -11,6 +11,14 @@ export class LoginPage {
   constructor(public navCtrl: NavController) {
 
   }
+
+  onLogin(){
+    this.onSetAuthToken({userId:1,type:"canditate"});
+  }
+  onSetAuthToken(response) {
+    localStorage.setItem('loggedInUserCredential', response);
+    this.gotoDashboard();
+  }
   gotoDashboard(){
     this.navCtrl.setRoot("DashboardPage");
   }

@@ -33,23 +33,17 @@
                     </ion-avatar>
                     <div class="card">
                       <h4 class="para-overflow-hidden margin-bottom-5">
-                          <ion-icon name="woman"></ion-icon> <span class="margin-right-10 font-weight-500 font-size-16 "> &nbsp;{{item.Name}}</span>
+                        <span class="margin-right-10 font-weight-500 font-size-16 ">
+                          <img src="assets/imgs/publishedjob/location.svg" class="img-sub-size"> {{item.Name}}</span>
                         <span class="req-type-color">
-                         ( {{item.RequestType}} )
+                          ( {{item.RequestType}} )
                         </span>
                       </h4>
                       <p class="para-overflow-hidden">
                         <rating class="rating-sec" [(ngModel)]="item.Rating" readOnly="true" max="5" emptyStarIconName="star-outline" halfStarIconName="star-half"
                           starIconName="star" nullable="false"></rating>
                       </p>
-                      <p class="para-overflow-hidden">
-                        <span class="margin-right-10">
-                          Age: {{item.Age}} Yrs.
-                        </span>
-                        <span class="">
-                          Exp: {{item.Experience}} Yrs.
-                        </span>
-                      </p>
+    
                       <p class="para-overflow-hidden">
                         <span>
                           <img src="assets/imgs/publishedjob/location.svg" class="img-sub-size">
@@ -57,6 +51,12 @@
                         <span class=""> {{item.Location}}</span>
                       </p>
                       <p class="para-overflow-hidden">
+                        <span>
+                          <img src="assets/imgs/publishedjob/location.svg" class="img-sub-size">
+                        </span>
+                        <span class=""> Salary Exp: {{item.Salary}}</span>
+                      </p>
+                      <!-- <p class="para-overflow-hidden">
                         <span>
                           <img src="assets/imgs/publishedjob/mail_icon.svg" class="img-sub-size">
                         </span>
@@ -67,30 +67,43 @@
                           <img src="assets/imgs/publishedjob/mobile_icon.svg" class="img-sub-size">
                         </span>
                         <span class=""> {{item.ContactNo}}</span>
+                      </p> -->
+                      <p class="para-overflow-hidden">
+                        <span class="margin-right-10">
+                          Age: {{item.Age}} Yrs.
+                        </span>
+                        <span class="">
+                          Exp: {{item.Experience}} Yrs.
+                        </span>
                       </p>
                       <p class="para-overflow-hidden">
                         <span>
-                          Published: {{item.PublishedDate}}
+                          Published {{item.PublishedDate}}
                         </span>
-                      
                       </p>
                     </div>
                   </ion-item>
+                  <ion-item class="border-bottom-1 margin-top--10" *ngIf="item.Description && item.Description!=''">
+                    <p>
+                      <span class="sub-header-title">Description: </span>
+                      <span class="font-size-13 white-space-initial">{{item.Description}}</span>
+                    </p>
+                  </ion-item>
                   <ion-row no-padding class="action-con">
-                      <ion-col class="action-con-inner">
-                        <button ion-button clear small  icon-start class="action-btn">
-                            <ion-icon name="trash"></ion-icon>
-                          Delete
-                        </button>
-                      </ion-col>
-                     
-                      <ion-col text-right class="action-con-inner">
-                        <button ion-button clear small  icon-start class="action-btn" (click)="gotoDetails()">
-                            <ion-icon name="information-circle" ></ion-icon>
-                          Detail
-                        </button>
-                      </ion-col>
-                    </ion-row>
+                    <ion-col class="action-con-inner">
+                      <button ion-button clear small icon-start class="action-btn">
+                        <ion-icon name="trash"></ion-icon>
+                        Delete
+                      </button>
+                    </ion-col>
+    
+                    <ion-col text-right class="action-con-inner">
+                      <button ion-button clear small icon-start class="action-btn">
+                        <ion-icon name="information-circle"></ion-icon>
+                        Detail
+                      </button>
+                    </ion-col>
+                  </ion-row>
                 </ion-card>
               </div>
             </ion-list>
@@ -103,23 +116,17 @@
                     </ion-avatar>
                     <div class="card">
                       <h4 class="para-overflow-hidden margin-bottom-5">
-                        <span class="margin-right-10 font-weight-500 font-size-16 ">{{item.Name}}</span>
+                        <span class="margin-right-10 font-weight-500 font-size-16 ">
+                          <img src="assets/imgs/publishedjob/location.svg" class="img-sub-size"> {{item.Name}}</span>
                         <span class="req-type-color">
-                            ( {{item.RequestType}} )
+                          ( {{item.RequestType}} )
                         </span>
                       </h4>
                       <p class="para-overflow-hidden">
                         <rating class="rating-sec" [(ngModel)]="item.Rating" readOnly="true" max="5" emptyStarIconName="star-outline" halfStarIconName="star-half"
                           starIconName="star" nullable="false"></rating>
                       </p>
-                      <p class="para-overflow-hidden">
-                        <span class="margin-right-10">
-                          Age: {{item.Age}} Yrs.
-                        </span>
-                        <span class="">
-                          Exp: {{item.Experience}} Yrs.
-                        </span>
-                      </p>
+    
                       <p class="para-overflow-hidden">
                         <span>
                           <img src="assets/imgs/publishedjob/location.svg" class="img-sub-size">
@@ -127,6 +134,12 @@
                         <span class=""> {{item.Location}}</span>
                       </p>
                       <p class="para-overflow-hidden">
+                        <span>
+                          <img src="assets/imgs/publishedjob/location.svg" class="img-sub-size">
+                        </span>
+                        <span class=""> Salary Exp: {{item.Salary}}</span>
+                      </p>
+                      <!-- <p class="para-overflow-hidden">
                         <span>
                           <img src="assets/imgs/publishedjob/mail_icon.svg" class="img-sub-size">
                         </span>
@@ -137,32 +150,43 @@
                           <img src="assets/imgs/publishedjob/mobile_icon.svg" class="img-sub-size">
                         </span>
                         <span class=""> {{item.ContactNo}}</span>
+                      </p> -->
+                      <p class="para-overflow-hidden">
+                        <span class="margin-right-10">
+                          Age: {{item.Age}} Yrs.
+                        </span>
+                        <span class="">
+                          Exp: {{item.Experience}} Yrs.
+                        </span>
                       </p>
                       <p class="para-overflow-hidden">
                         <span>
                           Published {{item.PublishedDate}}
                         </span>
-                        <span class="">
-                          Disponability {{item.Disponability}}
-                        </span>
                       </p>
                     </div>
                   </ion-item>
+                  <ion-item class="border-bottom-1 margin-top--10" *ngIf="item.Description && item.Description!=''">
+                    <p>
+                      <span class="sub-header-title">Description: </span>
+                      <span class="font-size-13 white-space-initial">{{item.Description}}</span>
+                    </p>
+                  </ion-item>
                   <ion-row no-padding class="action-con">
-                      <ion-col class="action-con-inner">
-                        <button ion-button clear small  icon-start class="action-btn">
-                            <ion-icon name="trash"></ion-icon>
-                          Delete
-                        </button>
-                      </ion-col>
-                     
-                      <ion-col text-right class="action-con-inner">
-                        <button ion-button clear small  icon-start class="action-btn" (click)="gotoDetails()">
-                            <ion-icon name="information-circle"></ion-icon>
-                          Detail
-                        </button>
-                      </ion-col>
-                    </ion-row>
+                    <ion-col class="action-con-inner">
+                      <button ion-button clear small icon-start class="action-btn">
+                        <ion-icon name="trash"></ion-icon>
+                        Delete
+                      </button>
+                    </ion-col>
+    
+                    <ion-col text-right class="action-con-inner">
+                      <button ion-button clear small icon-start class="action-btn">
+                        <ion-icon name="information-circle"></ion-icon>
+                        Detail
+                      </button>
+                    </ion-col>
+                  </ion-row>
                 </ion-card>
               </div>
             </ion-list>

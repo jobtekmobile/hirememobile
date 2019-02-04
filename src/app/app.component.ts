@@ -22,7 +22,7 @@ export class MyApp {
     this.pages = [
       { title: 'Admin Dashboard', component: "AdmindashboardPage", imagepath:"../assets/imgs/menu/search-job.png" },
       { title: 'Dashboard', component: "DashboardPage", imagepath:"../assets/imgs/menu/search-job.png" },
-      { title: 'Search Jobs', component: "SerchjobsPage", imagepath:"../assets/imgs/menu/search-job.png" },
+      { title: 'Search Jobs', component: "SearchjobsPage", imagepath:"../assets/imgs/menu/search-job.png" },
       { title: 'Manage My Job Requests', component: "JobrequestsPage", imagepath:"../assets/imgs/menu/my-job-requests.png" },
       { title: 'Manage My Favorites', component: "FavoritejoboffersPage", imagepath:"../assets/imgs/menu/favorites.png" },
       { title: 'Message & Notifications', component: "NotificationPage", imagepath:"../assets/imgs/menu/messages-notifications.png" },
