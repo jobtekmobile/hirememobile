@@ -38,9 +38,7 @@
 
         </h4>
       </div>
-      <ion-avatar item-end class="avatar-top">
-        <img class="img-size" #myImage (click)="presentImage(myImage)" src="../assets/imgs/nanny.jpg" />
-      </ion-avatar>
+      
       <!-- <p class="para-overflow-hidden">
               <span class="margin-right-10">
                 Age: {{item.Age}} Yrs.
@@ -75,7 +73,18 @@
             </p> -->
 
     </ion-item>
-
+    <ion-row no-padding class="action-con">
+        <ion-col class="action-con-image">
+          <img src="assets/imgs/nanny.jpg"  #myImage1 (click)="presentImage(myImage1)" class="action-con-image-size">
+         
+          
+        </ion-col>
+       
+        <ion-col text-right class="action-con-image">
+          <img src="assets/imgs/nanny.jpg"  #myImage2 (click)="presentImage(myImage2)" class="action-con-image-size">
+        
+        </ion-col>
+      </ion-row>
   </ion-card>
   <ion-list class="profile-con">
     <ion-item>

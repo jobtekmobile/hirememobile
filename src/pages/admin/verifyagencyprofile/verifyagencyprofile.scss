@@ -1,22 +1,23 @@
-page-managemysetting {
+page-verifyagencyprofile {
 
     .scroll-content{
         padding:0px !important;    
         // margin-top: 98px !important;
 
     }
-/*card*/
 
-.job-card-con{
+ /*card*/
+
+ .job-card-con{
     margin: 5px;
     width: calc(100% - 10px);
 }
 .img-sub-size{
-    width: 17px;
+    width: 15px;
     margin-top: 5px;
     display: inline;
     vertical-align: bottom;
-    margin-left: -2px;
+   
 }
 .rating-sec > ul {
     padding: 0px;
@@ -32,7 +33,7 @@ page-managemysetting {
     }
   }
   .avatar-top{
-    margin: 16px 10px 8px 0 !important;
+    margin: 16px 16px 8px 0 !important;
     margin-bottom: auto !important;
   }
   ion-avatar img{
@@ -43,7 +44,7 @@ page-managemysetting {
       color:#2AA03F;
   }
   .job-card-con .label-md {
-    margin: 8px 8px 5px 0;
+    margin: 5px 8px 5px 0;
 }
 .action-con{
     border-top: 1px solid #e8e8e8;
@@ -55,45 +56,24 @@ page-managemysetting {
     background: transparent;
     color: #f5005b;
 }
+
 .action-con-image-size{
     height: 80px;
     border: 1px solid #b0a5a5;
     padding: 2px;
 }
+
+.card-name-geneder-icon{
+    width: 13px;
+    display: inline;
+}
+
+.verified-img{
+    
+    height: 20px !important;
+    width: 20px !important;
+    margin-left: 15px;
+    margin-top: 5px;
+}
   /***********************************/
-
-  .job-card-con > .item-md {
-    padding-left: 8px;
-}
-
-.job-card-con > .item-md > .item-inner {
-    padding-right: 0px !important;
-    border-bottom: 1px solid #dedede;
-}
-.font-size-13 {
-    font-size: 13px !important;
-}
-
-.profile-con {
-    padding:0px 5px 5px 5px;
-}
-.profile-con .item-md{
-    padding-left:0px;
-}
-
-.profile-con .label-md {
-    margin: 13px 8px 13px 8px;
-}
-.contactoption{
-    background: white;
-    margin: 0;
-    padding: 10px 5px 10px 5px;
-    font-weight: bold;
-    font-size: 1.4rem;
-}
-.profile-btn-con{
-    background: white;
-    text-align: center;
-    padding-bottom: 10px;
-}
 }
