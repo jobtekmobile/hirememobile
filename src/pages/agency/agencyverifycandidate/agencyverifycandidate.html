@@ -7,9 +7,23 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>agencyverifycandidate</ion-title>
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+    <ion-title>Agency Verify Candidate</ion-title>
   </ion-navbar>
-
+  <ion-toolbar class="segment-toolbar">
+    <ion-row class="filters">
+      <ion-col no-padding col-12>
+        <ion-slides (ionSlideDidChange)="slideChanged()" slidesPerView="3">
+          <ion-slide (click)="filterDataBySelectedCategory(category.JobCategoryId)" *ngFor="let category of categories">
+            <p [class.selected]="selectedCategory?.JobCategoryId === category.JobCategoryId" style="text-transform: uppercase;">{{
+              category.CategoryName }}</p>
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
 </ion-header>
 
 
