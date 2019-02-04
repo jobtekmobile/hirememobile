@@ -31,6 +31,11 @@ export class CommonServices {
     this._cacheKeyList["getCities"] = this.apiServiceUrl + "cities";
     //These API are used to get response from Elastic serach.
     this._apiList["getActiveCategories"] = { controller: "JobTekApi", method: "GetJobCategories", api: "api/JobTekApi/GetJobCategories" };
+    this._apiList["getPublishedJobRequestByJobId"] = { controller: "JobRequests", method: "JobRequestDetails", api: "api/JobRequests" };
+    this._apiList["getPublishedJobResponseByJobId"] = { controller: "JobOffers", method: "SearchJobOffers", api: "api/JobOffers" }; 
+    this._apiList["makeJobOfferAsFavourite"] = { controller: " Candidates", method: "Create", api: "api/Candidates" }; 
+    this._apiList["deleteFavourite"] = { controller: " Candidates", method: "DeleteFavouriteJobOffer", api: "api/Candidates" }; 
+    this._apiList["getNotification"] = { controller: " Candidates", method: "Notifications", api: "api/Candidates" }; 
   }
   setStoreDataIncache(url, data) {
     let cacheKey = url;

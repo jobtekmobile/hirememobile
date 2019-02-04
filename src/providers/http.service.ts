@@ -205,7 +205,7 @@ export class HttpService {
         if (navigator.onLine) {
             options = this.prepareOptions(options);
             return Observable.create((observer) => {
-                this._http.put(this.commonService.getApiServiceUrl() + url, options)
+                this._http.delete(this.commonService.getApiServiceUrl() + url, options)
                     .map(response => <Response>response)
                     .subscribe((res) => {
                         observer.next(res);
@@ -221,6 +221,7 @@ export class HttpService {
             this.commonService.onMessageHandler(this.offline_message, 0);
             return Observable.throw('Failed');
         }
+
     }
     public handleError(error: Response) {
         console.error(error);

@@ -22,23 +22,24 @@ import { DataContext } from '../../providers/dataContext.service';
   selector: 'page-serchjobs',
   templateUrl: 'serchjobs.html',
 })
-export class SerchjobsPage {
+export class SearchjobsPage {
   @ViewChild(Slides) slides: Slides;
   public selectedCategory: any;
-  public categories: Array<any>;
+  public categories: Array<any> = [];
   public showLeftButton: boolean;
   public showRightButton: boolean;
-
+  selectedJobByCategoryId: Array<any> = [];
   constructor(
     public injector: Injector,
     public navCtrl: NavController,
     public navParams: NavParams,
     public _dataContext: DataContext,
-    private commonService: CommonServices) {
+    private commonService: CommonServices
+  ) {
 
   }
   ionViewWillEnter() {
-   // this.getActiveCategories();
+    this.getActiveCategories();
   }
   //Get all active categories for search job
   getActiveCategories() {
@@ -47,6 +48,7 @@ export class SerchjobsPage {
         if (response.length > 0) {
           this.categories = response;
           this.selectedCategory = this.categories[0];
+          this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
         }
         else
           this.commonService.onMessageHandler("No category found.", 0);
@@ -64,10 +66,14 @@ export class SerchjobsPage {
     this.showRightButton = this.categories.length > 3;
   }
 
-  public filterData(categoryId: number): void {
+  public filterDataBySelectedCategory(categoryId: number): void {
     // Handle what to do when a category is selected
     let pageNo = categoryId - 1;
     this.slides.slideTo(pageNo, 500);
+    this.categories.filter(item => {
+      if (item.JobCategoryId == categoryId)
+        this.selectedJobByCategoryId = item.Jobs;
+    });
   }
 
   // Method executed when the slides are changed
@@ -86,10 +92,9 @@ export class SerchjobsPage {
   public slidePrev(): void {
     this.slides.slidePrev();
   }
-
-
-  goto() {
-    this.navCtrl.push("PublishedJob");
+  //get selected job id and get all the published jobs.
+  gotoSelectedCategory(id) {
+    this.navCtrl.push("PublishedJob", { jobId: id });
   }
 
 }
