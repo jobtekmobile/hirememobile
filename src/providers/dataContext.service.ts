@@ -40,12 +40,12 @@ export class DataContext {
     }
     //Make selected job request as favourite
     MakeJobOfferAsFavourite = (userId: number, jobOfferId: number): Observable<any> => {
-        return this._http.post(this.commonService.getApiControllerName("makeJobOfferAsFavourite").toString() + "/" + userId + "/FavouriteJobOffers/" + jobOfferId,"")
+        return this._http.post(this.commonService.getApiControllerName("makeJobOfferAsFavourite").toString() + "/" + userId + "/FavouriteJobOffers/" + jobOfferId, "")
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
     //Delete selected job offer from favourite
-    DeleteFavourite=(userId: number, jobOfferId: number): Observable<any> => {
+    DeleteFavourite = (userId: number, jobOfferId: number): Observable<any> => {
         return this._http.delete(this.commonService.getApiControllerName("deleteFavourite").toString() + "/" + userId + "/FavouriteJobOffers/" + jobOfferId)
             .map((response: any) => response.json())
             .catch(this._http.handleError);
@@ -58,8 +58,21 @@ export class DataContext {
             .catch(this._http.handleError);
     }
     //Get all my favourite offers
-    GetMyFavouriteOffers= (userId: number): Observable<any> => {
+    GetMyFavouriteOffers = (userId: number): Observable<any> => {
         return this._http.get(this.commonService.getApiControllerName("getMyFavouriteOffers").toString() + "/" + userId + "/FavouriteJobOffers/")
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+
+    //Get job request details
+    GetJobRequestDescription = (jobRequestId: number): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getPublishedJobRequestByJobId").toString() + "/" + jobRequestId)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    //Get job response details
+    GetJobResponseDescription = (jobResponseId: number): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getPublishedJobResponseByJobId").toString() + "/" + jobResponseId)
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }

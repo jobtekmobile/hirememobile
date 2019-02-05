@@ -1,0 +1,153 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Nanny</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="">
+  <ion-row *ngIf="publishedJobResponseDesc !=null && isAvailable">
+    <ion-col col-12>
+      <ion-card class="details-card">
+        <ion-item class="">
+          <ion-avatar item-start class="avatar-top">
+            <img class="img-size" [src]="publishedJobResponseDesc.Image" />
+          </ion-avatar>
+          <div class="card">
+            <h4 class="para-overflow-hidden margin-bottom-5">
+              <span class="margin-right-10 font-weight-500 font-size-16 ">{{publishedJobResponseDesc.Name}}</span>
+              <!-- <span class="req-type-color">
+                {{item.RequestType}}
+              </span> -->
+            </h4>
+            <p class="para-overflow-hidden">
+              <rating class="rating-sec" [(ngModel)]="publishedJobResponseDesc.Rating" readOnly="true" max="5" emptyStarIconName="star-outline"
+                halfStarIconName="star-half" starIconName="star" nullable="false"></rating>
+            </p>
+            <p class="para-overflow-hidden">
+              <span>
+                <img src="assets/imgs/publishedjob/mail_icon.svg" class="img-sub-size">
+              </span>
+              <span class="font-size-13"> {{publishedJobResponseDesc.Email}}</span>
+            </p>
+            <p class="para-overflow-hidden">
+              <span>
+                <img src="assets/imgs/publishedjob/mobile_icon.svg" class="img-sub-size">
+              </span>
+              <span class="font-size-13"> {{publishedJobResponseDesc.ContactNo}}</span>
+            </p>
+            <p class="para-overflow-hidden">
+              <span>
+                <img src="assets/imgs/publishedjob/location.svg" class="img-sub-size">
+              </span>
+              <span class="font-size-13"> {{publishedJobResponseDesc.Location}}</span>
+            </p>
+          </div>
+        </ion-item>
+        <ion-item class="border-bottom-1 margin-top--10" *ngIf="publishedJobResponseDesc.Description && publishedJobResponseDesc.Description!=''">
+          <p>
+            <span class="sub-header-title">Description: </span>
+            <span class="font-size-13 white-space-initial">{{publishedJobResponseDesc.Description}}</span>
+          </p>
+        </ion-item>
+        <ion-item class="border-bottom-1">
+          <p>
+            <span class="float-left sub-header-title">Gender</span>
+            <span class="float-right font-size-13">{{publishedJobResponseDesc.Gender}}</span>
+          </p>
+        </ion-item>
+        <ion-item class="border-bottom-1">
+          <p>
+            <span class="float-left sub-header-title">Type of Staff</span>
+            <span class="float-right font-size-13">{{publishedJobResponseDesc.StaffType}}</span>
+          </p>
+        </ion-item>
+        <ion-item class="border-bottom-1">
+          <p>
+            <span class="float-left sub-header-title">Age</span>
+            <span class="float-right font-size-13">{{publishedJobResponseDesc.Age}}</span>
+          </p>
+        </ion-item>
+        <ion-item class="border-bottom-1">
+          <p>
+            <span class="float-left sub-header-title">Year of Experience</span>
+            <span class="float-right font-size-13">{{publishedJobResponseDesc.Experience}}</span>
+          </p>
+        </ion-item>
+        <ion-item class="border-bottom-1">
+          <p>
+            <span class="float-left sub-header-title">Read</span>
+            <span class="float-right font-size-13">{{publishedJobResponseDesc.IsRead}}</span>
+          </p>
+        </ion-item>
+        <ion-item class="border-bottom-1">
+          <p>
+            <span class="float-left sub-header-title">Write</span>
+            <span class="float-right font-size-13">{{publishedJobResponseDesc.IsWrite}}</span>
+          </p>
+        </ion-item>
+        <ion-item class="border-bottom-1">
+          <p>
+            <span class="float-left sub-header-title">Sleep on Site</span>
+            <span class="float-right font-size-13">{{publishedJobResponseDesc.Sleep}}</span>
+          </p>
+        </ion-item>
+        <ion-item class="border-bottom-1">
+          <p>
+            <span class="float-left sub-header-title">Disponibility</span>
+            <span class="float-right font-size-13">{{publishedJobResponseDesc.Disponibility}}</span>
+          </p>
+        </ion-item>
+        <ion-item class="border-bottom-1">
+          <p>
+            <span class="float-left sub-header-title">Number of Adults</span>
+            <span class="float-right font-size-13">{{publishedJobResponseDesc.Adult}}</span>
+          </p>
+        </ion-item>
+        <ion-item class="border-bottom-1">
+          <p>
+            <span class="float-left sub-header-title">Number of Children</span>
+            <span class="float-right font-size-13">{{publishedJobResponseDesc.Children}}</span>
+          </p>
+        </ion-item>
+        <ion-item class="border-bottom-1">
+          <p>
+            <span class="float-left sub-header-title">Localization</span>
+            <span class="float-right font-size-13">{{publishedJobResponseDesc.Localization}}</span>
+          </p>
+        </ion-item>
+        <ion-item class="border-bottom-1">
+          <p>
+            <span class="float-left sub-header-title">Salary Between</span>
+            <span class="float-right font-size-13">{{publishedJobResponseDesc.MinSalary}} - {{publishedJobResponseDesc.MaxSalary}}</span>
+          </p>
+        </ion-item>
+        <ion-item class="border-bottom-1" *ngIf="publishedJobResponseDesc!=null && publishedJobResponseDesc.Skill.length > 0">
+          <p>
+            <span class="float-left margin-bottom-5 sub-header-title">Canditate Skills</span>
+            <span class="float-right font-size-13">-</span>
+          </p>
+          <p *ngFor="let skill of publishedJobResponseDesc.Skill">
+            <span class="float-left font-size-13">{{skill}}</span>
+          </p>
+        </ion-item>
+        <ion-item class="border-bottom-1" *ngIf="publishedJobResponseDesc !=null && publishedJobResponseDesc.AddtionalDesc && publishedJobResponseDesc.AddtionalDesc!=''">
+          <p>
+            <span class="float-left sub-header-title">Additional Description</span>
+          </p>
+          <p class="font-size-13 white-space-initial">
+            {{publishedJobResponseDesc.AddtionalDesc}}
+          </p>
+        </ion-item>
+      </ion-card>
+
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="!isAvailable">
+    <ion-col col-12 text-center>
+      <p class="not-found-text">Empty Result!</p>
+    </ion-col>
+  </ion-row>
+</ion-content>

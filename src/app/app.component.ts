@@ -26,7 +26,9 @@ export class MyApp {
       { title: 'Manage My Job Requests', component: "JobrequestsPage", imagepath:"../assets/imgs/menu/my-job-requests.png" },
       { title: 'Manage My Favorites', component: "FavoritejoboffersPage", imagepath:"../assets/imgs/menu/favorites.png" },
       { title: 'Message & Notifications', component: "NotificationPage", imagepath:"../assets/imgs/menu/messages-notifications.png" },
-      { title: 'Manage My Settings', component: "ManagemysettingPage", imagepath:"../assets/imgs/menu/manage-setting.png" }
+      { title: 'Manage My Settings', component: "ManagemysettingPage", imagepath:"../assets/imgs/menu/manage-setting.png" },
+      { title: 'req', component: "JobRequestDescDetails", imagepath:"../assets/imgs/menu/manage-setting.png" },
+      { title: 'res', component: "JobResponseDescDetails", imagepath:"../assets/imgs/menu/manage-setting.png" }
     ];
 
   }
