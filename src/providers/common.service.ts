@@ -36,7 +36,15 @@ export class CommonServices {
     this._apiList["makeJobOfferAsFavourite"] = { controller: " Candidates", method: "Create", api: "api/Candidates" }; 
     this._apiList["deleteFavourite"] = { controller: " Candidates", method: "DeleteFavouriteJobOffer", api: "api/Candidates" }; 
     this._apiList["getNotification"] = { controller: " Candidates", method: "Notifications", api: "api/Candidates" }; 
-    this._apiList["getMyFavouriteOffers"] = { controller: " Candidates", method: "MyFavouriteJobOffers", api: "api/Candidates" }; 
+    this._apiList["getMyFavouriteOffers"] = { controller: " Candidates", method: "MyFavouriteJobOffers", api: "api/Candidates" };
+    
+    
+    ///////////////////////////////Agency////////////////////////////
+    this._apiList["getMyCandidates"] = { controller: " Agencies", method: "MyCandidates", api: "api/Agencies" };
+    this._apiList["getMyJobRequestsForAgency"] = { controller: " Agencies", method: "MyJobRequests", api: "api/Agencies" };
+    
+    
+    /////////////////////////////////////////////////////////////////
   }
   setStoreDataIncache(url, data) {
     let cacheKey = url;

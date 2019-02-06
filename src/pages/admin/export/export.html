@@ -7,12 +7,41 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>export</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Export</ion-title>
+    <ion-buttons end>
+        <button ion-button icon-only>
+          <ion-icon name="options"></ion-icon>
+        </button>
+      </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+  <ion-card class="export-card" *ngFor="let item of members">
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="assets/imgs/nanny.jpg">
+        <img class="verfied-img" *ngIf="item.ProfileVerified == 'Verified'" src="assets/imgs/verified.png">
+      </ion-avatar>
+      <h2><img class="gender-img" *ngIf="item.Gender == 'Man'" src="assets/imgs/male.svg">
+        <img class="gender-img" *ngIf="item.Gender != 'Man'" src="assets/imgs/woman.svg">
+         {{item.Name}} 
+         <span class="date-text">{{item.PublishedDate}}</span></h2>
+      <p>
+        <span class="membertype">{{item.MemberType}}</span>
+        <span class="jobtype">&nbsp;({{item.JobSought}})</span>
+        <span class="age">Age: {{item.Age}} Yrs</span>
+      </p>
+      <p><img class="phone-img" src="assets/imgs/mail_icon.svg">{{item.EmailId}}</p>
+      <p><img class="phone-img" src="assets/imgs/mobile_icon.svg">{{item.ContactNo}}</p>
+    </ion-item>
+  </ion-card>
+  <ion-fab right bottom class="jobtek-fab-btn">
+      <button ion-fab mini color="danger"><ion-icon name="download"></ion-icon></button>
+    </ion-fab>
 </ion-content>

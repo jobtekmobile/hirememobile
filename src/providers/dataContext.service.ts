@@ -63,4 +63,19 @@ export class DataContext {
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
+
+
+    ////////////////////////////////////////Agency////////////////////////////////
+
+    GetMyCandidatesForAgency= (agencyId: number): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getMyCandidates").toString() + "/" + agencyId + "/Candidates/")
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+
+    GetMyJobRequestsForAgency= (agencyId: number): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getMyJobRequestsForAgency").toString() + "/" + agencyId + "/JobRequests/")
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
 }
