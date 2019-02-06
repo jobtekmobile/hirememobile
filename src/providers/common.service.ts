@@ -37,7 +37,11 @@ export class CommonServices {
     this._apiList["deleteFavourite"] = { controller: " Candidates", method: "DeleteFavouriteJobOffer", api: "api/Candidates" }; 
     this._apiList["getNotification"] = { controller: " Candidates", method: "Notifications", api: "api/Candidates" }; 
     this._apiList["getMyFavouriteOffers"] = { controller: " Candidates", method: "MyFavouriteJobOffers", api: "api/Candidates" };
-    
+    this._apiList["getProfileDetails"] = { controller: " Candidates", method: "MyProfile", api: "api/Candidates" }; 
+    this._apiList["getCountries"] = { controller: " JobTekApi", method: "GetCountries", api: "api/JobTekApi" };    
+     this._apiList["getCities"] = { controller: " JobTekApi", method: "GetCities", api: "api/JobTekApi" }; 
+     this._apiList["getDistricts"] = { controller: " JobTekApi", method: "GetDistricts", api: "api/JobTekApi" }; 
+     this._apiList["updateCandidateProfile"] = { controller: " Candidates", method: "MyProfile", api: "api/Candidates" }; 
     
     ///////////////////////////////Agency////////////////////////////
     this._apiList["getMyCandidates"] = { controller: " Agencies", method: "MyCandidates", api: "api/Agencies" };

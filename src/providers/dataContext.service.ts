@@ -89,4 +89,35 @@ export class DataContext {
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
+    /////////////////////////////////////////////////////////////////////////////////
+
+    CandidateProfileById=(userId: number): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getProfileDetails").toString() + "/" + userId + "/MyProfile/")
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+
+
+    getCountries = (): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getCountries").toString() + "/GetCountries/")
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    // "?job=" + 
+    getCities = (countryId): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getCities").toString() + "/GetCities/?countryId="+countryId)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    getDistricts = (cityId): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getDistricts").toString() + "/GetDistricts/?cityId="+cityId)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+
+    updateProfile = (profileId,profileObj): Observable<any> => {
+        return this._http.put(this.commonService.getApiControllerName("updateCandidateProfile").toString() +"/"+profileId+ "/MyProfile/?candidateId="+profileId,profileObj)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
 }
