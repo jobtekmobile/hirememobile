@@ -13,6 +13,7 @@ export class JobRequestDescDetails {
   isAvailable: boolean = true;
   jobRequestId: number;
   publishedJobRequestDesc: any = null;
+  title :string;
   constructor(
     public navCtrl: NavController,
     public navParam: NavParams,
@@ -25,10 +26,11 @@ export class JobRequestDescDetails {
     this.getJobRequestDescription();
   }
   getJobRequestDescription() {
-    this._dataContext.GetJobRequestDescription(60)
+    this._dataContext.GetJobRequestDescription(this.jobRequestId)
       .subscribe(response => {
         if (response && response != null) {
           this.publishedJobRequestDesc = response;
+          this.title = this.publishedJobRequestDesc.Job.JobName;
           if (this.publishedJobRequestDesc.Candidate)
             this.publishedJobRequestDesc.Candidate.Disponibility = moment(this.publishedJobRequestDesc.Candidate.Disponibility).format("DD-MMM-YYYY");
         }

@@ -8,4 +8,4 @@ import { JobRequestDescDetails } from './jobrequestdetails';
   imports: [IonicPageModule.forChild(JobRequestDescDetails),Ionic2RatingModule],
     entryComponents: [JobRequestDescDetails]
 })
-export class PublishedJobDescModule { }
+export class JobRequestDescDetailsModule { }

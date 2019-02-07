@@ -4,7 +4,43 @@ page-verifyjobofferprofile {
         // margin-top: 98px !important;
 
     }
-
+    .segment-toolbar .toolbar-background-md {
+      background: #C3005E;
+      // background: -webkit-gradient(linear, left top, right top, from(#310068), to(#fe005a));
+      // background: linear-gradient(left, #310068, #fe005a);
+  }
+      .filters {
+  
+          ion-col {
+              text-align: center;
+              font-size: 1.2rem !important;
+              line-height: 1.6rem;
+  
+              ion-icon {
+                  color: #ccc;
+              }
+  
+              &.col-with-arrow {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+              }
+          }
+  
+          p {
+              
+              color: #fff;
+              margin: 0;
+              font-size: 1.2rem;
+              line-height: 1.6rem;
+          }
+  
+          .swiper-slide-active {
+              border-bottom: 2px solid white;
+      margin-bottom: 29px;
+  
+          }
+      }
  /*card*/
 
  .job-card-con{
