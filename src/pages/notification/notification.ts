@@ -18,10 +18,10 @@ import moment from 'moment';
 })
 export class NotificationPage {
   loggedInUserDetails: any = {};
-  notificationList:any=[];
-  isAvailable:boolean=true;
+  notificationList: any = [];
+  isAvailable: boolean = true;
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     public _dataContext: DataContext,
     private commonService: CommonServices
@@ -46,22 +46,45 @@ export class NotificationPage {
       });
   }
   getNotification() {
-    this._dataContext.GetActiveNotificationByUserId(this.loggedInUserDetails.userId)
-    .subscribe(response => {
-      if (response.length > 0) {
-        this.isAvailable = true;
-        this.notificationList = response;
-        this.notificationList.forEach(element => {
-          element.CreatedDate = moment(element.CreatedDate).format("DD-MMM-YYYY");
-        });
-      }
-      else{
-        this.isAvailable = false;
-        this.commonService.onMessageHandler("No notification found.", 0);
-      }
-    },
-      error => {
-        this.commonService.onMessageHandler("Failed to retrieve notification details. Please try again", 0);
-      });
+    if (this.loggedInUserDetails.type = "Employee") {
+      this._dataContext.GetActiveNotificationByUserId(this.loggedInUserDetails.userId)
+        .subscribe(response => {
+          if (response.length > 0) {
+            this.isAvailable = true;
+            this.notificationList = response;
+            this.notificationList.forEach(element => {
+              element.CreatedDate = moment(element.CreatedDate).format("DD-MMM-YYYY");
+            });
+          }
+          else {
+            this.isAvailable = false;
+            this.commonService.onMessageHandler("No notification found.", 0);
+          }
+        },
+          error => {
+            this.commonService.onMessageHandler("Failed to retrieve notification details. Please try again", 0);
+          });
+    } else if (this.loggedInUserDetails.type = "Employer") {
+      this._dataContext.GetEmployerNotificationDetails(this.loggedInUserDetails.userId)
+        .subscribe(response => {
+          if (response.length > 0) {
+            this.isAvailable = true;
+            this.notificationList = response;
+            this.notificationList.forEach(element => {
+              element.CreatedDate = moment(element.CreatedDate).format("DD-MMM-YYYY");
+            });
+          }
+          else {
+            this.isAvailable = false;
+            this.commonService.onMessageHandler("No notification found.", 0);
+          }
+        },
+          error => {
+            this.commonService.onMessageHandler("Failed to retrieve notification details. Please try again", 0);
+          });
+    } else if (this.loggedInUserDetails.type = "Agency") {
+
+    }
+
   }
 }

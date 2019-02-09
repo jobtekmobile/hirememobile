@@ -34,7 +34,7 @@ export class ManagemysettingPage {
     this._imageViewerCtrl = imageViewerCtrl;
     //const imageViewer = this._imageViewerCtrl.create(myImage);
 
-   this.getLoggedInUserDetailsFromCache();
+    this.getLoggedInUserDetailsFromCache();
   }
 
   ionViewDidLoad() {
@@ -67,13 +67,28 @@ export class ManagemysettingPage {
 
 
   getProfileDetails() {
+
+
+    if (this.loggedInUserDetails.type = "Employee") {
+      this.getEmployeeProfile();
+    } else if (this.loggedInUserDetails.type = "Employer") {
+      this.getEmployerProfile();
+    } else if (this.loggedInUserDetails.type = "Agency") {
+
+    }
+
+
+
+
+  }
+  getEmployeeProfile() {
     this._dataContext.CandidateProfileById(this.loggedInUserDetails.userId)
       .subscribe(response => {
         this.userDetails = response;
         console.log(this.userDetails);
 
         for (let i = 0; i < this.userDetails.ContactOption.length; i++) {
-          
+
           switch (this.userDetails.ContactOption[i]) {
             case "Email":
               this.isEmailSelected = true;
@@ -111,7 +126,50 @@ export class ManagemysettingPage {
         });
   }
 
+  getEmployerProfile() {
+    this._dataContext.GetEmployerProfileDetails(this.loggedInUserDetails.userId)
+      .subscribe(response => {
+        this.userDetails = response;
+        console.log(this.userDetails);
 
+        for (let i = 0; i < this.userDetails.ContactOption.length; i++) {
+
+          switch (this.userDetails.ContactOption[i]) {
+            case "Email":
+              this.isEmailSelected = true;
+              break;
+            case "Phone":
+              this.isPhoneSelected = true;
+              break;
+          }
+
+        }
+
+
+
+
+        if (this.userDetails.CountryId != undefined && this.userDetails.CountryId != "") {
+          this.selectedCountry = this.userDetails.CountryId;
+        }
+        this.selectedCity = this.userDetails.CityId;
+        this.selectedDistrict = this.userDetails.DistrictId;
+        this.getCountriesDetails();
+        this.getCitiesDetails();
+        this.getDistrictDetails();
+
+        // if (response.length > 0) {
+        //   // this.notificationList = response;
+        //   // this.notificationList.forEach(element => {
+        //   //   element.CreatedDate = moment(element.CreatedDate).format("DD-MMM-YYYY");
+        //   //});
+        // }
+        // else
+        //   this.commonService.onMessageHandler("No notification found.", 0);
+      },
+        error => {
+          this.commonService.onMessageHandler("Failed to retrieve profile details. Please try again", 0);
+        });
+  }
   getCountriesDetails() {
     this._dataContext.getCountries()
       .subscribe(response => {
@@ -183,11 +241,11 @@ export class ManagemysettingPage {
 
 
   updateProfile() {
-    this.userDetails.ContactOption=[];
-    if(this.isEmailSelected){
+    this.userDetails.ContactOption = [];
+    if (this.isEmailSelected) {
       this.userDetails.ContactOption.push("Email");
     }
-    if(this.isPhoneSelected){
+    if (this.isPhoneSelected) {
       this.userDetails.ContactOption.push("Phone");
     }
 
