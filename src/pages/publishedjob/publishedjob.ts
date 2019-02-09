@@ -17,7 +17,7 @@ export class PublishedJob {
   searchFilterData: any = {
     Job: 0
   };
-  tapOption:any=[];
+  tapOption = [];
   loggedInUserDetails: any = {};
   title: string;
   constructor(
@@ -28,28 +28,19 @@ export class PublishedJob {
     private commonService: CommonServices,
     public alertCtrl: AlertController
   ) {
+    this.tapOption = [{ Value: "JOB REQUEST", Key: "JobRequest" }, { Value: "JOB OFFER", Key: "JobOffer" }];
     this.searchFilterData.Job = this.navParam.get("jobId");
     this.title = this.navParam.get("jobName");
     this.publishedJobResult = [];
-    this.tapOption[0] = "JOB REQUEST";
-    this.tapOption[1] = "JOB OFFER";
+
   }
   ionViewDidEnter() {
-    this.tabValue = "0";
+    this.tabValue = "JobRequest";
     this.getPublishedJobRequest();
     this.getLoggedInUserDetailsFromCache();
   }
   getLoggedInUserDetailsFromCache() {
-    //this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));;
-    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
-      .then((result) => {
-        if (result && result.userId) {
-          this.loggedInUserDetails = result;
-        }
-        else {
-          this.navCtrl.setRoot("LoginPage");
-        }
-      });
+    this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));
   }
   getPublishedJobRequest() {
     this._dataContext.GetPublishedJobRequestByJobId(this.searchFilterData)
@@ -131,19 +122,26 @@ export class PublishedJob {
 
   }
   //While Tab change
-  tabSelection(event,option) {
+  tabSelection(event, option) {
     this.publishedJobResult = [];
-    this.tabValue = option;
     if (option == 0) {
+      this.tabValue = "JobRequest";
       this.getPublishedJobRequest();
     }
     else {
+      this.tabValue = "JobOffer";
       this.getPublishedJobReponse();
     }
   }
 
   openFilter() {
-    let filterModal = this.modalCtrl.create("FilterPage", { activeTab: this.tabValue });
+    let index = 0;
+    if (this.tabValue == "JobRequest") {
+      index = 0;
+    } else {
+      index = 1;
+    }
+    let filterModal = this.modalCtrl.create("FilterPage", { activeTab: index });
     filterModal.onDidDismiss(item => {
       if (item) {
         this.isAvailable = true;
