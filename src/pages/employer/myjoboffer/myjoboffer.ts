@@ -18,75 +18,36 @@ export class EployerJobOffer {
   public showLeftButton: boolean;
   public showRightButton: boolean;
   selectedJobByCategoryId: Array<any> = [];
+  employeeJobOffers: any = [];
+  loggedInUserDetails: any = {};
   _imageViewerCtrl: ImageViewerController;
+  employeeJobOfferList: any = [];
   joboffers: any = [];
-  allJobOffersList : any = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams,imageViewerCtrl: ImageViewerController,
+  isAvailable: boolean = true;
+  allJobOffersList: any = [];
+  constructor(public alerCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, imageViewerCtrl: ImageViewerController,
     public _dataContext: DataContext, private commonService: CommonServices, public alertCtrl: AlertController) {
     this._imageViewerCtrl = imageViewerCtrl;
-    this.getActiveCategories();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad VerifycandidateprofilePage');
+  ionViewWillEnter() {
+    this.getLoggedInUserDetailsFromCache();
   }
-  presentImage(myImage) {
-  
-    const imageViewer = this._imageViewerCtrl.create(myImage);
-    imageViewer.present();
- 
-    // setTimeout(() => imageViewer.dismiss(), 1000);
-    // imageViewer.onDidDismiss(() => alert('Viewer dismissed'));
-  }
-  getUnverifiedJobOffersForAdmin() {
-    this._dataContext.GetUnverifiedJobOffersForAdmin()
-      .subscribe(response => {
-        this.allJobOffersList = response;
-        this.allJobOffersList.forEach(element => {
-          element.PublishedDate = moment(element.PublishedDate).format("DD MMM YYYY");
-        });
-        this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
-      },
-        error => {
-          this.commonService.onMessageHandler("Failed to retrieve unverified job offer. Please try again", 0);
-        });
-  }
-  validateJobOffer(item) {
-    this._dataContext.ValidateJobOffer(item.JobOfferId)
-      .subscribe(response => {
-        if (response.Status == "OK") {
-          this.commonService.onMessageHandler(response.Message, 1);
-          this.getUnverifiedJobOffersForAdmin();
+  getLoggedInUserDetailsFromCache() {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+      .then((result) => {
+        if (result && result.userId) {
+          this.loggedInUserDetails = result;
+          this.getActiveCategories();
         }
-      },
-        error => {
-          this.commonService.onMessageHandler("Failed to verify job offer. Please try again", 0);
-        });
+        else {
+          this.navCtrl.setRoot("LoginPage");
+        }
+      });
   }
 
-  verify(item) {
-    const confirm = this.alertCtrl.create({
-      title: 'Verify Job Offer?',
-      message: 'Do you want to verify this job offer?',
-      buttons: [
-        {
-          text: 'No',
-          handler: () => {
-            console.log('Disagree clicked');
-          }
-        },
-        {
-          text: 'Yes',
-          handler: () => {
-            this.validateJobOffer(item);
-          }
-        }
-      ]
-    });
-    confirm.present();
-  }
-  gotoDetails(item){
-   this.navCtrl.push("JobOfferDetails", { jobOfferId: item.JobOfferId });
+  gotoDetails(item) {
+    this.navCtrl.push("JobOfferDetails", { jobOfferId: item.JobOfferId });
   }
   getActiveCategories() {
     this._dataContext.GetActiveCategories()
@@ -94,11 +55,30 @@ export class EployerJobOffer {
         if (response.length > 0) {
           this.categories = response;
           this.selectedCategory = this.categories[0];
-         // this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
-         this.getUnverifiedJobOffersForAdmin();
+          // this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
+          this.getEmployeeJobOffers();
         }
         else
           this.commonService.onMessageHandler("No category found.", 0);
+      },
+        error => {
+          this.commonService.onMessageHandler("Failed to retrieve categories. Please try again", 0);
+        });
+  }
+  getEmployeeJobOffers() {
+    this._dataContext.GetMyJobOfferForEmployee(this.loggedInUserDetails.userId)
+      .subscribe(response => {
+        if (response.length > 0) {
+          this.isAvailable = true;
+          this.employeeJobOfferList = response;
+          this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
+        }
+        else {
+          this.employeeJobOfferList = [];
+          this.employeeJobOffers = [];
+          this.isAvailable = false;
+          this.commonService.onMessageHandler("No category found.", 0);
+        }
       },
         error => {
           this.commonService.onMessageHandler("Failed to retrieve categories. Please try again", 0);
@@ -108,29 +88,69 @@ export class EployerJobOffer {
     // Handle what to do when a category is selected
     let pageNo = categoryId - 1;
     this.slides.slideTo(pageNo, 500);
-    this.joboffers = [];
-    this.allJobOffersList.filter(item => {
-      if (item.Job.JobCategoryId == categoryId)
-        this.joboffers.push(item);
+    this.employeeJobOffers = [];
+    this.employeeJobOfferList.filter(item => {
+      if (item.JobCategoryId == categoryId)
+        this.employeeJobOffers.push(item);
     });
-
-
+    if (this.employeeJobOffers.length == 0)
+      this.isAvailable = false;
+    else
+      this.isAvailable = true;
   }
 
-// Method executed when the slides are changed
-public slideChanged(): void {
-  let currentIndex = this.slides.getActiveIndex();
-  // this.showLeftButton = currentIndex !== 0;
-  // this.showRightButton = currentIndex !== Math.ceil(this.slides.length() / 3);
-}
+  // Method executed when the slides are changed
+  public slideChanged(): void {
+    let currentIndex = this.slides.getActiveIndex();
+    // this.showLeftButton = currentIndex !== 0;
+    // this.showRightButton = currentIndex !== Math.ceil(this.slides.length() / 3);
+  }
 
-// Method that shows the next slide
-public slideNext(): void {
-  this.slides.slideNext();
-}
+  // Method that shows the next slide
+  public slideNext(): void {
+    this.slides.slideNext();
+  }
 
-// Method that shows the previous slide
-public slidePrev(): void {
-  this.slides.slidePrev();
-}
+  // Method that shows the previous slide
+  public slidePrev(): void {
+    this.slides.slidePrev();
+  }
+  deleteJobOffer(id, index) {
+    let method = this.alerCtrl.create({
+      title: "Please Confirm!",
+      message: "Do you want to delete ?",
+      cssClass: 'alert-header-back-style',
+      buttons: [
+        {
+          text: 'CANCEL',
+          cssClass: 'cancel-btn-style',
+          handler: () => {
+            // return false;
+          }
+        },
+        {
+          text: "DELETE",
+          cssClass: 'ok-btn-style',
+          handler: () => {
+            this._dataContext.DeleteEmployerJobOffer(this.loggedInUserDetails.userId, id)
+              .subscribe(response => {
+                this.employeeJobOffers.splice(index, 1);
+                this.getActiveCategories();
+                // this.allMyJobRequestList.filter((item, index) => {
+                //   if (item.JobCategoryId == id) {
+                //     this.allMyJobRequestList.splice(this.allMyJobRequestList, 1);
+                //   }
+                // });
+                this.commonService.onMessageHandler("Successfully removed", 1);
+
+              },
+                error => {
+                  this.commonService.onMessageHandler("Failed to delete. Please try again", 0);
+                });
+          }
+        }
+      ]
+    });
+    method.present();
+  }
 }

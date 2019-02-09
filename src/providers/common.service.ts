@@ -84,11 +84,18 @@ export class CommonServices {
     this._apiList["getSearchPublishedJobRequest"] = { controller: "JobRequests", method: "SearchJobRequests", api: "api/JobRequests" };
     this._apiList["getSearchPublishedJobResponse"] = { controller: "JobOffers", method: "SearchJobOffers", api: "api/JobOffers" };
 
-    
+
     /////////////////////////////////////////////////////////////////
     this._apiList["loginUser"] = { controller: "Accounts", method: "Login", api: "api/Accounts" };
+    //////////////////////////////// Employer API Services ////////////////////////////////
+    this._apiList["getMyFavJobRequestForEmployer"] = { controller: "Employers", method: "MyFavouriteJobRequests", api: "api/Employers" };
+    this._apiList["getMyJobOfferForEmployee"] = { controller: "Employers", method: "MyJobOffers", api: "api/Employers" };
+    this._apiList["deleteFavouriteJobRequestForEmployee"] = { controller: "Employers", method: "DeleteFavouriteJobRequest", api: "api/Employers" };
+    this._apiList["deleteEmployerJobOffer"] = { controller: "Employers", method: "DeleteFavouriteJobRequest", api: "api/Employers" };
+    this._apiList["getEmployerProfileDetails"] = { controller: "Employers", method: "MyProfile", api: "api/Employers" };
+    this._apiList["getEmployerNotificationDetails"] = { controller: "Employers", method: "Notifications", api: "api/Employers" };
 
-    
+
   }
   //Clear all cache
   clearAllCache() {
@@ -189,7 +196,7 @@ export class CommonServices {
     });
     method.present();
     method.onDidDismiss((data) => {
-     return data;
+      return data;
     });
   }
   setStoreDataIncache(url, data) {
@@ -211,13 +218,13 @@ export class CommonServices {
     let BASE64_MARKER = ';base64,';
     let base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
     let base64 = dataURI.substring(base64Index);
-      var raw = window.atob(base64);
-      var rawLength = raw.length;
-      var array = new Uint8Array(new ArrayBuffer(rawLength));
-      for (var i = 0; i < rawLength; i++) {
-        array[i] = raw.charCodeAt(i);
-      }
-      return array;
+    var raw = window.atob(base64);
+    var rawLength = raw.length;
+    var array = new Uint8Array(new ArrayBuffer(rawLength));
+    for (var i = 0; i < rawLength; i++) {
+      array[i] = raw.charCodeAt(i);
+    }
+    return array;
   }
   onMessageHandler(error_message, value) {
     let toast = this._toastCtrl.create({

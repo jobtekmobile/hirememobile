@@ -11,12 +11,13 @@ import moment from 'moment';
   templateUrl: 'publishedjob.html'
 })
 export class PublishedJob {
-  tabValue: number;
+  tabValue: string;
   isAvailable: boolean = true;
   publishedJobResult: any = [];
   searchFilterData: any = {
     Job: 0
   };
+  tapOption = [];
   loggedInUserDetails: any = {};
   constructor(
     public navCtrl: NavController,
@@ -25,17 +26,17 @@ export class PublishedJob {
     public _dataContext: DataContext,
     private commonService: CommonServices
   ) {
+    this.tapOption = [{Value:"JOB REQUEST",Key:"JobRequest"},{Value:"JOB OFFER",Key:"JobOffer"}];
     this.searchFilterData.Job = this.navParam.get("jobId");
-    this.tabValue = 0;
     this.publishedJobResult = [];
   }
   ionViewDidEnter() {
-    this.tabValue = 0;
+    this.tabValue = "JobRequest";
     this.getPublishedJobRequest();
     this.getLoggedInUserDetailsFromCache();
   }
   getLoggedInUserDetailsFromCache() {
-    this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));;
+    this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));
   }
   getPublishedJobRequest() {
     this._dataContext.GetPublishedJobRequestByJobId(this.searchFilterData)
@@ -92,13 +93,14 @@ export class PublishedJob {
         });
   }
   //While Tab change
-  tabSelection(option) {
+  tabSelection(event,option) {
     this.publishedJobResult = [];
-    this.tabValue = option;
     if (option == 0) {
+      this.tabValue = "JobRequest";
       this.getPublishedJobRequest();
     }
     else {
+      this.tabValue = "JobOffer";
       this.getPublishedJobReponse();
     }
   }

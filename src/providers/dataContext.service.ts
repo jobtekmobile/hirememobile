@@ -277,4 +277,41 @@ export class DataContext {
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
+    //Get Fav job request for employer
+    GetMyFavJobRequestForEmployer = (employerId: number): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getMyFavJobRequestForEmployer").toString() + "/" + employerId + "/FavouriteJobRequests")
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    //Get employer job offer by employee id
+    GetMyJobOfferForEmployee = (employerId: number): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getMyJobOfferForEmployee").toString() + "/" + employerId + "/JobOffers")
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    //delete employer job offer by employee id and job request id
+    DeleteFavouriteJobRequestForEmployee = (employerId: number, jobRequestId: number): Observable<any> => {
+        return this._http.delete(this.commonService.getApiControllerName("deleteFavouriteJobRequestForEmployee").toString() + "/" + employerId + "/FavouriteJobRequests/" + jobRequestId)
+            .map((response: any) => response.json())
+            .catch(this._http.handleError);
+    }
+    //delete employer job offer by employee id and job offer id
+    DeleteEmployerJobOffer = (employerId: number, jobOffertId: number): Observable<any> => {
+        return this._http.delete(this.commonService.getApiControllerName("deleteEmployerJobOffer").toString() + "/" + employerId + "/FavouriteJobOffers/" + jobOffertId)
+            .map((response: any) => response.json())
+            .catch(this._http.handleError);
+    }
+    //Get employer profile details
+    GetEmployerProfileDetails = (employerId: number): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getEmployerProfileDetails").toString() + "/" + employerId + "/MyProfile")
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    //Get employer notification details
+    GetEmployerNotificationDetails = (employerId: number): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getEmployerNotificationDetails").toString() + "/" + employerId + "/Notifications")
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+
 }

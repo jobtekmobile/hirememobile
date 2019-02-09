@@ -41,8 +41,16 @@ export class EmployerFavouriteJobRequest {
     this.getLoggedInUserDetailsFromCache();
   }
   getLoggedInUserDetailsFromCache() {
-    this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));
-    this.getActiveCategories();
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+      .then((result) => {
+        if (result && result.userId) {
+          this.loggedInUserDetails = result;
+          this.getActiveCategories();
+        }
+        else {
+          this.navCtrl.setRoot("LoginPage");
+        }
+      });
   }
   //Get all active categories for search job
   getActiveCategories() {
@@ -51,7 +59,7 @@ export class EmployerFavouriteJobRequest {
         if (response.length > 0) {
           this.categories = response;
           this.selectedCategory = this.categories[0];
-          this.getMySavedJobRequest();
+          this.getMyFavJobRequest();
           //this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
         }
         else
@@ -67,18 +75,19 @@ export class EmployerFavouriteJobRequest {
     let pageNo = categoryId - 1;
     this.slides.slideTo(pageNo, 500);
     this.allMyJobRequestList.filter(item => {
-      if (item.JobCategoryId == categoryId)
+      if (item.JobRequestId == categoryId)
         this.myJobRequestListByCategoryId.push(item);
     });
   }
-  getMySavedJobRequest() {
-    this._dataContext.GetMySavedJobRequest(this.loggedInUserDetails.userId)
+  getMyFavJobRequest() {
+    this._dataContext.GetMyFavJobRequestForEmployer(this.loggedInUserDetails.userId)
       .subscribe(response => {
         if (response.length > 0) {
           this.isAvailable = true;
           this.allMyJobRequestList = response;
           this.allMyJobRequestList.forEach(element => {
             element.PublishedDate = moment(element.PublishedDate).format("DD-MMM-YYYY");
+            element.ProfilePicUrl = "data:image/png;base64," + element.Candidate.ProfilePicUrl;
           });
           this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
         }
@@ -151,9 +160,8 @@ export class EmployerFavouriteJobRequest {
           text: "DELETE",
           cssClass: 'ok-btn-style',
           handler: () => {
-            this._dataContext.DeleteJobRequest(this.loggedInUserDetails.userId, id)
+            this._dataContext.DeleteFavouriteJobRequestForEmployee(this.loggedInUserDetails.userId, id)
               .subscribe(response => {
-                if (response.Status == "OK") {
                   this.myJobRequestListByCategoryId.splice(index, 1);
                   this.getActiveCategories();
                   // this.allMyJobRequestList.filter((item, index) => {
@@ -161,10 +169,8 @@ export class EmployerFavouriteJobRequest {
                   //     this.allMyJobRequestList.splice(this.allMyJobRequestList, 1);
                   //   }
                   // });
-                  this.commonService.onMessageHandler(response.Message, 1);
-                }
-                else
-                  this.commonService.onMessageHandler("Failed to delete. Please try again", 0);
+                  this.commonService.onMessageHandler("Successfully removed", 1);
+               
               },
                 error => {
                   this.commonService.onMessageHandler("Failed to delete. Please try again", 0);

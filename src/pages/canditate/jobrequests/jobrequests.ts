@@ -41,8 +41,17 @@ export class JobrequestsPage {
     this.getLoggedInUserDetailsFromCache();
   }
   getLoggedInUserDetailsFromCache() {
-    this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));
-    this.getActiveCategories();
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+    .then((result) => {
+      if (result && result.userId) {
+        this.loggedInUserDetails = result;
+        this.getActiveCategories();
+      }
+      else {
+        this.navCtrl.setRoot("LoginPage");
+      }
+    });
+
   }
   //Get all active categories for search job
   getActiveCategories() {
