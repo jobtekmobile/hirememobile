@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { CommonServices } from '../providers/common.service';
 
 
 
@@ -11,7 +12,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = "LoginPage";
+  rootPage: any = "";
 
   pages: Array<{ title: string, component: any, imagepath: string }>;
   employeepages: Array<{ title: string, component: any, imagepath: string }>;
@@ -19,7 +20,28 @@ export class MyApp {
   agencypages: Array<{ title: string, component: any, imagepath: string }>;
   adminpages: Array<{ title: string, component: any, imagepath: string }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public events: Events) {
+  constructor(private commonService: CommonServices, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public events: Events) {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+      .then((result) => {
+        if (result && result.userId) {
+          if (result.type == "Admin") {
+            this.pages = this.adminpages;
+          }
+          else if (result.type == "Candidate") {
+            this.pages = this.employeepages;
+          }
+          else if (result.type == "Employer") {
+            this.pages = this.employerpages;
+          } else {
+            this.pages = this.agencypages;
+          }
+          this.rootPage = "DashboardPage";
+        }
+        else {
+          this.rootPage = "LoginPage";
+        }
+      });
+
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -66,7 +88,7 @@ export class MyApp {
       }
       else if (role == "Employer") {
         this.pages = this.employerpages;
-      }else{
+      } else {
         this.pages = this.agencypages;
       }
     })
@@ -87,6 +109,7 @@ export class MyApp {
     this.nav.setRoot(page.component);
   }
   logout() {
+    this.commonService.clearAllCache();
     this.nav.setRoot("LoginPage");
   }
 }

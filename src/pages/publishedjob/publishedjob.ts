@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { PopoverController, IonicPage, NavController, DateTime, NavParams } from 'ionic-angular';
 //import { PublishedJobModel } from '../../interfaces/publishedjob';
 import { ModalController, ViewController } from 'ionic-angular';
-import { CommonServices } from '../../../providers/common.service';
-import { DataContext } from '../../../providers/dataContext.service';
+import { CommonServices } from '../../providers/common.service';
+import { DataContext } from '../../providers/dataContext.service';
 import moment from 'moment';
 @IonicPage()
 @Component({
@@ -82,7 +82,7 @@ export class PublishedJob {
     this._dataContext.MakeJobOfferAsFavourite(2, id)
       .subscribe(response => {
         if (response.length > 0) {
-          this.commonService.onMessageHandler("You have successfully make this offer as favourite",1);
+          this.commonService.onMessageHandler("You have successfully make this offer as favourite", 1);
         }
         else
           this.commonService.onMessageHandler("Something went wrong. Please try again", 0);
@@ -104,7 +104,16 @@ export class PublishedJob {
   }
 
   openFilter() {
-    let contactModal = this.modalCtrl.create("FilterPage");
-    contactModal.present();
+    let filterModal = this.modalCtrl.create("FilterPage", { activeTab: this.tabValue });
+    filterModal.onDidDismiss(item => {
+      if (item) {
+        this.isAvailable = true;
+        this.publishedJobResult = item;
+        this.publishedJobResult.forEach(element => {
+          element.PublishedDate = moment(element.PublishedDate).format("DD-MMM-YYYY");
+        });
+      }
+    })
+    filterModal.present();
   }
 }

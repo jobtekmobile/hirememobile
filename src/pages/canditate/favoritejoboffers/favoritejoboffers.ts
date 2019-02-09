@@ -1,7 +1,7 @@
 import { Component, ViewChild, Injector } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
-import { DataContext } from '../../providers/dataContext.service';
-import { CommonServices } from '../../providers/common.service';
+import { IonicPage, NavController, NavParams, Slides, AlertController } from 'ionic-angular';
+import { DataContext } from '../../../providers/dataContext.service';
+import { CommonServices } from '../../../providers/common.service';
 
 /**
  * Generated class for the FavoritejoboffersPage page.
@@ -28,12 +28,13 @@ export class FavoritejoboffersPage {
   myFavListByCategoryId: any = {};
   allMyFavouriteList: any = [];
   loggedInUserDetails: any = {};
+
   constructor(
     public injector: Injector,
     public navCtrl: NavController,
     public navParams: NavParams,
     public _dataContext: DataContext,
-    private commonService: CommonServices) {
+    private commonService: CommonServices,public alerCtrl: AlertController) {
     this.publishedJobResult = [];
     this.tabValue = 0;
   }
@@ -42,8 +43,17 @@ export class FavoritejoboffersPage {
     this.getLoggedInUserDetailsFromCache();
   }
   getLoggedInUserDetailsFromCache() {
-    this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));
-    this.getActiveCategories();
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+      .then((result) => {
+        if (result && result.userId) {
+          this.loggedInUserDetails = result;
+          this.getActiveCategories();
+        }
+        else {
+          this.navCtrl.setRoot("LoginPage");
+        }
+      });
+
   }
   //Get all active categories for search job
   getActiveCategories() {
@@ -89,18 +99,37 @@ export class FavoritejoboffersPage {
           this.commonService.onMessageHandler("Failed to retrieve favourite job offers. Please try again", 0);
         });
   }
-  deleteFavouriteJobOffer(id) {
-    this._dataContext.DeleteFavourite(this.loggedInUserDetails.userId, id)
-      .subscribe(response => {
-        if (response.length > 0) {
-          this.commonService.onMessageHandler("You have successfully removed.", 0);
+  deleteFavouriteJobOffer(id, index) {
+    let method = this.alerCtrl.create({
+      title: "Please Confirm!",
+      message: "Do you want to delete ?",
+      cssClass: 'alert-header-back-style',
+      buttons: [
+        {
+          text: 'CANCEL',
+          cssClass: 'cancel-btn-style',
+          handler: () => {
+            // return false;
+          }
+        },
+        {
+          text: "DELETE",
+          cssClass: 'ok-btn-style',
+          handler: () => {
+            this._dataContext.DeleteFavourite(this.loggedInUserDetails.userId, id)
+            .subscribe(response => {
+              this.myFavListByCategoryId.splice(index, 1);
+              this.getActiveCategories();
+              this.commonService.onMessageHandler("You have successfully removed.", 0);
+            },
+              error => {
+                this.commonService.onMessageHandler("Failed to remove. Please try again", 0);
+              });
+          }
         }
-        else
-          this.commonService.onMessageHandler("Something went wrong. Please try again", 0);
-      },
-        error => {
-          this.commonService.onMessageHandler("Failed to remove. Please try again", 0);
-        });
+      ]
+    });
+    method.present();
   }
   private initializeCategories(): void {
     // Select it by defaut

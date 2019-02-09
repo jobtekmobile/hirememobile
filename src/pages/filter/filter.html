@@ -4,7 +4,7 @@
             Filter
         </ion-title>
         <ion-buttons start>
-            <button ion-button (click)="dismiss()">
+            <button ion-button (click)="closeModal()">
                 <span ion-text color="primary" showWhen="ios">Cancel</span>
                 <ion-icon name="md-close" showWhen="android, windows"></ion-icon>
             </button>
@@ -17,216 +17,266 @@
         <ion-list-header style="margin: 0px;color:#ef548a;">
             STANDARD CRITERIAS
         </ion-list-header>
-
         <!-- Gender -->
-        <ion-item class="ion-item-noborder">
-            <ion-label>Gender</ion-label>
-            <ion-toggle checked="false"></ion-toggle>
-        </ion-item>
-
-        <div class="ion-item-border">
-            <ion-list radio-group style="margin:0px;">
-                <ion-row>
-                    <ion-col col-6 style="padding:0px;">
-                        <ion-item class="ion-item-noborder">
-                            <ion-radio checked="true" value="Male"></ion-radio>
-                            <ion-label>Male</ion-label>
-                        </ion-item>
-                    </ion-col>
-                    <ion-col col-6 style="padding:0px;">
-                        <ion-item class="ion-item-noborder">
-                            <ion-radio value="Female"></ion-radio>
-                            <ion-label>Female</ion-label>
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
-            </ion-list>
-        </div>
-
-        <!-- ID Card Checked -->
-        <ion-item class="ion-item-noborder">
-            <ion-label>ID Card Checked</ion-label>
-            <ion-toggle checked="false"></ion-toggle>
-        </ion-item>
-        <div class="ion-item-border">
-            <ion-list radio-group style="margin:0px;">
-                <ion-row>
-                    <ion-col col-6 style="padding:0px;">
-                        <ion-item class="ion-item-noborder">
-                            <ion-radio checked="true" value="Yes"></ion-radio>
-                            <ion-label>Yes</ion-label>
-                        </ion-item>
-                    </ion-col>
-                    <ion-col col-6 style="padding:0px;">
-                        <ion-item class="ion-item-noborder">
-                            <ion-radio value="No"></ion-radio>
-                            <ion-label>No</ion-label>
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
-            </ion-list>
-        </div>
-
-
-
-        <!-- Age -->
-        <ion-item class="ion-item-noborder">
-            <ion-label>Age</ion-label>
-            <ion-toggle checked="false"></ion-toggle>
-        </ion-item>
-
-        <div class="ion-item-border">
-
-            <ion-row>
-                <ion-col col-6 style="padding:0px;">
-                    <ion-list style="margin:0px;">
-                        <ion-item class="ion-item-noborder">
-                            <ion-select [(ngModel)]="age1">
-                                <ion-option *ngFor="let item of age" [value]="item.value">{{item.label}}</ion-option>
-                            </ion-select>
-                        </ion-item>
+        <ion-row>
+            <ion-col col-12>
+                <ion-item class="ion-item-noborder">
+                    <ion-label>Gender</ion-label>
+                    <ion-toggle [(ngModel)]="specificCrieteria.IsGenderActive" [checked]="specificCrieteria.IsGenderActive" (ionChange)="onToggleChange('Gender')"></ion-toggle>
+                </ion-item>
+                <div class="ion-item-border" *ngIf="specificCrieteria.IsGenderActive">
+                    <ion-list radio-group style="margin:0px;" [(ngModel)]="specificCrieteria.Gender">
+                        <ion-row>
+                            <ion-col col-6 style="padding:0px;">
+                                <ion-item class="ion-item-noborder">
+                                    <ion-radio item-left value="2"></ion-radio>
+                                    <ion-label class="font-size-14">Male</ion-label>
+                                </ion-item>
+                            </ion-col>
+                            <ion-col col-6 style="padding:0px;">
+                                <ion-item class="ion-item-noborder">
+                                    <ion-radio item-left value="1"></ion-radio>
+                                    <ion-label class="font-size-14">Female</ion-label>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
                     </ion-list>
-                </ion-col>
-                <ion-col col-6 style="padding:0px;">
-                    <ion-list style="margin:0px;">
-                        <ion-item class="ion-item-noborder">
-                            <ion-select [(ngModel)]="age2">
-                                <ion-option *ngFor="let item of age" [value]="item.value">{{item.label}}</ion-option>
-                            </ion-select>
-                        </ion-item>
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-12>
+                <ion-item class="ion-item-noborder">
+                    <ion-label>ID Card Checked</ion-label>
+                    <ion-toggle [(ngModel)]="specificCrieteria.IsProfileVerifiedActive" [checked]="specificCrieteria.IsProfileVerifiedActive"
+                        (ionChange)="onToggleChange('ProfileVerified')"></ion-toggle>
+                </ion-item>
+                <div class="ion-item-border" *ngIf="specificCrieteria.IsProfileVerifiedActive">
+                    <ion-list radio-group style="margin:0px;" [(ngModel)]="specificCrieteria.ProfileVerified">
+                        <ion-row>
+                            <ion-col col-6 style="padding:0px;">
+                                <ion-item class="ion-item-noborder">
+                                    <ion-radio item-left value="true"></ion-radio>
+                                    <ion-label class="font-size-14">Yes</ion-label>
+                                </ion-item>
+                            </ion-col>
+                            <ion-col col-6 style="padding:0px;">
+                                <ion-item class="ion-item-noborder">
+                                    <ion-radio item-left value="false"></ion-radio>
+                                    <ion-label class="font-size-14">No</ion-label>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
                     </ion-list>
-                </ion-col>
-            </ion-row>
-        </div>
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-12>
+                <ion-item class="ion-item-noborder">
+                    <ion-label>Age</ion-label>
+                    <ion-toggle [(ngModel)]="specificCrieteria.IsAgeFilterActive" (ionChange)="onToggleChange('Age')" [checked]="specificCrieteria.IsAgeFilterActive"></ion-toggle>
+                </ion-item>
+                <div class="ion-item-border" *ngIf="specificCrieteria.IsAgeFilterActive">
+                    <ion-row>
+                        <ion-col col-6 style="padding:0px;">
+                            <ion-list style="margin:0px;">
+                                <ion-item class="ion-item-noborder">
+                                    <ion-select [(ngModel)]="specificCrieteria.MinAge">
+                                        <ion-option value="">--Select--</ion-option>
+                                        <ion-option *ngFor="let item of minAge" [value]="item.value">{{item.label}}</ion-option>
+                                    </ion-select>
+                                </ion-item>
+                            </ion-list>
+                        </ion-col>
+                        <ion-col col-6 style="padding:0px;">
+                            <ion-list style="margin:0px;">
+                                <ion-item class="ion-item-noborder">
+                                    <ion-select [(ngModel)]="specificCrieteria.MaxAge">
+                                        <ion-option value="">--Select--</ion-option>
+                                        <ion-option *ngFor="let item of age" [value]="item.value">{{item.label}}</ion-option>
+                                    </ion-select>
+                                </ion-item>
+                            </ion-list>
+                        </ion-col>
+                    </ion-row>
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-12>
+                <ion-item class="ion-item-noborder">
+                    <ion-label>Years of Experiences</ion-label>
+                    <ion-toggle [(ngModel)]="specificCrieteria.IsExperienceFilterActive" (ionChange)="onToggleChange('Experience')" [checked]="specificCrieteria.IsExperienceFilterActive"></ion-toggle>
+                </ion-item>
+                <div class="ion-item-border" *ngIf="specificCrieteria.IsExperienceFilterActive">
+                    <ion-row>
+                        <ion-col col-6 style="padding:0px;">
+                            <ion-list style="margin:0px;">
+                                <ion-item>
+                                    <ion-select [(ngModel)]="specificCrieteria.MinYearsOfExperience">
+                                        <ion-option value="">--Select--</ion-option>
+                                        <ion-option *ngFor="let exp of experiences" [value]="exp.value">{{exp.label}}</ion-option>
+                                    </ion-select>
+                                </ion-item>
+                            </ion-list>
+                        </ion-col>
+                        <ion-col col-6 style="padding:0px;">
+                            <ion-list style="margin:0px;">
+                                <ion-item>
+                                    <ion-select [(ngModel)]="specificCrieteria.MaxYearsOfExperience">
+                                        <ion-option value="">--Select--</ion-option>
+                                        <ion-option *ngFor="let exp of experiences" [value]="exp.value">{{exp.label}}</ion-option>
+                                    </ion-select>
+                                </ion-item>
+                            </ion-list>
+                        </ion-col>
+                    </ion-row>
+                </div>
 
-
-        <!-- Year Of Experiences -->
-        <ion-item class="ion-item-noborder">
-            <ion-label>Year Of Experiences</ion-label>
-            <ion-toggle checked="false"></ion-toggle>
-        </ion-item>
-        <div class="ion-item-border">
-            <ion-row>
-                <ion-col col-6 style="padding:0px;">
-                    <ion-list style="margin:0px;">
-                        <ion-item>
-                            <ion-select [(ngModel)]="exp1">
-                                <ion-option *ngFor="let exp of experiences" [value]="exp.value">{{exp.label}}</ion-option>
-                            </ion-select>
-                        </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-12>
+                <ion-item class="ion-item-noborder">
+                    <ion-label>Type of Staff</ion-label>
+                    <ion-toggle [(ngModel)]="specificCrieteria.IsStaffTypeFilterActive" [checked]="specificCrieteria.IsStaffTypeFilterActive"
+                        (ionChange)="onToggleChange('StaffType')"></ion-toggle>
+                </ion-item>
+                <div class="ion-item-border" *ngIf="specificCrieteria.IsStaffTypeFilterActive">
+                    <ion-list radio-group style="margin:0px;" [(ngModel)]="specificCrieteria.StaffType">
+                        <ion-row>
+                            <ion-col col-6 style="padding:0px;">
+                                <ion-item class="ion-item-noborder">
+                                    <ion-radio item-left checked="true" value="1"></ion-radio>
+                                    <ion-label>Independant</ion-label>
+                                </ion-item>
+                            </ion-col>
+                            <ion-col col-6 style="padding:0px;">
+                                <ion-item class="ion-item-noborder">
+                                    <ion-radio item-left value="2"></ion-radio>
+                                    <ion-label>Agency</ion-label>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
                     </ion-list>
-                </ion-col>
-                <ion-col col-6 style="padding:0px;">
-                    <ion-list style="margin:0px;">
-                        <ion-item>
-                            <ion-select [(ngModel)]="exp2">
-                                <ion-option *ngFor="let exp of experiences" [value]="exp.value">{{exp.label}}</ion-option>
-                            </ion-select>
-                        </ion-item>
-                    </ion-list>
-                </ion-col>
-            </ion-row>
-        </div>
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-12>
+                <ion-item class="ion-item-noborder">
+                    <ion-label>Disponibility</ion-label>
+                    <ion-toggle [(ngModel)]="specificCrieteria.IsDisponibilityFilterActive" [checked]="specificCrieteria.IsDisponibilityFilterActive"
+                        (ionChange)="onToggleChange('Date')"></ion-toggle>
+                </ion-item>
+                <div class="ion-item-border" *ngIf="specificCrieteria.IsDisponibilityFilterActive">
+                    <ion-item>
+                        <ion-label>Select Date</ion-label>
+                        <ion-datetime displayFormat="DD-MMM-YYYY" pickerFormat="DD-MMM-YYYY" placeholder="" [(ngModel)]="specificCrieteria.Disponibility"></ion-datetime>
+                    </ion-item>
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-12>
+                <ion-item class="ion-item-noborder">
+                    <ion-label>Localizations</ion-label>
+                    <ion-toggle [(ngModel)]="specificCrieteria.IsLocalizationFilterActive" (ionChange)="onToggleChange('Localization')" [checked]="specificCrieteria.IsLocalizationFilterActive"></ion-toggle>
+                </ion-item>
+                <div class="ion-item-border" *ngIf="specificCrieteria.IsLocalizationFilterActive">
+                    <ion-row>
+                        <ion-col col-6 style="padding:0px;">
+                            <ion-list style="margin:0px;">
+                                <ion-item>
+                                    <ion-select [(ngModel)]="specificCrieteria.City" (ionChange)="onSelectedCity()">
+                                        <ion-option value="">--Select City--</ion-option>
+                                        <ion-option *ngFor="let item of cities" [value]="item.CityId">{{item.CityName}}</ion-option>
+                                    </ion-select>
+                                </ion-item>
+                            </ion-list>
+                        </ion-col>
+                        <ion-col col-6 style="padding:0px;">
+                            <ion-list style="margin:0px;">
+                                <ion-item>
+                                    <ion-select [(ngModel)]="specificCrieteria.District" [disabled]="specificCrieteria.CityId == 0">
+                                        <ion-option value="">--Select District--</ion-option>
+                                        <ion-option *ngFor="let item of districts" [value]="item.DistrictId">{{item.DistrictName}}</ion-option>
+                                    </ion-select>
+                                </ion-item>
+                            </ion-list>
+                        </ion-col>
+                    </ion-row>
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-12>
+                <ion-item class="ion-item-noborder">
+                    <ion-label>Salary Between</ion-label>
+                    <ion-toggle [(ngModel)]="specificCrieteria.IsSalaryFilterActive" [checked]="specificCrieteria.IsSalaryFilterActive" (ionChange)="onToggleChange('Salary')"></ion-toggle>
+                </ion-item>
+                <ion-list *ngIf="specificCrieteria.IsSalaryFilterActive">
+                    <div class="ion-item-border">
+                        <ion-row>
+                            <ion-col col-6 style="padding:0px;">
+                                <ion-item class="no-border">
+                                    <ion-input [(ngModel)]="specificCrieteria.MinSalary" type="tel" placeholder="Min" spellcheck="false" autocapitalize="off"
+                                        maxlength="7" (keypress)="onlyNumber($event)">
+                                    </ion-input>
 
-
-        <!-- Type Of Staff -->
-        <ion-item class="ion-item-noborder">
-            <ion-label>Type Of Staff</ion-label>
-            <ion-toggle checked="false"></ion-toggle>
-        </ion-item>
-        <div class="ion-item-border">
-            <ion-list radio-group style="margin:0px;">
-                <ion-row>
-                    <ion-col col-6 style="padding:0px;">
-                        <ion-item class="ion-item-noborder">
-                            <ion-radio checked="true" value="Independant"></ion-radio>
-                            <ion-label>Independant</ion-label>
-                        </ion-item>
-                    </ion-col>
-                    <ion-col col-6 style="padding:0px;">
-                        <ion-item class="ion-item-noborder">
-                            <ion-radio value="Agency"></ion-radio>
-                            <ion-label>Agency</ion-label>
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
-            </ion-list>
-        </div>
-
-
-
-
-        <!-- Disponibility -->
-        <!-- [(ngModel)]="event.timeStarts" -->
-
-        <ion-item class="ion-item-noborder">
-            <ion-label>Disponibility</ion-label>
-            <ion-toggle checked="false"></ion-toggle>
-        </ion-item>
-        <div class="ion-item-border">
-            <ion-item>
-                <ion-label>Start Time</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A"></ion-datetime>
-            </ion-item>
-        </div>
-
-        <!-- Localization -->
-        <ion-item class="ion-item-noborder">
-            <ion-label>Localization</ion-label>
-            <ion-toggle checked="false"></ion-toggle>
-        </ion-item>
-        <div class="ion-item-border">
-            <ion-row>
-                <ion-col col-6 style="padding:0px;">
-                    <ion-list style="margin:0px;">
-                        <ion-item>
-                            <ion-select [(ngModel)]="selectedCity">
-                                <ion-option *ngFor="let city of cities" [value]="city.value">{{city.label}}</ion-option>
-                            </ion-select>
-                        </ion-item>
-                    </ion-list>
-                </ion-col>
-                <ion-col col-6 style="padding:0px;">
-                    <ion-list style="margin:0px;">
-                        <ion-item>
-                            <ion-select [(ngModel)]="selectedDistrict">
-                                <ion-option *ngFor="let dist of district" [value]="dist.value">{{dist.label}}</ion-option>
-                            </ion-select>
-                        </ion-item>
-                    </ion-list>
-                </ion-col>
-            </ion-row>
-        </div>
-        <!-- Salary Between -->
-        <ion-item class="ion-item-noborder">
-            <ion-label>Salary Between</ion-label>
-            <ion-toggle checked="false"></ion-toggle>
-        </ion-item>
-        <ion-list>
-            <div class="ion-item-border">
-                <ion-row>
-                    <ion-col col-6 style="padding:0px;">
-                        <ion-item class="no-border">
-                            <ion-input type="number" placeholder="min"></ion-input>
-                        </ion-item>
-                    </ion-col>
-                    <ion-col col-6 style="padding:0px;">
-                        <ion-item class="no-border">
-                            <ion-input type="number" placeholder="max"></ion-input>
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
-            </div>
-
-        </ion-list>
-
-
+                                </ion-item>
+                            </ion-col>
+                            <ion-col col-6 style="padding:0px;">
+                                <ion-item class="no-border">
+                                    <ion-input [(ngModel)]="specificCrieteria.MaxSalary" type="tel" placeholder="Min" spellcheck="false" autocapitalize="off"
+                                        maxlength="7" (keypress)="onlyNumber($event)">
+                                    </ion-input>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+                </ion-list>
+            </ion-col>
+        </ion-row>
     </ion-list>
     <ion-list>
         <ion-list-header style="margin: 0px;color:#ef548a;">
             SPECIFIC CRITERIAS
         </ion-list-header>
     </ion-list>
-
-
+    <ion-row *ngIf="jobTasks.length > 0">
+        <ion-col col-12 *ngFor="let skill of jobTasks">
+            <div class="skill-task">
+                <span class="">
+                    <ion-checkbox item-left class="margin-right-15" [(ngModel)]="skill.Selected">
+                    </ion-checkbox>
+                    <span>{{skill.JobTaskName}}</span>
+                </span>
+                <div *ngIf="skill.SubTasks.length > 0">
+                    <div *ngFor="let subTask of skill.SubTasks" class="sub-skill-task">
+                        <span class="">
+                            <ion-checkbox item-left class="margin-right-15" [(ngModel)]="subTask.Selected">
+                            </ion-checkbox>
+                            <span>{{subTask.JobTaskName}}</span>
+                        </span>
+                        <div *ngIf="subTask.SubTasks.length > 0">
+                            <div *ngFor="let subSkill of subTask.SubTasks" class="sub-skill-task">
+                                <span class="">
+                                    <ion-checkbox item-left class="margin-right-15" [(ngModel)]="subSkill.Selected">
+                                    </ion-checkbox>
+                                    <span>{{subSkill.JobTaskName}}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ion-col>
+    </ion-row>
+    <ion-fab right bottom class="jobtek-fab-btn">
+        <button ion-fab mini color="danger" (click)="onFilterSearch()">
+            <ion-icon name="search"></ion-icon>
+        </button>
+    </ion-fab>
 </ion-content>

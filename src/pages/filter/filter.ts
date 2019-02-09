@@ -1,6 +1,8 @@
 import { Platform, NavParams, IonicPage } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { ViewController } from 'ionic-angular';
+import { CommonServices } from '../../providers/common.service';
+import { DataContext } from '../../providers/dataContext.service';
 
 @IonicPage()
 @Component({
@@ -8,87 +10,208 @@ import { ViewController } from 'ionic-angular';
   templateUrl: 'filter.html'
 })
 export class FilterPage {
-  character: any;
-  age1: any;
-  age2: any;
-  age = [];
 
-  exp1: any;
-  exp2: any;
-  experiences = [];
-
-
-
-  cities = [
-    { label: "Abidjan", value: "Abidjan" },
-    { label: "Daloa", value: "Daloa" },
-    { label: "Dabou", value: "Dabou" }
-  ];
-  selectedCity: any;
-
-  district = [
-    { label: "district1", value: "district1" },
-    { label: "district2", value: "district2" },
-    { label: "district3", value: "district3" }
-  ];
-  selectedDistrict: any;
-
-  specificCrieteria = { "JobId": 1, "JobName": "Nanny", "JobCategoryId": 1, "JobGroup": "Internal Home Job", "JobDesc": null, "IconImage": "/assets/images/portfolio/nanny.jpg", "JobTasks": [{ "SubTasks": [], "JobTaskId": 1, "JobId": 1, "JobTaskName": "Cleaning", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/cleaning.png", "ParentJobTaskId": null, "JobTaskCountryMapper": null, "Selected": false }, { "SubTasks": [{ "SubTasks": [{ "SubTasks": [], "JobTaskId": 5, "JobId": 1, "JobTaskName": "Sauces", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/sauces.png", "ParentJobTaskId": 3, "JobTaskCountryMapper": null, "Selected": false }, { "SubTasks": [], "JobTaskId": 6, "JobId": 1, "JobTaskName": "Grilling", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/grill.png", "ParentJobTaskId": 3, "JobTaskCountryMapper": null, "Selected": false }], "JobTaskId": 3, "JobId": 1, "JobTaskName": "African Food", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/gratin.png", "ParentJobTaskId": 2, "JobTaskCountryMapper": null, "Selected": false }, { "SubTasks": [{ "SubTasks": [], "JobTaskId": 7, "JobId": 1, "JobTaskName": "Ovan", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/gratin.png", "ParentJobTaskId": 4, "JobTaskCountryMapper": null, "Selected": false }, { "SubTasks": [], "JobTaskId": 8, "JobId": 1, "JobTaskName": "Pastry", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/gratin.png", "ParentJobTaskId": 4, "JobTaskCountryMapper": null, "Selected": false }, { "SubTasks": [], "JobTaskId": 9, "JobId": 1, "JobTaskName": "Dessert", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/dessert.png", "ParentJobTaskId": 4, "JobTaskCountryMapper": null, "Selected": false }], "JobTaskId": 4, "JobId": 1, "JobTaskName": "European Food", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/gratin.png", "ParentJobTaskId": 2, "JobTaskCountryMapper": null, "Selected": false }], "JobTaskId": 2, "JobId": 1, "JobTaskName": "Cooking", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/cooking1.png", "ParentJobTaskId": null, "JobTaskCountryMapper": null, "Selected": false }, { "SubTasks": [{ "SubTasks": [], "JobTaskId": 5, "JobId": 1, "JobTaskName": "Sauces", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/sauces.png", "ParentJobTaskId": 3, "JobTaskCountryMapper": null, "Selected": false }, { "SubTasks": [], "JobTaskId": 6, "JobId": 1, "JobTaskName": "Grilling", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/grill.png", "ParentJobTaskId": 3, "JobTaskCountryMapper": null, "Selected": false }], "JobTaskId": 3, "JobId": 1, "JobTaskName": "African Food", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/gratin.png", "ParentJobTaskId": 2, "JobTaskCountryMapper": null, "Selected": false }, { "SubTasks": [{ "SubTasks": [], "JobTaskId": 7, "JobId": 1, "JobTaskName": "Ovan", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/gratin.png", "ParentJobTaskId": 4, "JobTaskCountryMapper": null, "Selected": false }, { "SubTasks": [], "JobTaskId": 8, "JobId": 1, "JobTaskName": "Pastry", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/gratin.png", "ParentJobTaskId": 4, "JobTaskCountryMapper": null, "Selected": false }, { "SubTasks": [], "JobTaskId": 9, "JobId": 1, "JobTaskName": "Dessert", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/dessert.png", "ParentJobTaskId": 4, "JobTaskCountryMapper": null, "Selected": false }], "JobTaskId": 4, "JobId": 1, "JobTaskName": "European Food", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/gratin.png", "ParentJobTaskId": 2, "JobTaskCountryMapper": null, "Selected": false }, { "SubTasks": [], "JobTaskId": 5, "JobId": 1, "JobTaskName": "Sauces", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/sauces.png", "ParentJobTaskId": 3, "JobTaskCountryMapper": null, "Selected": false }, { "SubTasks": [], "JobTaskId": 6, "JobId": 1, "JobTaskName": "Grilling", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/grill.png", "ParentJobTaskId": 3, "JobTaskCountryMapper": null, "Selected": false }, { "SubTasks": [], "JobTaskId": 7, "JobId": 1, "JobTaskName": "Ovan", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/gratin.png", "ParentJobTaskId": 4, "JobTaskCountryMapper": null, "Selected": false }, { "SubTasks": [], "JobTaskId": 8, "JobId": 1, "JobTaskName": "Pastry", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/gratin.png", "ParentJobTaskId": 4, "JobTaskCountryMapper": null, "Selected": false }, { "SubTasks": [], "JobTaskId": 9, "JobId": 1, "JobTaskName": "Dessert", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/dessert.png", "ParentJobTaskId": 4, "JobTaskCountryMapper": null, "Selected": false }, { "SubTasks": [], "JobTaskId": 12, "JobId": 1, "JobTaskName": "Child Care", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/childcare.png", "ParentJobTaskId": null, "JobTaskCountryMapper": null, "Selected": false }, { "SubTasks": [], "JobTaskId": 13, "JobId": 1, "JobTaskName": "Laundry", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/laundry.png", "ParentJobTaskId": null, "JobTaskCountryMapper": null, "Selected": false }, { "SubTasks": [], "JobTaskId": 14, "JobId": 1, "JobTaskName": "Cleaning", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/cleaning.png", "ParentJobTaskId": null, "JobTaskCountryMapper": null, "Selected": false }, { "SubTasks": [], "JobTaskId": 15, "JobId": 1, "JobTaskName": "Ironing", "JobTaskDescription": null, "TaskSectionName": null, "TaskGroupName": null, "TaskParamType": 1, "TaskParamValueType": 0, "ParamAvailableOptions": null, "IconImage": "/assets/images/ironing1.png", "ParentJobTaskId": null, "JobTaskCountryMapper": null, "Selected": false }] };
-
-
-
+  specificCrieteria: any = {
+    IsGenderActive: false,
+    Gender: "",
+    IsProfileVerifiedActive: false,
+    ProfileVerified: "",
+    IsAgeFilterActive: false,
+    MinAge: "",
+    MaxAge: "",
+    IsExperienceFilterActive: false,
+    MinYearsOfExperience: "",
+    MaxYearsOfExperience: "",
+    IsStaffTypeFilterActive: false,
+    StaffType: "",
+    IsDisponibilityFilterActive: false,
+    Disponibility: "",
+    IsLocalizationFilterActive: false,
+    City: "",
+    District: "",
+    IsSalaryFilterActive: false,
+    MinSalary: "",
+    MaxSalary: "",
+    Job: 1,
+    Tasks: ""
+  };
+  cities: any = [];
+  districts: any = [];
+  minAge: any = [];
+  maxAge: any = [];
+  experiences: any = [];
+  activeTab: number = 0;
+  jobTasks: any = [];
   constructor(
     public platform: Platform,
-    public params: NavParams,
-    public viewCtrl: ViewController
+    public navParam: NavParams,
+    public viewCtrl: ViewController,
+    public _dataContext: DataContext,
+    public navParams: NavParams,
+    private commonService: CommonServices,
   ) {
-
-    for (let i = 16; i < 51; i++) {
-      this.age.push({ label: i.toString(), value: i });
+   // this.getActiveJobTasks();
+    this.getMinAge();
+    this.getMaxAge();
+    this.getexperiences();
+    this.getActiveCities();
+  }
+  ionViewDidEnter() {
+    this.activeTab = this.navParam.get("activeTab");
+  }
+  getexperiences() {
+    this.experiences = [];
+    for (var i = 1; i <= 20; i++) {
+      this.experiences.push({ value: i, label: i });
     }
-    for (let i = 1; i < 21; i++) {
-      this.experiences.push({ label: i.toString(), value: i });
+  }
+  getMinAge() {
+    this.minAge = [];
+    for (var i = 16; i <= 50; i++) {
+      this.minAge.push({ value: i, label: i });
     }
-
-
-
-    var characters = [
-      {
-        name: 'Gollum',
-        quote: 'Sneaky little hobbitses!',
-        image: 'assets/img/avatar-gollum.jpg',
-        items: [
-          { title: 'Race', note: 'Hobbit' },
-          { title: 'Culture', note: 'River Folk' },
-          { title: 'Alter Ego', note: 'Smeagol' }
-        ]
+  }
+  getMaxAge() {
+    this.maxAge = [];
+    for (var i = 16; i <= 50; i++) {
+      this.minAge.push({ value: i, label: i });
+    }
+  }
+  getActiveCities() {
+    this._dataContext.GetActiveCities(0)
+      .subscribe(responnse => {
+        if (responnse.length > 0) {
+          this.cities = responnse;
+          //this.getActiveDistricts();
+        }
+        else
+          this.commonService.onMessageHandler("Failed to retrieve cities.", 0);
       },
-      {
-        name: 'Frodo',
-        quote: 'Go back, Sam! I\'m going to Mordor alone!',
-        image: 'assets/img/avatar-frodo.jpg',
-        items: [
-          { title: 'Race', note: 'Hobbit' },
-          { title: 'Culture', note: 'Shire Folk' },
-          { title: 'Weapon', note: 'Sting' }
-        ]
-      },
-      {
-        name: 'Samwise Gamgee',
-        quote: 'What we need is a few good taters.',
-        image: 'assets/img/avatar-samwise.jpg',
-        items: [
-          { title: 'Race', note: 'Hobbit' },
-          { title: 'Culture', note: 'Shire Folk' },
-          { title: 'Nickname', note: 'Sam' }
-        ]
-      }
-    ];
-    this.character = characters[this.params.get('charNum')];
+        error => {
+          this.commonService.onMessageHandler("Failed to retrieve cities. Please try again", 0);
+        });
   }
 
-  dismiss() {
-    this.viewCtrl.dismiss();
+  getActiveDistricts() {
+    this._dataContext.GetActiveDistricts(this.cities[0].CityId)
+      .subscribe(responnse => {
+        if (responnse.length > 0) {
+          this.districts = responnse;
+        }
+        else
+          this.commonService.onMessageHandler("Failed to retrieve districts.", 0);
+      },
+        error => {
+          this.commonService.onMessageHandler("Failed to retrieve districts. Please try again", 0);
+        });
+  }
+  onToggleChange(value) {
+    switch (value) {
+      case "Gender":
+        if (!this.specificCrieteria.IsGenderActive) {
+          this.specificCrieteria.Gender = "";
+        }
+        break;
+      case "ProfileVerified":
+        if (!this.specificCrieteria.IsProfileVerifiedActive) {
+          this.specificCrieteria.ProfileVerified = "";
+
+        }
+        break;
+      case "StaffType":
+        if (!this.specificCrieteria.IsStaffTypeFilterActive) {
+          this.specificCrieteria.StaffType = "";
+        }
+        break;
+      case "Date":
+        if (!this.specificCrieteria.IsDisponibilityFilterActive) {
+          this.specificCrieteria.Disponibility = "";
+        }
+        break;
+      case "Age":
+        if (!this.specificCrieteria.IsAgeFilterActive) {
+          this.specificCrieteria.MinAge = "";
+          this.specificCrieteria.MaxAge = "";
+        }
+        break;
+      case "Experience":
+        if (!this.specificCrieteria.IsExperienceFilterActive) {
+          this.specificCrieteria.MinYearsOfExperience = "";
+          this.specificCrieteria.MaxYearsOfExperience = "";
+        }
+        break;
+      case "Localization":
+        if (!this.specificCrieteria.IsLocalizationFilterActive) {
+          this.specificCrieteria.City = "";
+          this.specificCrieteria.District = "";
+        }
+        break;
+      case "Salary":
+        if (!this.specificCrieteria.IsSalaryFilterActive) {
+          this.specificCrieteria.MinSalary = "";
+          this.specificCrieteria.MaxSalary = "";
+        }
+        break;
+      default:
+        break;
+    }
+  }
+  //validate only number
+  onlyNumber(event) {
+    return this.commonService.validateOnlyNumber(event);
+  }
+  closeModal() {
+    this.viewCtrl.dismiss(false);
+  }
+  onSelectedCity() {
+    this.getActiveDistricts();
+  }
+  onFilterSearch() {
+    let url = "?Job=" + this.specificCrieteria.Job;
+    for (var property in this.specificCrieteria) {
+      if (this.specificCrieteria.hasOwnProperty(property)) {
+        console.log(property, ' ', this.specificCrieteria[property]);
+        if (property != "Job" && this.specificCrieteria[property] != "") {
+          url = url + "&" + property + "=" + this.specificCrieteria[property];
+        }
+      }
+    }
+    this.jobTasks.forEach(element => {
+      if (element.Selected)
+        url = url + "&Tasks=" + element.JobTaskId;
+    });
+    if (this.activeTab == 0) {
+      this._dataContext.GetSearchPublishedJobRequest(url)
+        .subscribe(response => {
+          this.viewCtrl.dismiss(response);
+        },
+          error => {
+            this.commonService.onMessageHandler("Failed to retrieve cities. Please try again", 0);
+          });
+    }
+    else {
+      this._dataContext.GetSearchPublishedJobOffer(url)
+        .subscribe(response => {
+          this.viewCtrl.dismiss(response);
+        },
+          error => {
+            this.commonService.onMessageHandler("Failed to retrieve cities. Please try again", 0);
+          });
+    }
+
+  }
+  getActiveJobTasks() {
+    this._dataContext.GetJobTasks(this.specificCrieteria.Job)
+      .subscribe(response => {
+        if (response.JobTasks.length > 0) {
+          this.jobTasks = response.JobTasks;
+        }
+        else
+          this.commonService.onMessageHandler("Failed to retrieve job tasks.", 0);
+      },
+        error => {
+          this.commonService.onMessageHandler("Failed to retrieve job tasks. Please try again", 0);
+        });
   }
 }
 

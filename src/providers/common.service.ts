@@ -1,6 +1,7 @@
 import { Injectable, ViewChild } from '@angular/core';
 import { Events, ToastController, App, Navbar, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { CacheService } from "ionic-cache";
 import { FormControl } from '@angular/forms';
 import * as $ from 'jquery';
 @Injectable()
@@ -22,7 +23,8 @@ export class CommonServices {
     public storage: Storage,
     public _toastCtrl: ToastController,
     public appCtrl: App,
-    public alerCtrl: AlertController
+    public alerCtrl: AlertController,
+    private cache: CacheService,
   ) {
     this.apiServiceUrl = "http://localhost:60114/"; //PG Api
     this.appTtitle = "";
@@ -30,6 +32,7 @@ export class CommonServices {
 
     //Cache Key URL. This is used to maintain all cach  e data using cache key url.
     this._cacheKeyList["getCities"] = this.apiServiceUrl + "cities";
+    this._cacheKeyList["getLoggedInUserDetails"] = this.apiServiceUrl + "userLoggedInStatus";
     //These API are used to get response from Elastic serach.
     this._apiList["getActiveCategories"] = { controller: "JobTekApi", method: "GetJobCategories", api: "api/JobTekApi/GetJobCategories" };
     this._apiList["getPublishedJobRequestByJobId"] = { controller: "JobRequests", method: "JobRequestDetails", api: "api/JobRequests" };
@@ -78,6 +81,8 @@ export class CommonServices {
     this._apiList["searchMembersForAdmin"] = { controller: "Admin", method: "SearchMembers", api: "api/Admin" };
     this._apiList["exportMembersToExcelForAdmin"] = { controller: "Admin", method: "ExportMembersToExcel", api: "api/Admin" };
     this._apiList["getJobOfferDescriptionById"] = { controller: "JobOffers", method: "JobOfferDetails", api: "api/JobOffers" };
+    this._apiList["getSearchPublishedJobRequest"] = { controller: "JobRequests", method: "SearchJobRequests", api: "api/JobRequests" };
+    this._apiList["getSearchPublishedJobResponse"] = { controller: "JobOffers", method: "SearchJobOffers", api: "api/JobOffers" };
 
     
     /////////////////////////////////////////////////////////////////
@@ -85,22 +90,6 @@ export class CommonServices {
 
     
   }
-  setStoreDataIncache(url, data) {
-    let cacheKey = url;
-    // let uniqueKey = "Health-Pro-App-" + this.getParentGroupEntityId();
-    let ttl = 60 * 60 * 24 * 7 * 30 * 12;
-    //      let delayType="all";
-    return "";// this.cache.saveItem(cacheKey, data, uniqueKey, ttl);
-  }
-  // getStoreDataFromCache(key) {
-  //   return this.cache.getItem(key).catch((data) => {
-  //     // fall here if item is expired or doesn't exist
-  //     return false;
-  //   }).then((data) => {
-  //     return data;
-  //   });
-  // }
-
   //Clear all cache
   clearAllCache() {
     //return this.cache.clearAll();
@@ -203,12 +192,39 @@ export class CommonServices {
      return data;
     });
   }
+  setStoreDataIncache(url, data) {
+    let cacheKey = url;
+    let uniqueKey = "job-tek-app";
+    let ttl = 60 * 60 * 24 * 7 * 30 * 12;
+    //      let delayType="all";
+    return this.cache.saveItem(cacheKey, data, uniqueKey, ttl);
+  }
+  getStoreDataFromCache(key) {
+    return this.cache.getItem(key).catch((data) => {
+      // fall here if item is expired or doesn't exist
+      return false;
+    }).then((data) => {
+      return data;
+    });
+  }
+  convertBase64ToBanary(dataURI) {
+    let BASE64_MARKER = ';base64,';
+    let base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+    let base64 = dataURI.substring(base64Index);
+      var raw = window.atob(base64);
+      var rawLength = raw.length;
+      var array = new Uint8Array(new ArrayBuffer(rawLength));
+      for (var i = 0; i < rawLength; i++) {
+        array[i] = raw.charCodeAt(i);
+      }
+      return array;
+  }
   onMessageHandler(error_message, value) {
     let toast = this._toastCtrl.create({
       message: error_message,
       duration: 2000,
       cssClass: !value ? "error" : "success",
-      showCloseButton: true
+      showCloseButton: false
     });
     toast.present();
   }
