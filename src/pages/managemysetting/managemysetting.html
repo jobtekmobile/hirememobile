@@ -95,13 +95,13 @@
   </ion-card>
   <ion-list class="profile-con">
     <ion-item>
-      <ion-input type="text" placeholder="First Name" [(ngModel)]="userDetails.FirstName"></ion-input>
+      <ion-input type="text" placeholder="First Name" [(ngModel)]="userDetails.FirstName" disabled="{{userDetails.ProfileVerified}}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input type="text" placeholder="Last Name" [(ngModel)]="userDetails.LastName"></ion-input>
+      <ion-input type="text" placeholder="Last Name" [(ngModel)]="userDetails.LastName" disabled="{{userDetails.ProfileVerified}}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input type="text" placeholder="Age" [(ngModel)]="userDetails.Age"></ion-input>
+      <ion-input type="text" placeholder="Age" [(ngModel)]="userDetails.Age" disabled="{{userDetails.ProfileVerified}}"></ion-input>
     </ion-item>
     <ion-item>
       <ion-input type="text" placeholder="Address" [(ngModel)]="userDetails.Address"></ion-input>

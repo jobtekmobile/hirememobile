@@ -46,7 +46,7 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.employeepages = [
-      { title: 'Dashboard', component: "DashboardPage", imagepath: "../assets/imgs/menu/search-job.png" },
+      { title: 'Dashboard', component: "DashboardPage", imagepath: "../assets/imgs/menu/dashboard.png" },
       { title: 'Search Jobs', component: "SearchjobsPage", imagepath: "../assets/imgs/menu/search-job.png" },
       { title: 'Manage My Job Requests', component: "JobrequestsPage", imagepath: "../assets/imgs/menu/my-job-requests.png" },
       { title: 'Manage My Favorites', component: "FavoritejoboffersPage", imagepath: "../assets/imgs/menu/favorites.png" },
@@ -54,30 +54,30 @@ export class MyApp {
       { title: 'Manage My Settings', component: "ManagemysettingPage", imagepath: "../assets/imgs/menu/manage-setting.png" }
     ];
     this.employerpages = [
-      { title: 'Dashboard', component: "DashboardPage", imagepath: "../assets/imgs/menu/search-job.png" },
+      { title: 'Dashboard', component: "DashboardPage", imagepath: "../assets/imgs/menu/dashboard.png" },
       { title: 'Search Jobs', component: "SearchjobsPage", imagepath: "../assets/imgs/menu/search-job.png" },
-      { title: 'My Job Offer  --', component: "JobrequestsPage", imagepath: "../assets/imgs/menu/my-job-requests.png" },
-      { title: 'Manage My Favorites', component: "FavoritejoboffersPage", imagepath: "../assets/imgs/menu/favorites.png" },
+      { title: 'My Job Offer', component: "EployerJobOffer", imagepath: "../assets/imgs/menu/my-job-requests.png" },
+      { title: 'Manage My Favorites', component: "EmployerFavouriteJobRequest", imagepath: "../assets/imgs/menu/favorites.png" },
       { title: 'Message & Notifications', component: "NotificationPage", imagepath: "../assets/imgs/menu/messages-notifications.png" },
       { title: 'Manage My Settings', component: "ManagemysettingPage", imagepath: "../assets/imgs/menu/manage-setting.png" }
     ];
     this.agencypages = [
-      { title: 'Dashboard', component: "DashboardPage", imagepath: "../assets/imgs/menu/search-job.png" },
+      { title: 'Dashboard', component: "DashboardPage", imagepath: "../assets/imgs/menu/dashboard.png" },
       { title: 'Search Jobs', component: "SearchjobsPage", imagepath: "../assets/imgs/menu/search-job.png" },
       { title: 'Register Candidate', component: "AgencyregistercandidatePage", imagepath: "../assets/imgs/menu/my-job-requests.png" },
-      { title: 'Verify Candidate', component: "AgencyverifycandidatePage", imagepath: "../assets/imgs/menu/favorites.png" },
-      { title: 'My Job Request', component: "AgencymyjobrequestPage", imagepath: "../assets/imgs/menu/favorites.png" },
+      { title: 'Verify Candidate', component: "AgencyverifycandidatePage", imagepath: "../assets/imgs/menu/check.png" },
+      { title: 'My Job Request', component: "AgencymyjobrequestPage", imagepath: "../assets/imgs/menu/my-job-requests.png" },
       { title: 'Message & Notifications', component: "NotificationPage", imagepath: "../assets/imgs/menu/messages-notifications.png" },
       { title: 'Manage My Settings', component: "ManagemysettingPage", imagepath: "../assets/imgs/menu/manage-setting.png" }
     ];
     this.adminpages = [
-      { title: 'Admin Dashboard', component: "AdmindashboardPage", imagepath: "../assets/imgs/menu/search-job.png" },
-      { title: 'Verify Agency', component: "VerifyagencyprofilePage", imagepath: "../assets/imgs/menu/search-job.png" },
-      { title: 'Verify Candidate', component: "VerifycandidateprofilePage", imagepath: "../assets/imgs/menu/my-job-requests.png" },
-      { title: 'Verify Employer', component: "VerifyemployerprofilePage", imagepath: "../assets/imgs/menu/favorites.png" },
-      { title: 'Verify Job Request', component: "VerifyjobrequestprofilePage", imagepath: "../assets/imgs/menu/messages-notifications.png" },
-      { title: 'Verify Job Offer', component: "VerifyjobofferprofilePage", imagepath: "../assets/imgs/menu/manage-setting.png" },
-      { title: 'Export', component: "ExportPage", imagepath: "../assets/imgs/menu/manage-setting.png" }
+      { title: 'Admin Dashboard', component: "AdmindashboardPage", imagepath: "../assets/imgs/menu/dashboard.png" },
+      { title: 'Verify Agency', component: "VerifyagencyprofilePage", imagepath: "../assets/imgs/menu/check.png" },
+      { title: 'Verify Candidate', component: "VerifycandidateprofilePage", imagepath: "../assets/imgs/menu/check.png" },
+      { title: 'Verify Employer', component: "VerifyemployerprofilePage", imagepath: "../assets/imgs/menu/check.png" },
+      { title: 'Verify Job Request', component: "VerifyjobrequestprofilePage", imagepath: "../assets/imgs/menu/check.png" },
+      { title: 'Verify Job Offer', component: "VerifyjobofferprofilePage", imagepath: "../assets/imgs/menu/check.png" },
+      { title: 'Export', component: "ExportPage", imagepath: "../assets/imgs/menu/export.png" }
     ];
     this.events.subscribe('user:loginsuccessfully', (role, time) => {
       if (role == "Admin") {

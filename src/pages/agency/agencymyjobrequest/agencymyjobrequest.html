@@ -35,8 +35,8 @@
                 <ion-card class="job-card-con" *ngFor="let item of jobRequests">
                   <ion-item class="">
                     <ion-avatar item-start class="avatar-top">
-                      <img class="img-size" *ngIf="item.Candidate.ProfilePicUrl == '' && item.Candidate.Gender == 1" src="assets/imgs/maledefault.svg" />
-                      <img class="img-size" *ngIf="item.Candidate.ProfilePicUrl == '' && item.Candidate.Gender == 2" src="assets/imgs/femaledefault.svg" />
+                      <img class="img-size" *ngIf="item.Candidate.ProfilePicUrl == '' && item.Candidate.Gender == 2" src="assets/imgs/maledefault.svg" />
+                      <img class="img-size" *ngIf="item.Candidate.ProfilePicUrl == '' && item.Candidate.Gender == 1" src="assets/imgs/femaledefault.svg" />
                       <img class="img-size" *ngIf="item.Candidate.ProfilePicUrl != ''" src="data:image/png;base64,{{item.Candidate.ProfilePicUrl}}" />
   
                       <img src="assets/imgs/verified.png" class="verified-img" *ngIf="item.VerifiedByAdmin" alt="">
@@ -44,8 +44,8 @@
                     <div class="card">
                       
                       <h4 class="para-overflow-hidden margin-bottom-5">
-                          <img src="assets/imgs/woman.svg" *ngIf="item.Candidate.Gender == 2" class="card-name-geneder-icon"> 
-                        <img src="assets/imgs/male.svg" *ngIf="item.Candidate.Gender == 1" class="card-name-geneder-icon"> <span class="margin-right-10 font-weight-500 font-size-16 ">{{item.Candidate.FirstName}} {{item.Candidate.LastName}}</span>
+                          <img src="assets/imgs/woman.svg" *ngIf="item.Candidate.Gender == 1" class="card-name-geneder-icon"> 
+                        <img src="assets/imgs/male.svg" *ngIf="item.Candidate.Gender == 2" class="card-name-geneder-icon"> <span class="margin-right-10 font-weight-500 font-size-16 ">{{item.Candidate.FirstName}} {{item.Candidate.LastName}}</span>
                        
                         
                       </h4>

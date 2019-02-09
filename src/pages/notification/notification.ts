@@ -28,15 +28,25 @@ export class NotificationPage {
   ) {
   }
 
+
   ionViewWillEnter() {
     this.getLoggedInUserDetailsFromCache();
   }
-  getLoggedInUserDetailsFromCache(){
-    this.loggedInUserDetails = localStorage.getItem("loggedInUserCredential");
-    this.getNotification();
+  getLoggedInUserDetailsFromCache() {
+    //this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));;
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+      .then((result) => {
+        if (result && result.userId) {
+          this.loggedInUserDetails = result;
+          this.getNotification();
+        }
+        else {
+          this.navCtrl.setRoot("LoginPage");
+        }
+      });
   }
   getNotification() {
-    this._dataContext.GetActiveNotificationByUserId(2)
+    this._dataContext.GetActiveNotificationByUserId(this.loggedInUserDetails.userId)
     .subscribe(response => {
       if (response.length > 0) {
         this.isAvailable = true;

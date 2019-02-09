@@ -113,7 +113,7 @@ export class EployerJobOffer {
       if (item.Job.JobCategoryId == categoryId)
         this.joboffers.push(item);
     });
-
+   
 
   }
 

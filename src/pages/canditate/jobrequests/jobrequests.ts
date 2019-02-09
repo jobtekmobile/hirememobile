@@ -63,6 +63,7 @@ export class JobrequestsPage {
   }
   public filterDataBySelectedCategory(categoryId: number): void {
     // Handle what to do when a category is selected
+    this.isAvailable = true;
     this.myJobRequestListByCategoryId = [];
     let pageNo = categoryId - 1;
     this.slides.slideTo(pageNo, 500);
@@ -70,6 +71,8 @@ export class JobrequestsPage {
       if (item.JobCategoryId == categoryId)
         this.myJobRequestListByCategoryId.push(item);
     });
+    if(this.myJobRequestListByCategoryId.length==0)
+    this.isAvailable = false;
   }
   getMySavedJobRequest() {
     this._dataContext.GetMySavedJobRequest(this.loggedInUserDetails.userId)

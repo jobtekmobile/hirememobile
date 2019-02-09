@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PopoverController, IonicPage, NavController, DateTime, NavParams } from 'ionic-angular';
+import { PopoverController, IonicPage, NavController, DateTime, NavParams, AlertController } from 'ionic-angular';
 //import { PublishedJobModel } from '../../interfaces/publishedjob';
 import { ModalController, ViewController } from 'ionic-angular';
 import { CommonServices } from '../../providers/common.service';
@@ -11,31 +11,45 @@ import moment from 'moment';
   templateUrl: 'publishedjob.html'
 })
 export class PublishedJob {
-  tabValue: number;
+  tabValue: string;
   isAvailable: boolean = true;
   publishedJobResult: any = [];
   searchFilterData: any = {
     Job: 0
   };
+  tapOption:any=[];
   loggedInUserDetails: any = {};
+  title: string;
   constructor(
     public navCtrl: NavController,
     public modalCtrl: ModalController,
     public navParam: NavParams,
     public _dataContext: DataContext,
-    private commonService: CommonServices
+    private commonService: CommonServices,
+    public alertCtrl: AlertController
   ) {
     this.searchFilterData.Job = this.navParam.get("jobId");
-    this.tabValue = 0;
+    this.title = this.navParam.get("jobName");
     this.publishedJobResult = [];
+    this.tapOption[0] = "JOB REQUEST";
+    this.tapOption[1] = "JOB OFFER";
   }
   ionViewDidEnter() {
-    this.tabValue = 0;
+    this.tabValue = "0";
     this.getPublishedJobRequest();
     this.getLoggedInUserDetailsFromCache();
   }
   getLoggedInUserDetailsFromCache() {
-    this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));;
+    //this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));;
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+      .then((result) => {
+        if (result && result.userId) {
+          this.loggedInUserDetails = result;
+        }
+        else {
+          this.navCtrl.setRoot("LoginPage");
+        }
+      });
   }
   getPublishedJobRequest() {
     this._dataContext.GetPublishedJobRequestByJobId(this.searchFilterData)
@@ -76,23 +90,48 @@ export class PublishedJob {
         });
   }
   selectedJobRequestDetails(value) {
-    this.navCtrl.push("PublishedJobDesc", value);
+    this.navCtrl.push("JobRequestDescDetails", { jobRequestId: value.JobRequestId });
+    // this.navCtrl.push("PublishedJobDesc", value);
   }
+  selectedJobOfferDetails(value) {
+    this.navCtrl.push("JobOfferDetails", { jobOfferId: value.JobofferId });
+    // this.navCtrl.push("PublishedJobDesc", value);
+  }
+
   makeFavourite(id) {
-    this._dataContext.MakeJobOfferAsFavourite(2, id)
-      .subscribe(response => {
-        if (response.length > 0) {
-          this.commonService.onMessageHandler("You have successfully make this offer as favourite", 1);
+    const confirm = this.alertCtrl.create({
+      title: 'Adding as favorite?',
+      message: 'Do you want to make this offer as your favourite?',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            this._dataContext.MakeJobOfferAsFavourite(this.loggedInUserDetails.userId, id)
+              .subscribe(response => {
+                if (response.length > 0) {
+                  this.commonService.onMessageHandler("You have successfully make this offer as favourite", 1);
+                }
+                else
+                  this.commonService.onMessageHandler("Something went wrong. Please try again", 0);
+              },
+                error => {
+                  this.commonService.onMessageHandler("Failed to add favourite. Please try again", 0);
+                });
+          }
         }
-        else
-          this.commonService.onMessageHandler("Something went wrong. Please try again", 0);
-      },
-        error => {
-          this.commonService.onMessageHandler("Failed to add favourite. Please try again", 0);
-        });
+      ]
+    });
+    confirm.present();
+
   }
   //While Tab change
-  tabSelection(option) {
+  tabSelection(event,option) {
     this.publishedJobResult = [];
     this.tabValue = option;
     if (option == 0) {

@@ -26,7 +26,20 @@ export class JobRequestDescDetails {
     this.userDetails = this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
   }
   ionViewDidEnter() {
+    this.getLoggedInUserDetailsFromCache();
     this.getJobRequestDescription();
+  }
+  getLoggedInUserDetailsFromCache() {
+    //this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));;
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+    .then((result) => {
+      if (result && result.userId) {
+        this.userDetails = result;
+      }
+      else {
+        this.navCtrl.setRoot("LoginPage");
+      }
+    });
   }
   getJobRequestDescription() {
     this._dataContext.GetJobRequestDescription(this.jobRequestId)

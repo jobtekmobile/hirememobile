@@ -29,6 +29,7 @@ export class JobCategory {
   public showLeftButton: boolean;
   public showRightButton: boolean;
   selectedJobByCategoryId: any = [];
+  jobtitle:string;
   constructor(
     public injector: Injector,
     public navCtrl: NavController,
@@ -44,7 +45,7 @@ export class JobCategory {
       this.getActiveCategories();
     else {
       this.selectedCategory = this.categories[0];
-      this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
+      this.filterDataBySelectedCategory(this.categories[0].JobCategoryId,this.categories[0].CategoryName);
     }
   }
   //Get all active categories for search job
@@ -54,7 +55,7 @@ export class JobCategory {
         if (response.length > 0) {
           this.categories = response;
           this.selectedCategory = this.categories[0];
-          this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
+          this.filterDataBySelectedCategory(this.categories[0].JobCategoryId,this.categories[0].CategoryName);
         }
         else
           this.commonService.onMessageHandler("No category found.", 0);
@@ -72,7 +73,8 @@ export class JobCategory {
     this.showRightButton = this.categories.length > 3;
   }
 
-  public filterDataBySelectedCategory(categoryId: number): void {
+  public filterDataBySelectedCategory(categoryId: number,categoryName:string): void {
+    this.jobtitle = categoryName;
     // Handle what to do when a category is selected
     let pageNo = categoryId - 1;
     this.slides.slideTo(pageNo, 500);

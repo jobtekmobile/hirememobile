@@ -41,11 +41,11 @@ page-publishedjob{
     width: calc(100% - 10px);
 }
 .img-sub-size{
-   // width: 17px;
-    margin-top: 5px;
-    display: inline;
-    vertical-align: bottom;
-   // margin-left: -2px;
+  width: 15px;
+  margin-top: 5px;
+  display: inline;
+  vertical-align: bottom;
+ 
 }
 .rating-sec > ul {
     padding: 0px;
@@ -89,4 +89,14 @@ page-publishedjob{
     font-size: 14px;
     color: #55555f;
   }
+  .card-name-geneder-icon{
+    width: 13px;
+    display: inline;
+}
+.card-job-item-name{
+  background: #fe005a;
+  text-align: center;
+  padding: 0px 3px 3px 3px;
+  color: white;
+}
 }

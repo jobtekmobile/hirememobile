@@ -59,14 +59,12 @@ page-jobrequests {
         width: calc(100% - 10px);
     }
     .img-sub-size{
-        //width: 17px;
+        width: 15px;
         margin-top: 5px;
         display: inline;
         vertical-align: bottom;
-        margin-left: 1px;
-        
-    //color: #d84d7f;
-    }
+       
+      }
     .rating-sec > ul {
         padding: 0px;
         margin: 0px;
@@ -109,6 +107,15 @@ page-jobrequests {
         font-size: 14px;
         color: #55555f;
       }
-  
+      .card-name-geneder-icon{
+        width: 13px;
+        display: inline;
+    }
+    .card-job-item-name{
+      background: #fe005a;
+      text-align: center;
+      padding: 0px 3px 3px 3px;
+      color: white;
+    }
       /***********************************/
 }

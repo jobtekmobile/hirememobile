@@ -17,7 +17,7 @@
       <ion-col no-padding col-12>
         <ion-slides (ionSlideDidChange)="slideChanged()" slidesPerView="3">
           <ion-slide (click)="filterDataBySelectedCategory(category.JobCategoryId)" *ngFor="let category of categories">
-            <p [class.selected]="selectedCategory?.JobCategoryId === category.JobCategoryId" style="text-transform: uppercase;">{{ category.CategoryName }}</p>
+            <p class="para-overflow-hidden" [class.selected]="selectedCategory?.JobCategoryId === category.JobCategoryId" style="text-transform: uppercase;">{{ category.CategoryName }}</p>
           </ion-slide>
         </ion-slides>
       </ion-col>

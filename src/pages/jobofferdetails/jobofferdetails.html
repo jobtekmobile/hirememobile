@@ -161,7 +161,7 @@
               {{publishedJobOfferDesc.AdditionalDescription}}
             </p>
           </ion-item>
-          <div class="job-btn-con">
+          <div class="job-btn-con" *ngIf="loggedInUserDetails.type=='Admin'">
               <button ion-button round full pr class="job-button" (click)="Verify()">Verify</button>
           </div>
         </ion-card>

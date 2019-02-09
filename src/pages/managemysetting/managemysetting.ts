@@ -28,17 +28,30 @@ export class ManagemysettingPage {
 
   isEmailSelected = false;
   isPhoneSelected = false;
-
+  loggedInUserDetails: any = {};
   constructor(public navCtrl: NavController, public _dataContext: DataContext, public navParams: NavParams, imageViewerCtrl: ImageViewerController,
     private commonService: CommonServices) {
     this._imageViewerCtrl = imageViewerCtrl;
     //const imageViewer = this._imageViewerCtrl.create(myImage);
 
-    this.getProfileDetails();
+   this.getLoggedInUserDetailsFromCache();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ManagemysettingPage');
+  }
+  getLoggedInUserDetailsFromCache() {
+    //this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));;
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+      .then((result) => {
+        if (result && result.userId) {
+          this.loggedInUserDetails = result;
+          this.getProfileDetails();
+        }
+        else {
+          this.navCtrl.setRoot("LoginPage");
+        }
+      });
   }
   presentImage(myImage) {
 
@@ -54,7 +67,7 @@ export class ManagemysettingPage {
 
 
   getProfileDetails() {
-    this._dataContext.CandidateProfileById(1)
+    this._dataContext.CandidateProfileById(this.loggedInUserDetails.userId)
       .subscribe(response => {
         this.userDetails = response;
         console.log(this.userDetails);
@@ -180,7 +193,7 @@ export class ManagemysettingPage {
 
 
 
-    this._dataContext.updateProfile(1, this.userDetails)
+    this._dataContext.updateProfile(this.loggedInUserDetails.userId, this.userDetails)
       .subscribe(response => {
 
         console.log("-------");

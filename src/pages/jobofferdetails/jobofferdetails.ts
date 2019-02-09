@@ -14,6 +14,7 @@ export class JobOfferDetails {
   publishedJobOfferDesc: any = null;
   title :string;
   userDetails:any={};
+  loggedInUserDetails: any = {};
   constructor(
     public navCtrl: NavController,
     public navParam: NavParams,
@@ -22,10 +23,24 @@ export class JobOfferDetails {
     public alertCtrl: AlertController
   ) {
     this.jobOfferId = this.navParam.get("jobOfferId");
+    
     this.userDetails = this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
   }
   ionViewDidEnter() {
+    this.getLoggedInUserDetailsFromCache();
     this.getJobOfferDescription();
+  }
+  getLoggedInUserDetailsFromCache() {
+    //this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));;
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+    .then((result) => {
+      if (result && result.userId) {
+        this.loggedInUserDetails = result;
+      }
+      else {
+        this.navCtrl.setRoot("LoginPage");
+      }
+    });
   }
   getJobOfferDescription() {
     this._dataContext.GetJobOfferDescription(this.jobOfferId)

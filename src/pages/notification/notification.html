@@ -19,11 +19,11 @@
       <ion-card class="noti-card">
         <ion-item>
           <ion-avatar item-start>
-            <img *ngIf="item.Sender && item.Sender.ProfilePicUrl != null" src="data:image/png;base64,{{item.Sender.ProfilePicUrl}}">
+            <img src="assets/imgs/maledefault.svg">
           </ion-avatar>
           <h2 float-left>
-            <span *ngIf="item.Sender && item.Sender.FirstName != null">{{item.Sender.FirstName}} </span>
-            <span *ngIf="item.Sender && item.Sender.LastName != null">{{item.Sender.LastName}}</span>
+            <span *ngIf="item.FirstName != null">{{item.FirstName}} </span>
+            <!-- <span *ngIf="item.Sender && item.Sender.LastName != null">{{item.Sender.LastName}}</span> -->
           </h2>
           <h3 text-right *ngIf="item.CreatedDate && item.CreatedDate != null && item.CreatedDate!=''">{{item.CreatedDate}}</h3>
           <p *ngIf="item.Subject && item.Subject != null && item.Subject != ''">{{item.Subject}}</p>

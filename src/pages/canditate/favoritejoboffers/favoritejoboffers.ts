@@ -80,6 +80,8 @@ export class FavoritejoboffersPage {
       if (item.Job.JobCategoryId == categoryId)
         this.myFavListByCategoryId.push(item);
     });
+    if(this.myFavListByCategoryId.length == 0)
+    this.isAvailable =false;
   }
   getMyFavOffers() {
     this._dataContext.GetMyFavouriteOffers(this.loggedInUserDetails.userId)

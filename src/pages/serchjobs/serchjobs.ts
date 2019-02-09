@@ -30,6 +30,7 @@ export class SearchjobsPage {
   public showRightButton: boolean;
   isAvailable: boolean = true;
   selectedJobByCategoryId: any = [];
+  jobtitle:string;
   constructor(
     public injector: Injector,
     public navCtrl: NavController,
@@ -51,7 +52,7 @@ export class SearchjobsPage {
           this.isAvailable = true;
           this.categories = response;
           this.selectedCategory = this.categories[0];
-          this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
+          this.filterDataBySelectedCategory(this.categories[0].JobCategoryId,this.categories[0].CategoryName);
         }
         else {
           this.isAvailable = true;
@@ -71,8 +72,10 @@ export class SearchjobsPage {
     this.showRightButton = this.categories.length > 3;
   }
 
-  public filterDataBySelectedCategory(categoryId: number): void {
+  public filterDataBySelectedCategory(categoryId: number,categoryName:string): void {
     // Handle what to do when a category is selected
+    this.isAvailable = true;
+    this.jobtitle = categoryName;
     let pageNo = categoryId - 1;
     this.slides.slideTo(pageNo, 500);
     this.categories.filter(item => {
@@ -100,8 +103,8 @@ export class SearchjobsPage {
     this.slides.slidePrev();
   }
   //get selected job id and get all the published jobs.
-  gotoSelectedCategory(id) {
-    this.navCtrl.push("PublishedJob", { jobId: id });
+  gotoSelectedCategory(id,name) {
+    this.navCtrl.push("PublishedJob", { jobId: id,jobName:name });
   }
 
 }
