@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Nanny</ion-title>
+    <ion-title>{{title}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -26,7 +26,7 @@
               </span> -->
             </h4>
             <p class="para-overflow-hidden" *ngIf="publishedJobRequestDesc.Candidate">
-              <rating class="rating-sec" [(ngModel)]="publishedJobRequestDesc.Candidate.StarRating" readOnly="true" max="5" emptyStarIconName="star-outline"
+              <rating class="rating-sec" [(ngModel)]="publishedJobRequestDesc.StarRating" readOnly="true" max="5" emptyStarIconName="star-outline"
                 halfStarIconName="star-half" starIconName="star" nullable="false"></rating>
             </p>
             <p class="para-overflow-hidden" *ngIf="publishedJobRequestDesc.Candidate">
@@ -45,7 +45,7 @@
               <span>
                 <img src="assets/imgs/publishedjob/location.svg" class="img-sub-size">
               </span>
-              <span class="font-size-13"> {{publishedJobRequestDesc.Candidate.Address}}</span>
+              <span class="font-size-13"> {{publishedJobRequestDesc.Candidate.Country}}, {{publishedJobRequestDesc.Candidate.City}}, {{publishedJobRequestDesc.Candidate.District}}</span>
             </p>
           </div>
         </ion-item>
@@ -73,7 +73,7 @@
         <ion-item class="border-bottom-1" *ngIf="publishedJobRequestDesc.Candidate">
           <p>
             <span class="float-left sub-header-title">Age</span>
-            <span class="float-right font-size-13">{{publishedJobRequestDesc.Candidate.Age}}</span>
+            <span class="float-right font-size-13">{{publishedJobRequestDesc.Candidate.Age}} Years</span>
           </p>
         </ion-item>
         <ion-item class="border-bottom-1" *ngIf="publishedJobRequestDesc.Candidate">
@@ -140,22 +140,24 @@
             </span>
           </p>
         </ion-item>
-        <ion-row class="border-bottom-1" *ngIf="publishedJobRequestDesc.JobRequestJobTasks.length > 0">
-          <p>
-            <span class="float-left margin-bottom-5 sub-header-title">Canditate Skills</span>
-            <span class="float-right font-size-13">-</span>
-          </p>
-          <div *ngFor="let skill of publishedJobRequestDesc.JobRequestJobTasks">
+        <ion-row class="" *ngIf="publishedJobRequestDesc.JobRequestJobTasks.length > 0">
+            <ion-col col-12>
+                <p>
+                    Canditate Skills
+                  </p>
+            </ion-col>
+         
+          <ion-col col-12 *ngFor="let skill of publishedJobRequestDesc.JobRequestJobTasks">
             <div *ngIf="skill.JobTask" class="skill-task">
-              <div class="font-size-13">
-                <img [src]="skill.JobTask.IconImage" /> {{skill.JobTask.JobTaskName}}</div>
+              <span class="font-size-13">
+                <img [src]="skill.JobTask.IconImage" class="item-img" /> {{skill.JobTask.JobTaskName}}</span>
               <div *ngFor="let subTask of skill.JobTask.SubTasks" class="sub-skill-task">
                 <span class="font-size-13">
-                  <img [src]="subTask.IconImage" /> {{subTask.JobTaskName}}
+                  <img [src]="subTask.IconImage" class="item-img" /> {{subTask.JobTaskName}}
                 </span>
               </div>
             </div>
-          </div>
+          </ion-col>
         </ion-row>
         <ion-item class="border-bottom-1" *ngIf="publishedJobRequestDesc.JobRequestNotes && publishedJobRequestDesc.JobRequestNotes!=''">
           <p>

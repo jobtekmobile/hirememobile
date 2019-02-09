@@ -17,6 +17,7 @@ import moment from 'moment';
   templateUrl: 'jobrequests.html',
 })
 export class JobrequestsPage {
+  
   @ViewChild(Slides) slides: Slides;
   public selectedCategory: any;
   public categories: Array<any>;

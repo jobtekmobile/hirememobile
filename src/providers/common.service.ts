@@ -46,6 +46,44 @@ export class CommonServices {
     this._apiList["getActiveCities"] = { controller: "JobTekApi", method: "GetCities", api: "api/JobTekApi/GetCities" };
     this._apiList["getActiveDistricts"] = { controller: "JobTekApi", method: "GetDistricts", api: "api/JobTekApi/GetDistricts" };
     this._apiList["deleteJobRequest"] = { controller: "Candidates", method: "DeleteJobRequest", api: "api/Candidates" };
+    this._apiList["getProfileDetails"] = { controller: " Candidates", method: "MyProfile", api: "api/Candidates" };
+    this._apiList["getCountries"] = { controller: " JobTekApi", method: "GetCountries", api: "api/JobTekApi" };
+    this._apiList["getCities"] = { controller: " JobTekApi", method: "GetCities", api: "api/JobTekApi" };
+    this._apiList["getDistricts"] = { controller: " JobTekApi", method: "GetDistricts", api: "api/JobTekApi" };
+    this._apiList["updateCandidateProfile"] = { controller: " Candidates", method: "MyProfile", api: "api/Candidates" };
+
+    ///////////////////////////////Agency////////////////////////////
+    this._apiList["getMyCandidates"] = { controller: " Agencies", method: "MyCandidates", api: "api/Agencies" };
+    this._apiList["getMyJobRequestsForAgency"] = { controller: " Agencies", method: "MyJobRequests", api: "api/Agencies" };
+
+
+    /////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////Admin////////////////////////////
+    this._apiList["getJobOfferCountsForAdmin"] = { controller: " jobtekapi", method: "GetJobOfferCounts", api: "api/jobtekapi" };
+    this._apiList["getJobOfferDoughnotDataForAdmin"] = { controller: " jobtekapi", method: "GetJobOfferDoughnotData", api: "api/jobtekapi" };
+    this._apiList["getJobRequestCountsForAdmin"] = { controller: " jobtekapi", method: "GetJobRequestCounts", api: "api/jobtekapi" };
+    this._apiList["getJobRequestDoughnotDataForAdmin"] = { controller: " jobtekapi", method: "GetJobRequestDoughnotData", api: "api/jobtekapi" };
+
+    this._apiList["getUnverifiedAgenciesForAdmin"] = { controller: " Admin", method: "UnverifiedAgencies", api: "api/Admin" };
+    this._apiList["activateAgency"] = { controller: "Admin", method: "ActivateAgency", api: "api/Admin" };
+    this._apiList["getUnverifiedJobRequestsForAdmin"] = { controller: "Admin", method: "UnverifiedJobRequests", api: "api/Admin" };
+    this._apiList["validateJobRequest"] = { controller: "Admin", method: "ValidateJobRequest", api: "api/Admin" };
+    this._apiList["getUnverifiedJobOffersForAdmin"] = { controller: "Admin", method: "UnverifiedJobOffers", api: "api/Admin" };
+    this._apiList["validateJobOffer"] = { controller: "Admin", method: "ValidateJobOffer", api: "api/Admin" };
+    this._apiList["getUnVerifiedEmployersForAdmin"] = { controller: "Admin", method: "UnVerifiedEmployers", api: "api/Admin" };
+    this._apiList["activateEmployer"] = { controller: "Admin", method: "ActivateEmployer", api: "api/Admin" };
+    this._apiList["getUnverifiedCandidatesForAdmin"] = { controller: "Admin", method: "UnverifiedCandidates", api: "api/Admin" };
+    this._apiList["activateCandidate"] = { controller: "Admin", method: "ActivateCandidate", api: "api/Admin" };
+    this._apiList["searchMembersForAdmin"] = { controller: "Admin", method: "SearchMembers", api: "api/Admin" };
+    this._apiList["exportMembersToExcelForAdmin"] = { controller: "Admin", method: "ExportMembersToExcel", api: "api/Admin" };
+    this._apiList["getJobOfferDescriptionById"] = { controller: "JobOffers", method: "JobOfferDetails", api: "api/JobOffers" };
+
+    
+    /////////////////////////////////////////////////////////////////
+    this._apiList["loginUser"] = { controller: "Accounts", method: "Login", api: "api/Accounts" };
+
+    
   }
   setStoreDataIncache(url, data) {
     let cacheKey = url;

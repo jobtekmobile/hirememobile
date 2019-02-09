@@ -7,7 +7,18 @@
         </button>
     <ion-title>Job Offers</ion-title>
   </ion-navbar>
-
+  <ion-toolbar class="segment-toolbar">
+      <ion-row class="filters">
+        <ion-col no-padding col-12>
+          <ion-slides (ionSlideDidChange)="slideChanged()" slidesPerView="3">
+            <ion-slide (click)="filterDataBySelectedCategory(category.JobCategoryId)" *ngFor="let category of categories">
+              <p [class.selected]="selectedCategory?.JobCategoryId === category.JobCategoryId" style="text-transform: uppercase;">{{
+                category.CategoryName }}</p>
+            </ion-slide>
+          </ion-slides>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
 </ion-header>
 
 
@@ -22,7 +33,7 @@
                   <ion-avatar item-start class="avatar-top">
                     <img class="img-size" *ngIf="item.Employer.ProfilePicUrl == '' && item.Employer.Gender == 1" src="assets/imgs/maledefault.svg" />
                     <img class="img-size" *ngIf="item.Employer.ProfilePicUrl == '' && item.Employer.Gender == 2" src="assets/imgs/femaledefault.svg" />
-                    <img class="img-size" *ngIf="item.Employer.ProfilePicUrl != ''" [src]="item.Employer.ProfilePicUrl" />
+                    <img class="img-size" *ngIf="item.Employer.ProfilePicUrl != ''" src="data:image/png;base64,{{item.Employer.ProfilePicUrl}}" />
 
                     <img src="assets/imgs/verified.png" class="verified-img" *ngIf="item.VerifiedByAdmin" alt="">
                 
@@ -92,30 +103,30 @@
                 </ion-item>
                 <ion-row no-padding class="action-con">
                   <ion-col class="action-con-image">
-                    <img src="assets/imgs/nanny.jpg" *ngIf="item.IdProofDoc != '' && item.IdProofDoc != null" #idcardfront (click)="presentImage(idcardfront)" class="action-con-image-size">
-                    <img src="assets/imgs/noidcard.jpg" *ngIf="item.IdProofDoc == '' || item.IdProofDoc == null" class="action-con-image-size">
+                    <img src="data:image/png;base64,{{item.Employer.IdProofDoc}}" *ngIf="item.Employer.IdProofDoc != '' && item.Employer.IdProofDoc != null" #idcardfront (click)="presentImage(idcardfront)" class="action-con-image-size">
+                    <img src="assets/imgs/noidcard.jpg" *ngIf="item.Employer.IdProofDoc == '' || item.Employer.IdProofDoc == null" class="action-con-image-size">
                     
                   </ion-col>
                  
                   <ion-col text-right class="action-con-image">
-                    <img src="assets/imgs/nanny.jpg" *ngIf="item.IdProofDoc1 != '' && item.IdProofDoc1 != null" #idcardback (click)="presentImage(idcardback)" class="action-con-image-size">
-                    <img src="assets/imgs/noidcard.jpg" *ngIf="item.IdProofDoc1 == '' || item.IdProofDoc1 == null" class="action-con-image-size">
+                    <img src="data:image/png;base64,{{item.Employer.IdProofDoc1}}" *ngIf="item.Employer.IdProofDoc1 != '' && item.Employer.IdProofDoc1 != null" #idcardback (click)="presentImage(idcardback)" class="action-con-image-size">
+                    <img src="assets/imgs/noidcard.jpg" *ngIf="item.Employer.IdProofDoc1 == '' || item.Employer.IdProofDoc1 == null" class="action-con-image-size">
                   </ion-col>
                 </ion-row>
                 <ion-row no-padding class="action-con">
                     <ion-col class="action-con-inner">
-                      <button ion-button clear small  icon-start class="action-btn" *ngIf="!item.VerifiedByAdmin">
+                      <button ion-button clear small  icon-start class="action-btn" (click)="verify(item)" *ngIf="!item.VerifiedByAdmin">
                           <ion-icon name="checkmark"></ion-icon>
                         Verify
                       </button>
                     </ion-col>
                    
-                    <!-- <ion-col text-right class="action-con-inner">
-                      <button ion-button clear small  icon-start class="action-btn" (click)="gotoDetails()">
+                    <ion-col text-right class="action-con-inner">
+                      <button ion-button clear small  icon-start class="action-btn" (click)="gotoDetails(item)">
                           <ion-icon name="information-circle" ></ion-icon>
                         Detail
                       </button>
-                    </ion-col> -->
+                    </ion-col>
                   </ion-row>
               </ion-card>
             </div>
@@ -124,8 +135,9 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col col-12 text-center>
-        <p class="not-found-text">Empty Result!</p>
+      
+        <ion-col col-12 text-center *ngIf="joboffers.length == 0">
+          <img src="assets/imgs/no-record-found.png" >
       </ion-col>
     </ion-row>
 

@@ -5,7 +5,7 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
           </button>
-      <ion-title>Verify Employeer Profile</ion-title>
+      <ion-title>Verify Employeer</ion-title>
     </ion-navbar>
   
   </ion-header>
@@ -22,7 +22,7 @@
                     <ion-avatar item-start class="avatar-top">
                       <img class="img-size" *ngIf="item.ProfilePicUrl == '' && item.Gender == 1" src="assets/imgs/maledefault.svg" />
                       <img class="img-size" *ngIf="item.ProfilePicUrl == '' && item.Gender == 2" src="assets/imgs/femaledefault.svg" />
-                      <img class="img-size" *ngIf="item.ProfilePicUrl != ''" [src]="item.ProfilePicUrl" />
+                      <img class="img-size" *ngIf="item.ProfilePicUrl != ''" src="data:image/png;base64,{{item.ProfilePicUrl}}" />
 
                       <img src="assets/imgs/verified.png" class="verified-img" *ngIf="item.ProfileVerified" alt="">
                     </ion-avatar>
@@ -69,19 +69,19 @@
                   </ion-item>
                   <ion-row no-padding class="action-con">
                     <ion-col class="action-con-image">
-                      <img src="assets/imgs/nanny.jpg" *ngIf="item.IdProofDoc != '' && item.IdProofDoc != null" #idcardfront (click)="presentImage(idcardfront)" class="action-con-image-size">
+                      <img src="data:image/png;base64,{{item.IdProofDoc}}" *ngIf="item.IdProofDoc != '' && item.IdProofDoc != null" #idcardfront (click)="presentImage(idcardfront)" class="action-con-image-size">
                       <img src="assets/imgs/noidcard.jpg" *ngIf="item.IdProofDoc == '' || item.IdProofDoc == null" class="action-con-image-size">
                       
                     </ion-col>
                    
                     <ion-col text-right class="action-con-image">
-                      <img src="assets/imgs/nanny.jpg" *ngIf="item.IdProofDoc1 != '' && item.IdProofDoc1 != null" #idcardback (click)="presentImage(idcardback)" class="action-con-image-size">
+                      <img src="data:image/png;base64,{{item.IdProofDoc1}}" *ngIf="item.IdProofDoc1 != '' && item.IdProofDoc1 != null" #idcardback (click)="presentImage(idcardback)" class="action-con-image-size">
                       <img src="assets/imgs/noidcard.jpg" *ngIf="item.IdProofDoc1 == '' || item.IdProofDoc1 == null" class="action-con-image-size">
                     </ion-col>
                   </ion-row>
                   <ion-row no-padding class="action-con">
                       <ion-col class="action-con-inner">
-                        <button ion-button clear small  icon-start class="action-btn" *ngIf="!item.ProfileVerified">
+                        <button ion-button clear small  icon-start class="action-btn" (click)="verify(item)" *ngIf="!item.ProfileVerified">
                             <ion-icon name="checkmark"></ion-icon>
                           Verify
                         </button>
@@ -102,9 +102,9 @@
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col col-12 text-center>
-          <p class="not-found-text">Empty Result!</p>
-        </ion-col>
+        <ion-col col-12 text-center *ngIf="employeers.length == 0">
+          <img src="assets/imgs/no-record-found.png" >
+      </ion-col>
       </ion-row>
   
      

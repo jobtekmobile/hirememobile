@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage } from 'ionic-angular';
+import { NavController, IonicPage,Events  } from 'ionic-angular';
+import { DataContext } from '../../providers/dataContext.service';
+import { CommonServices } from '../../providers/common.service';
 
 @IonicPage()
 @Component({
@@ -8,12 +10,38 @@ import { NavController, IonicPage } from 'ionic-angular';
 })
 export class LoginPage {
   gender: string = "f";
-  constructor(public navCtrl: NavController) {
+  login={
+    UserName:"",
+    Password:""
+  }
+  constructor(public navCtrl: NavController,
+    public events: Events,
+    public _dataContext: DataContext,
+    private commonService: CommonServices) {
 
   }
 
   onLogin(){
-    this.onSetAuthToken({userId:1,type:"canditate"});
+    this._dataContext.LoginUser(this.login)
+    .subscribe(response => {
+
+      console.log("-------");
+      console.log(response);
+      this.onSetAuthToken({userId:response.UserId,type:response.Role});
+      this.events.publish('user:loginsuccessfully',response.Role,Date.now())
+      // if (response.length > 0) {
+      //   // this.notificationList = response;
+      //   // this.notificationList.forEach(element => {
+      //   //   element.CreatedDate = moment(element.CreatedDate).format("DD-MMM-YYYY");
+      //   //});
+      // }
+      // else
+      //   this.commonService.onMessageHandler("No notification found.", 0);
+    },
+      error => {
+        this.commonService.onMessageHandler("Failed to update details. Please try again", 0);
+      });
+    
   }
   onSetAuthToken(response) {
     localStorage.setItem('loggedInUserCredential', JSON.stringify(response));

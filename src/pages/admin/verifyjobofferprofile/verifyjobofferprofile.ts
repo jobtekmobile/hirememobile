@@ -1,12 +1,10 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import { ImageViewerController } from 'ionic-img-viewer';
-/**
- * Generated class for the VerifyjobofferprofilePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { DataContext } from '../../../providers/dataContext.service';
+import { CommonServices } from '../../../providers/common.service';
+import moment from 'moment';
+import { AlertController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -14,193 +12,19 @@ import { ImageViewerController } from 'ionic-img-viewer';
   templateUrl: 'verifyjobofferprofile.html',
 })
 export class VerifyjobofferprofilePage {
-
+  @ViewChild(Slides) slides: Slides;
+  public selectedCategory: any;
+  public categories: Array<any> = [];
+  public showLeftButton: boolean;
+  public showRightButton: boolean;
+  selectedJobByCategoryId: Array<any> = [];
   _imageViewerCtrl: ImageViewerController;
   joboffers: any = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams,imageViewerCtrl: ImageViewerController) {
+  allJobOffersList : any = [];
+  constructor(public navCtrl: NavController, public navParams: NavParams,imageViewerCtrl: ImageViewerController,
+    public _dataContext: DataContext, private commonService: CommonServices, public alertCtrl: AlertController) {
     this._imageViewerCtrl = imageViewerCtrl;
-    this.joboffers = [
-      {
-        "JobOfferId": 23,
-        "JobId": 8,
-        "Job": {
-          "JobId": 8,
-          "JobName": "Server/Caterer",
-          "JobCategoryId": 4,
-          "JobGroup": null,
-          "JobDesc": null,
-          "IconImage": "/assets/images/portfolio/catering.jpg",
-          "JobTasks": null
-        },
-        "EmployerId": 19,
-        "Employer": {
-          "EmployerId": 19,
-          "AspNetUserId": "e0eb5120-b020-457b-bb21-a7afe945081d",
-          "ApplicationUser": null,
-          "Gender": 1,
-          "GenderDesc": null,
-          "CountryId": 1,
-          "Country": "Ivory Coast",
-          "CountryEntity": null,
-          "CityId": 6,
-          "CityEntity": null,
-          "City": "Abidjan",
-          "DistrictId": 16,
-          "DistrictEntity": null,
-          "District": "Cocody",
-          "ProfileVerified": true,
-          "CreatedBy": null,
-          "CreatedDate": "12/19/2018 7:32:56 PM",
-          "UpdatedBy": null,
-          "UpdatedDate": null,
-          "JobOffers": [],
-          "FavouriteJobRequests": [],
-          "FirstName": "Carine",
-          "LastName": "jojo",
-          "IdProofDoc": "",
-          "IdProofDocDesc": null,
-          "ProfilePicUrl": "",
-          "EmailId": "carine@yahoo.fr",
-          "ContactNo": "+22506524896",
-          "ContactOption": "Email,Phone",
-          "Address": "tekaka",
-          "Age": 22,
-          "DOB": "0001-01-01T00:00:00Z",
-          "IdProofDoc1": null
-        },
-        "Gender": 1,
-        "GenderDesc": null,
-        "Age": 0,
-        "MinAge": 25,
-        "MaxAge": 30,
-        "ExperienceInYears": 2,
-        "ExperienceInMonths": 2,
-        "IdProofDoc": null,
-        "IdProofDocDesc": null,
-        "ProfileVerified": false,
-        "StaffType": 2,
-        "StaffTypeDesc": null,
-        "Disponibility": "2018-12-12T00:00:00Z",
-        "CountryId": 1,
-        "Country": null,
-        "CityId": 6,
-        "City": null,
-        "DistrictId": 12,
-        "District": null,
-        "SalaryType": 1,
-        "SalaryTypeDesc": null,
-        "SalaryTypeOtherDesc": null,
-        "CanRead": true,
-        "CanWrite": true,
-        "ExpectedMinSalary": 35000.00,
-        "ExpectedMaxSalary": 40000.00,
-        "SleepOnSite": false,
-        "ExpectedMinRooms": 0,
-        "ExpectedMaxRooms": 0,
-        "MinGroupPeople": 0,
-        "MaxGroupPeople": 0,
-        "IsPublished": true,
-        "PublishedDate": "2018-12-19T20:08:07Z",
-        "ValidTill": "0001-01-01T00:00:00Z",
-        "AdditionalDescription": "BOnjour bespoin d'un expert pour ceremonie de mariage",
-        "JobOfferJobTasks": null,
-        "VerifiedByAdmin": false,
-        "VerificationDate": null,
-        "StarRating": 0,
-        "MasterJobTasks": null,
-        "JobOfferNotes": null
-      },
-      {
-        "JobOfferId": 22,
-        "JobId": 7,
-        "Job": {
-          "JobId": 7,
-          "JobName": "Manicure/Pedicure/Massage",
-          "JobCategoryId": 3,
-          "JobGroup": null,
-          "JobDesc": null,
-          "IconImage": "/assets/images/portfolio/esthetician.jpg",
-          "JobTasks": null
-        },
-        "EmployerId": 19,
-        "Employer": {
-          "EmployerId": 19,
-          "AspNetUserId": "e0eb5120-b020-457b-bb21-a7afe945081d",
-          "ApplicationUser": null,
-          "Gender": 1,
-          "GenderDesc": null,
-          "CountryId": 1,
-          "Country": "Ivory Coast",
-          "CountryEntity": null,
-          "CityId": 6,
-          "CityEntity": null,
-          "City": "Abidjan",
-          "DistrictId": 16,
-          "DistrictEntity": null,
-          "District": "Cocody",
-          "ProfileVerified": true,
-          "CreatedBy": null,
-          "CreatedDate": "12/19/2018 7:32:56 PM",
-          "UpdatedBy": null,
-          "UpdatedDate": null,
-          "JobOffers": [],
-          "FavouriteJobRequests": [],
-          "FirstName": "Carine",
-          "LastName": "jojo",
-          "IdProofDoc": "",
-          "IdProofDocDesc": null,
-          "ProfilePicUrl": "",
-          "EmailId": "carine@yahoo.fr",
-          "ContactNo": "+22506524896",
-          "ContactOption": "Email,Phone",
-          "Address": "tekaka",
-          "Age": 22,
-          "DOB": "0001-01-01T00:00:00Z",
-          "IdProofDoc1": null
-        },
-        "Gender": 2,
-        "GenderDesc": null,
-        "Age": 0,
-        "MinAge": 25,
-        "MaxAge": 30,
-        "ExperienceInYears": 1,
-        "ExperienceInMonths": 2,
-        "IdProofDoc": null,
-        "IdProofDocDesc": null,
-        "ProfileVerified": false,
-        "StaffType": 0,
-        "StaffTypeDesc": null,
-        "Disponibility": "2018-12-06T00:00:00Z",
-        "CountryId": 1,
-        "Country": null,
-        "CityId": 8,
-        "City": null,
-        "DistrictId": 0,
-        "District": null,
-        "SalaryType": 2,
-        "SalaryTypeDesc": null,
-        "SalaryTypeOtherDesc": null,
-        "CanRead": true,
-        "CanWrite": false,
-        "ExpectedMinSalary": 10000.00,
-        "ExpectedMaxSalary": 25000.00,
-        "SleepOnSite": false,
-        "ExpectedMinRooms": 0,
-        "ExpectedMaxRooms": 0,
-        "MinGroupPeople": 0,
-        "MaxGroupPeople": 0,
-        "IsPublished": true,
-        "PublishedDate": "2018-12-19T20:04:58Z",
-        "ValidTill": "0001-01-01T00:00:00Z",
-        "AdditionalDescription": "Besoin d'une masseuse",
-        "JobOfferJobTasks": null,
-        "VerifiedByAdmin": false,
-        "VerificationDate": null,
-        "StarRating": 0,
-        "MasterJobTasks": null,
-        "JobOfferNotes": null
-      }
-    ]
+    this.getActiveCategories();
   }
 
   ionViewDidLoad() {
@@ -214,4 +38,99 @@ export class VerifyjobofferprofilePage {
     // setTimeout(() => imageViewer.dismiss(), 1000);
     // imageViewer.onDidDismiss(() => alert('Viewer dismissed'));
   }
+  getUnverifiedJobOffersForAdmin() {
+    this._dataContext.GetUnverifiedJobOffersForAdmin()
+      .subscribe(response => {
+        this.allJobOffersList = response;
+        this.allJobOffersList.forEach(element => {
+          element.PublishedDate = moment(element.PublishedDate).format("DD MMM YYYY");
+        });
+        this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
+      },
+        error => {
+          this.commonService.onMessageHandler("Failed to retrieve unverified job offer. Please try again", 0);
+        });
+  }
+  validateJobOffer(item) {
+    this._dataContext.ValidateJobOffer(item.JobOfferId)
+      .subscribe(response => {
+        if (response.Status == "OK") {
+          this.commonService.onMessageHandler(response.Message, 1);
+          this.getUnverifiedJobOffersForAdmin();
+        }
+      },
+        error => {
+          this.commonService.onMessageHandler("Failed to verify job offer. Please try again", 0);
+        });
+  }
+
+  verify(item) {
+    const confirm = this.alertCtrl.create({
+      title: 'Verify Job Offer?',
+      message: 'Do you want to verify this job offer?',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            this.validateJobOffer(item);
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+  gotoDetails(item){
+   this.navCtrl.push("JobOfferDetails", { jobOfferId: item.JobOfferId });
+  }
+  getActiveCategories() {
+    this._dataContext.GetActiveCategories()
+      .subscribe(response => {
+        if (response.length > 0) {
+          this.categories = response;
+          this.selectedCategory = this.categories[0];
+         // this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
+         this.getUnverifiedJobOffersForAdmin();
+        }
+        else
+          this.commonService.onMessageHandler("No category found.", 0);
+      },
+        error => {
+          this.commonService.onMessageHandler("Failed to retrieve categories. Please try again", 0);
+        });
+  }
+  public filterDataBySelectedCategory(categoryId: number): void {
+    // Handle what to do when a category is selected
+    let pageNo = categoryId - 1;
+    this.slides.slideTo(pageNo, 500);
+    this.joboffers = [];
+    this.allJobOffersList.filter(item => {
+      if (item.Job.JobCategoryId == categoryId)
+        this.joboffers.push(item);
+    });
+
+
+  }
+
+// Method executed when the slides are changed
+public slideChanged(): void {
+  let currentIndex = this.slides.getActiveIndex();
+  // this.showLeftButton = currentIndex !== 0;
+  // this.showRightButton = currentIndex !== Math.ceil(this.slides.length() / 3);
+}
+
+// Method that shows the next slide
+public slideNext(): void {
+  this.slides.slideNext();
+}
+
+// Method that shows the previous slide
+public slidePrev(): void {
+  this.slides.slidePrev();
+}
 }

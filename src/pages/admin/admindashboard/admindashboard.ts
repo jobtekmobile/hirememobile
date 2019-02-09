@@ -1,94 +1,185 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Chart } from 'chart.js';
-/**
- * Generated class for the AdmindashboardPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { DataContext } from '../../../providers/dataContext.service';
+import { CommonServices } from '../../../providers/common.service';
 
 @IonicPage()
 @Component({
-  selector: 'page-admindashboard',
-  templateUrl: 'admindashboard.html',
+    selector: 'page-admindashboard',
+    templateUrl: 'admindashboard.html',
 })
 export class AdmindashboardPage {
-  @ViewChild('doughnutCanvas') doughnutCanvas;
-  @ViewChild('lineCanvas') lineCanvas;
-  tabValue: number;
-  doughnutChart: any;
-  lineChart: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.tabValue =0;
-  }
+    @ViewChild('doughnutCanvas') doughnutCanvas;
+    @ViewChild('lineCanvas') lineCanvas;
+    tabValue: number;
+    doughnutChart: any;
+    lineChart: any;
+    doughnutdata: any = [];
+    linedata: any = [];
+    year: string = "2018";
+    colors = [
+        "#2E8B57",
+        "#f0ad4e",
+        "#DEB887",
+        "#A9A9A9",
+        "#FAEBD7",
+        "#DCDCDC",
+        "#E9967A",
+        "#F5DEB3",
+        "#9ACD32",
+        "#4272b7",
+        "#0078ff",
+        "#0003d2",
+        "#4272b7",
+        "#0065d0",
+        "#c0d6e4",
+        "#d001cf",
+        "#d2d0d1",
+        "#337465",
+        "#0a4168",
+        "#79e381",
+        "#cedee9",
+        "#149491",
+        "#e8bbc0",
+        "#cf3523",
+        "#e12241",
+        "#110055",
+        "#899ec1",
+        "#f2daf5",
+        "#6a6a92"
+    ];
+    constructor(public navCtrl: NavController, public navParams: NavParams, public _dataContext: DataContext, private commonService: CommonServices) {
+        this.tabValue = 0;
+        this.getJobRequestCountsForAdmin();
+    }
+    getJobOfferDoughnotDataForAdmin() {
+        this._dataContext.GetJobOfferDoughnotDataForAdmin()
+            .subscribe(response => {
+                this.doughnutdata = response;
+                this.setDoughnut();
+            },
+                error => {
+                    this.commonService.onMessageHandler("Failed to retrieve countries details. Please try again", 0);
+                });
+    }
+    getJobRequestDoughnotDataForAdmin() {
+        this._dataContext.GetJobRequestDoughnotDataForAdmin()
+            .subscribe(response => {
+                this.doughnutdata = response;
+                this.setDoughnut();
+            },
+                error => {
+                    this.commonService.onMessageHandler("Failed to retrieve countries details. Please try again", 0);
+                });
+    }
+    getJobOfferCountsForAdmin() {
+        this._dataContext.GetJobOfferCountsForAdmin()
+            .subscribe(response => {
+                this.linedata = response;
+                this.setLinechart();
+                this.getJobOfferDoughnotDataForAdmin();
+            },
+                error => {
+                    this.commonService.onMessageHandler("Failed to retrieve countries details. Please try again", 0);
+                });
+    }
+    getJobRequestCountsForAdmin() {
+        this._dataContext.GetJobRequestCountsForAdmin()
+            .subscribe(response => {
+                this.linedata = response;
+                this.setLinechart();
+                this.getJobRequestDoughnotDataForAdmin();
+                
+            },
+                error => {
+                    this.commonService.onMessageHandler("Failed to retrieve countries details. Please try again", 0);
+                });
+    }
 
-  ionViewDidLoad() {
+    setDoughnut() {
 
-    this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
+        let doughnutdatasets = [];
+        let doughnutlabels = [];
+        let doughnutcolors = [];
 
-      type: 'doughnut',
-      data: {
-          labels: ["Nanny", "Cook", "Plumber", "Guardian", "Decorator", "Electician"],
-          datasets: [{
-              label: '# of Votes',
-              data: [12, 19, 3, 5, 2, 3],
-              backgroundColor: [
-                  'rgba(255, 99, 132)',
-                  'rgba(54, 162, 235)',
-                  'rgba(255, 206, 86)',
-                  'rgba(75, 192, 192)',
-                  'rgba(153, 102, 255)',
-                  'rgba(255, 159, 64)'
-              ],
-              hoverBackgroundColor: [
-                  "#FF6384",
-                  "#36A2EB",
-                  "#FFCE56",
-                  "#FF6384",
-                  "#36A2EB",
-                  "#FFCE56"
-              ]
-          }]
-      }
+        this.doughnutdata.forEach((element, index) => {
+            doughnutlabels.push(element.JobName);
+            doughnutdatasets.push(element.TotalRequests);
+            doughnutcolors.push(this.colors[index]);
+        });
 
-  });
+        this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
+            type: 'doughnut',
+            data: {
+                labels: doughnutlabels,
+                datasets: [{
+                    label: 'No Of Members',
+                    data: doughnutdatasets,
+                    backgroundColor: doughnutcolors,
+                    hoverBackgroundColor: doughnutcolors
+                }]
+            }
+        });
+    }
+    setLinechart() {
 
-  this.lineChart = new Chart(this.lineCanvas.nativeElement, {
+        let linelabels = [];
+        let linedatasets = [];
 
-      type: 'line',
-      data: {
-          labels: ["January", "February", "March", "April", "May", "June", "July"],
-          datasets: [
-              {
-                  label: "Nany",
-                  fill: false,
-                  lineTension: 0.1,
-                  backgroundColor: "rgba(75,192,192,0.4)",
-                  borderColor: "rgba(75,192,192,1)",
-                  borderCapStyle: 'butt',
-                  borderDash: [],
-                  borderDashOffset: 0.0,
-                  borderJoinStyle: 'miter',
-                  pointBorderColor: "rgba(75,192,192,1)",
-                  pointBackgroundColor: "#fff",
-                  pointBorderWidth: 1,
-                  pointHoverRadius: 5,
-                  pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                  pointHoverBorderColor: "rgba(220,220,220,1)",
-                  pointHoverBorderWidth: 2,
-                  pointRadius: 1,
-                  pointHitRadius: 10,
-                  data: [65, 59, 80, 81, 56, 55, 40],
-                  spanGaps: false,
-              }
-          ]
-      }
+        this.linedata[0].Items.forEach(element => {
+            linelabels.push(element.Month);
+        });
 
-  });
-  }
+        this.linedata.forEach((element, index) => {
+            let constructor = 0;
+            let lineitemdata = [];
+            element.Items.forEach(element => {
+                lineitemdata.push(element.TotalRequests);
+            });
+            linedatasets.push({
+                label: element.JobName,
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: "rgba(75,192,192,0.4)",
+                borderColor: this.colors[index],
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(75,192,192,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: lineitemdata,
+                spanGaps: false,
+            })
+        });
+        this.lineChart = new Chart(this.lineCanvas.nativeElement, {
 
-  tabSelection(option) {
+            type: 'line',
+            data: {
+                labels: linelabels,
+                datasets: linedatasets
+            }
 
-  }
+        });
+    }
+
+    ionViewDidLoad() {
+
+    }
+
+    tabSelection(option) {
+if(option==0){
+    this.getJobRequestCountsForAdmin();
+}else{
+    this.getJobOfferCountsForAdmin();
+}
+    }
 }

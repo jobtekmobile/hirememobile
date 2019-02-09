@@ -30,7 +30,15 @@
         </ion-col>
         <ion-col col-12>
           <div [ngSwitch]="tabValue">
-            <div *ngSwitchCase="0">
+            <div *ngSwitchCase="tabValue">
+                <ion-list>
+                    <ion-item>
+                      <ion-label>Year</ion-label>
+                      <ion-select [(ngModel)]="year">
+                        <ion-option value="2018">2018</ion-option>
+                      </ion-select>
+                    </ion-item>
+                  </ion-list>
               <div>
                 <p text-center>Dashboard Members</p>
                   <canvas #lineCanvas></canvas>
@@ -40,9 +48,7 @@
                 <canvas #doughnutCanvas></canvas>
                 </div>
             </div>
-            <div *ngSwitchCase="1">
-             
-              </div>
+          
           </div>
         </ion-col>
       </ion-row>
