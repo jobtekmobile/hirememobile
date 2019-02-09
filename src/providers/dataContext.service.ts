@@ -203,8 +203,8 @@ export class DataContext {
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
-    ValidateJobRequest= (jobRequestId: number): Observable<any> => {
-        return this._http.post(this.commonService.getApiControllerName("validateJobRequest").toString() +"/VerifyJobRequest/" + jobRequestId, "")
+    ValidateJobRequest = (jobRequestId: number): Observable<any> => {
+        return this._http.post(this.commonService.getApiControllerName("validateJobRequest").toString() + "/VerifyJobRequest/" + jobRequestId, "")
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
@@ -215,7 +215,7 @@ export class DataContext {
             .catch(this._http.handleError);
     }
     ValidateJobOffer = (jobOfferId: number): Observable<any> => {
-        return this._http.post(this.commonService.getApiControllerName("validateJobOffer").toString() +"/VerifyJobOffer/" + jobOfferId, "")
+        return this._http.post(this.commonService.getApiControllerName("validateJobOffer").toString() + "/VerifyJobOffer/" + jobOfferId, "")
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
@@ -226,7 +226,7 @@ export class DataContext {
             .catch(this._http.handleError);
     }
     ActivateEmployer = (employerId: number): Observable<any> => {
-        return this._http.post(this.commonService.getApiControllerName("activateEmployer").toString() +"/ActivateEmployer/" + employerId, "")
+        return this._http.post(this.commonService.getApiControllerName("activateEmployer").toString() + "/ActivateEmployer/" + employerId, "")
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
@@ -253,7 +253,7 @@ export class DataContext {
             .catch(this._http.handleError);
     }
 
-    GetJobOfferDescription= (jobOfferId: number): Observable<any> => {
+    GetJobOfferDescription = (jobOfferId: number): Observable<any> => {
         return this._http.get(this.commonService.getApiControllerName("getJobOfferDescriptionById").toString() + "/" + jobOfferId)
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
@@ -266,8 +266,20 @@ export class DataContext {
     
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    LoginUser= (login: any): Observable<any> => {
-        return this._http.post(this.commonService.getApiControllerName("loginUser").toString() + "/Login/" , login)
+    LoginUser = (login: any): Observable<any> => {
+        return this._http.post(this.commonService.getApiControllerName("loginUser").toString() + "/Login/", login)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    //Search job request using filter
+    GetSearchPublishedJobRequest = (searchObj: any): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getSearchPublishedJobRequest").toString() + searchObj)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    //Search job offer using filter
+    GetSearchPublishedJobOffer = (searchObj: any): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getSearchPublishedJobResponse").toString() + searchObj)
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }

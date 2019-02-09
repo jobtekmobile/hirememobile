@@ -27,16 +27,17 @@ export class LoginPage {
       .subscribe(response => {
         console.log("-------");
         console.log(response);
+ 
         this.onSetAuthToken({ userId: response.UserId, type: response.Role });
         this.events.publish('user:loginsuccessfully', response.Role, Date.now())
         // if (response.length > 0) {
-        // // this.notificationList = response;
-        // // this.notificationList.forEach(element => {
-        // // element.CreatedDate = moment(element.CreatedDate).format("DD-MMM-YYYY");
-        // //});
+        //   // this.notificationList = response;
+        //   // this.notificationList.forEach(element => {
+        //   //   element.CreatedDate = moment(element.CreatedDate).format("DD-MMM-YYYY");
+        //   //});
         // }
         // else
-        // this.commonService.onMessageHandler("No notification found.", 0);
+        //   this.commonService.onMessageHandler("No notification found.", 0);
       },
         error => {
           this.commonService.onMessageHandler("Failed to update details. Please try again", 0);
@@ -44,7 +45,7 @@ export class LoginPage {
 
   }
   onSetAuthToken(response) {
-    this.commonService.setStoreDataIncache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"), response);
+    this.commonService.setStoreDataIncache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"),response);
     this.gotoDashboard();
   }
   gotoDashboard() {

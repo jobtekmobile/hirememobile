@@ -13,10 +13,10 @@ import moment from 'moment';
 
 @IonicPage()
 @Component({
-  selector: 'page-jobrequests',
-  templateUrl: 'jobrequests.html',
+  selector: 'page-favouritejobrequest',
+  templateUrl: 'favouritejobrequest.html',
 })
-export class JobrequestsPage {
+export class EmployerFavouriteJobRequest {
 
   @ViewChild(Slides) slides: Slides;
   public selectedCategory: any;

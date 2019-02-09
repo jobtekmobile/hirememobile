@@ -15,6 +15,10 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 $btnprimary: #F5005D;
+body {
+    --success-color: #68bb69;
+    --danger-color: #f65f6e;
+}
 .button-md{
     background: $btnprimary;
 
@@ -242,6 +246,12 @@ ion-loading>.loading-wrapper {
 }
 .warning .toast-container {
         background:var(--warning-color) !important;
+}
+.success .toast-container .toast-button{
+    background: transparent !important;
+}
+.error .toast-container .toast-button{
+    background: transparent !important;
 }
 .not-available{
     color: #f5005b;
