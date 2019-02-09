@@ -11,7 +11,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Export</ion-title>
-    <ion-buttons end>
+    <ion-buttons end (click)="openFilter()">
         <button ion-button icon-only>
           <ion-icon name="options"></ion-icon>
         </button>
@@ -30,18 +30,19 @@
       </ion-avatar>
       <h2><img class="gender-img" *ngIf="item.Gender == 'Man'" src="assets/imgs/male.svg">
         <img class="gender-img" *ngIf="item.Gender != 'Man'" src="assets/imgs/woman.svg">
-         {{item.Name}} 
-         <span class="date-text">{{item.PublishedDate}}</span></h2>
+         <span class="para-overflow-hidden">{{item.Name}}</span> 
+        
+        </h2>
       <p>
         <span class="membertype">{{item.MemberType}}</span>
-        <span class="jobtype">&nbsp;({{item.JobSought}})</span>
+        <span class="jobtype para-overflow-hidden">&nbsp;({{item.JobSought}})</span>
         <span class="age">Age: {{item.Age}} Yrs</span>
       </p>
       <p><img class="phone-img" src="assets/imgs/mail_icon.svg">{{item.EmailId}}</p>
-      <p><img class="phone-img" src="assets/imgs/mobile_icon.svg">{{item.ContactNo}}</p>
+      <p><img class="phone-img" src="assets/imgs/mobile_icon.svg">{{item.ContactNo}} <span class="date-text">{{item.PublishedDate}}</span></p>
     </ion-item>
   </ion-card>
   <ion-fab right bottom class="jobtek-fab-btn">
-      <button ion-fab mini color="danger"><ion-icon name="download"></ion-icon></button>
+      <button ion-fab mini color="danger" (click)="download()"><ion-icon name="download"></ion-icon></button>
     </ion-fab>
 </ion-content>

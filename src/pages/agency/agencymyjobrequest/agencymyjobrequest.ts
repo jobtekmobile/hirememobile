@@ -109,4 +109,7 @@ export class AgencymyjobrequestPage {
     // setTimeout(() => imageViewer.dismiss(), 1000);
     // imageViewer.onDidDismiss(() => alert('Viewer dismissed'));
   }
+  gotoDetails(item){
+    this.navCtrl.push("JobRequestDescDetails", { jobRequestId: item.JobRequestId });
+  }
 }

@@ -18,7 +18,9 @@
   <ion-card class="job-card-con">
     <ion-item class="">
       <ion-avatar item-start class="avatar-top">
-        <img class="img-size" #myImage (click)="presentImage(myImage)" src="data:image/png;base64,{{userDetails.profile_pic}}" />
+        <img class="img-size" #myImage (click)="presentImage(myImage)" *ngIf="userDetails.profile_pic != '' && userDetails.profile_pic != null" src="data:image/png;base64,{{userDetails.profile_pic}}" />
+        <img class="img-size" *ngIf="userDetails.profile_pic == '' || userDetails.profile_pic == null" src="assets/imgs/maledefault.svg" />
+                  
       </ion-avatar>
       <div class="card">
         <h4 class="para-overflow-hidden margin-bottom-5">
@@ -78,14 +80,16 @@
     </ion-item>
     <ion-row no-padding class="action-con">
       <ion-col class="action-con-image">
-        <img src="data:image/png;base64,{{userDetails.id_proof}}" #myImage1 (click)="presentImage(myImage1)" class="action-con-image-size">
-
+        <img src="data:image/png;base64,{{userDetails.id_proof}}" *ngIf="userDetails.id_proof != '' && userDetails.id_proof != null" #myImage1 (click)="presentImage(myImage1)" class="action-con-image-size">
+        <img src="assets/imgs/noidcard.jpg" *ngIf="userDetails.id_proof == '' || userDetails.id_proof == null" class="action-con-image-size">
+                      
 
       </ion-col>
 
       <ion-col text-right class="action-con-image">
-        <img src="data:image/png;base64,{{userDetails.id_proof}}" #myImage2 (click)="presentImage(myImage2)" class="action-con-image-size">
-
+        <img src="data:image/png;base64,{{userDetails.id_proof}}" *ngIf="userDetails.id_proof != '' && userDetails.id_proof != null" #myImage2 (click)="presentImage(myImage2)" class="action-con-image-size">
+        <img src="assets/imgs/noidcard.jpg" *ngIf="userDetails.id_proof == '' || userDetails.id_proof == null" class="action-con-image-size">
+                      
       </ion-col>
     </ion-row>
   </ion-card>

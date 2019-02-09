@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PopoverController, IonicPage, NavController, DateTime, NavParams } from 'ionic-angular';
+import { PopoverController, IonicPage, NavController, DateTime, NavParams, AlertController } from 'ionic-angular';
 import { DataContext } from '../../providers/dataContext.service';
 import { CommonServices } from '../../providers/common.service';
 import moment from 'moment';
@@ -13,13 +13,16 @@ export class JobOfferDetails {
   jobOfferId: number;
   publishedJobOfferDesc: any = null;
   title :string;
+  userDetails:any={};
   constructor(
     public navCtrl: NavController,
     public navParam: NavParams,
     public _dataContext: DataContext,
-    private commonService: CommonServices
+    private commonService: CommonServices,
+    public alertCtrl: AlertController
   ) {
     this.jobOfferId = this.navParam.get("jobOfferId");
+    this.userDetails = this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
   }
   ionViewDidEnter() {
     this.getJobOfferDescription();
@@ -39,5 +42,41 @@ export class JobOfferDetails {
         error => {
           this.commonService.onMessageHandler("Failed to retrieve job offer details. Please try again", 0);
         });
+  }
+
+  validateJobOffer() {
+    this._dataContext.ValidateJobOffer(this.publishedJobOfferDesc.JobOfferId)
+      .subscribe(response => {
+        if (response.Status == "OK") {
+          this.commonService.onMessageHandler(response.Message, 1);
+         // this.getUnverifiedJobOffersForAdmin();
+         this.navCtrl.pop();
+        }
+      },
+        error => {
+          this.commonService.onMessageHandler("Failed to verify job offer. Please try again", 0);
+        });
+  }
+
+  verify() {
+    const confirm = this.alertCtrl.create({
+      title: 'Verify Job Offer?',
+      message: 'Do you want to verify this job offer?',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            this.validateJobOffer();
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 }

@@ -3,6 +3,7 @@ import { Events, ToastController, App, Navbar, AlertController } from 'ionic-ang
 import { Storage } from '@ionic/storage';
 import { FormControl } from '@angular/forms';
 import * as $ from 'jquery';
+import { CacheService } from "ionic-cache";
 @Injectable()
 export class CommonServices {
   @ViewChild(Navbar) navBar: Navbar;
@@ -22,7 +23,8 @@ export class CommonServices {
     public storage: Storage,
     public _toastCtrl: ToastController,
     public appCtrl: App,
-    public alerCtrl: AlertController
+    public alerCtrl: AlertController,
+    public cache : CacheService
   ) {
     this.apiServiceUrl = "http://localhost:60114/"; //PG Api
     this.appTtitle = "";
@@ -78,7 +80,9 @@ export class CommonServices {
     this._apiList["searchMembersForAdmin"] = { controller: "Admin", method: "SearchMembers", api: "api/Admin" };
     this._apiList["exportMembersToExcelForAdmin"] = { controller: "Admin", method: "ExportMembersToExcel", api: "api/Admin" };
     this._apiList["getJobOfferDescriptionById"] = { controller: "JobOffers", method: "JobOfferDetails", api: "api/JobOffers" };
+    this._apiList["getJobs"] = { controller: " jobtekapi", method: "GetJobs", api: "api/jobtekapi" };
 
+    
     
     /////////////////////////////////////////////////////////////////
     this._apiList["loginUser"] = { controller: "Accounts", method: "Login", api: "api/Accounts" };
@@ -87,23 +91,23 @@ export class CommonServices {
   }
   setStoreDataIncache(url, data) {
     let cacheKey = url;
-    // let uniqueKey = "Health-Pro-App-" + this.getParentGroupEntityId();
+    let uniqueKey = "Job-Tek-App";
     let ttl = 60 * 60 * 24 * 7 * 30 * 12;
     //      let delayType="all";
-    return "";// this.cache.saveItem(cacheKey, data, uniqueKey, ttl);
+  this.cache.saveItem(cacheKey, data, uniqueKey, ttl);
   }
-  // getStoreDataFromCache(key) {
-  //   return this.cache.getItem(key).catch((data) => {
-  //     // fall here if item is expired or doesn't exist
-  //     return false;
-  //   }).then((data) => {
-  //     return data;
-  //   });
-  // }
+  getStoreDataFromCache(key) {
+    return this.cache.getItem(key).catch((data) => {
+      // fall here if item is expired or doesn't exist
+      return false;
+    }).then((data) => {
+      return data;
+    });
+  }
 
   //Clear all cache
   clearAllCache() {
-    //return this.cache.clearAll();
+    return this.cache.clearAll();
   }
   splitCountryCode(number) {
     return number.substring(0, number.length - 10);
