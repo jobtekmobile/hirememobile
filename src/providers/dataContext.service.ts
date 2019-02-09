@@ -242,13 +242,13 @@ export class DataContext {
             .catch(this._http.handleError);
     }
 
-    SearchMembersForAdmin = (userId: number, jobOfferId: number): Observable<any> => {
-        return this._http.post(this.commonService.getApiControllerName("searchMembersForAdmin").toString() + "/ExportMembersToExcel/" + jobOfferId, "")
+    SearchMembersForAdmin= (searchParam: any): Observable<any> => {
+        return this._http.post(this.commonService.getApiControllerName("searchMembersForAdmin").toString() + "/SearchMembers/", searchParam)
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
     ExportMembersToExcelForAdmin = (): Observable<any> => {
-        return this._http.get(this.commonService.getApiControllerName("exportMembersToExcelForAdmin").toString() + "/SearchMembers/")
+        return this._http.get(this.commonService.getApiControllerName("exportMembersToExcelForAdmin").toString() + "/ExportMembersToExcel/")
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
@@ -258,6 +258,12 @@ export class DataContext {
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
+    GetJobs= (): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getJobs").toString() + "/GetJobs")
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     LoginUser = (login: any): Observable<any> => {

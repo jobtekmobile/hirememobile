@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PopoverController, IonicPage, NavController, DateTime, NavParams } from 'ionic-angular';
+import { PopoverController, IonicPage, NavController, DateTime, NavParams, AlertController } from 'ionic-angular';
 import { DataContext } from '../../providers/dataContext.service';
 import { CommonServices } from '../../providers/common.service';
 import moment from 'moment';
@@ -14,13 +14,16 @@ export class JobRequestDescDetails {
   jobRequestId: number;
   publishedJobRequestDesc: any = null;
   title :string;
+  userDetails:any={};
   constructor(
     public navCtrl: NavController,
     public navParam: NavParams,
     public _dataContext: DataContext,
-    private commonService: CommonServices
+    private commonService: CommonServices,
+    public alertCtrl: AlertController
   ) {
     this.jobRequestId = this.navParam.get("jobRequestId");
+    this.userDetails = this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
   }
   ionViewDidEnter() {
     this.getJobRequestDescription();
@@ -40,5 +43,39 @@ export class JobRequestDescDetails {
         error => {
           this.commonService.onMessageHandler("Failed to retrieve job request details. Please try again", 0);
         });
+  }
+  validateJobRequest() {
+    this._dataContext.ValidateJobRequest(this.publishedJobRequestDesc.JobRequestId)
+      .subscribe(response => {
+        if (response.Status == "OK") {
+          this.commonService.onMessageHandler(response.Message, 1);
+         // this.getUnverifiedJobRequestsForAdmin();
+         this.navCtrl.pop();
+        }
+      },
+        error => {
+          this.commonService.onMessageHandler("Failed to verify job request. Please try again", 0);
+        });
+  }
+  Verify(){
+    const confirm = this.alertCtrl.create({
+      title: 'Verify Job Request?',
+      message: 'Do you want to verify this job request?',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            this.validateJobRequest();
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 }

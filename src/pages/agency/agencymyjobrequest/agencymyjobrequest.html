@@ -119,7 +119,7 @@
                         </ion-col>
         
                         <ion-col text-right class="action-con-inner">
-                          <button ion-button clear small icon-start class="action-btn">
+                          <button ion-button clear small icon-start class="action-btn" (click)="gotoDetails(item)">
                             <ion-icon name="information-circle"></ion-icon>
                             Detail
                           </button>
@@ -138,5 +138,9 @@
         </ion-col>
       </ion-row>
   
-     
+      <ion-fab right bottom class="jobtek-fab-btn">
+          <button ion-fab mini color="danger">
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </ion-fab>
   </ion-content>

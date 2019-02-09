@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 import { CacheService } from "ionic-cache";
 import { FormControl } from '@angular/forms';
 import * as $ from 'jquery';
+
 @Injectable()
 export class CommonServices {
   @ViewChild(Navbar) navBar: Navbar;
@@ -81,10 +82,12 @@ export class CommonServices {
     this._apiList["searchMembersForAdmin"] = { controller: "Admin", method: "SearchMembers", api: "api/Admin" };
     this._apiList["exportMembersToExcelForAdmin"] = { controller: "Admin", method: "ExportMembersToExcel", api: "api/Admin" };
     this._apiList["getJobOfferDescriptionById"] = { controller: "JobOffers", method: "JobOfferDetails", api: "api/JobOffers" };
+    this._apiList["getJobs"] = { controller: " jobtekapi", method: "GetJobs", api: "api/jobtekapi" };
     this._apiList["getSearchPublishedJobRequest"] = { controller: "JobRequests", method: "SearchJobRequests", api: "api/JobRequests" };
     this._apiList["getSearchPublishedJobResponse"] = { controller: "JobOffers", method: "SearchJobOffers", api: "api/JobOffers" };
 
-
+    
+    
     /////////////////////////////////////////////////////////////////
     this._apiList["loginUser"] = { controller: "Accounts", method: "Login", api: "api/Accounts" };
     //////////////////////////////// Employer API Services ////////////////////////////////
@@ -99,7 +102,7 @@ export class CommonServices {
   }
   //Clear all cache
   clearAllCache() {
-    //return this.cache.clearAll();
+    return this.cache.clearAll();
   }
   splitCountryCode(number) {
     return number.substring(0, number.length - 10);

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import moment from 'moment';
+import { Http, Response, Headers, RequestOptionsArgs } from '@angular/http';
+import { DataContext } from '../../../providers/dataContext.service';
+import { CommonServices } from '../../../providers/common.service';
 /**
  * Generated class for the ExportPage page.
  *
@@ -15,121 +18,54 @@ import moment from 'moment';
 })
 export class ExportPage {
   members = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  searchParam = { MemberType: 0 };
 
-    this.members =[{
-      "Name": "Sidibe carelle",
-      "EmailId": "carelle.sidibe@yahoo.fr",
-      "ContactNo": "+23523435322",
-      "Gender": "Man",
-      "ProfileVerified": "Verified",
-      "JobSought": "Decorator",
-      "PublishedDate": "1/2/2019 12:48:07 PM",
-      "MemberType": "Candidate",
-      "Job": null,
-      "ProfileStatus": false,
-      "Age": "NA"
-    },
-    {
-      "Name": "Tanguy Roussel",
-      "EmailId": "Tanguy@gmail.com",
-      "ContactNo": "+22508667543",
-      "Gender": "Man",
-      "ProfileVerified": "Verified",
-      "JobSought": "Nanny",
-      "PublishedDate": "1/28/2019 6:26:48 AM",
-      "MemberType": "Employer",
-      "Job": null,
-      "ProfileStatus": false,
-      "Age": "23"
-    },
-    {
-      "Name": "Valérie Koffi",
-      "EmailId": "valerie@gmail.com",
-      "ContactNo": "0102030405",
-      "Gender": "Woman",
-      "ProfileVerified": "Verified",
-      "JobSought": "Nanny",
-      "PublishedDate": "12/2/2018 6:36:14 PM",
-      "MemberType": "Candidate",
-      "Job": null,
-      "ProfileStatus": false,
-      "Age": "NA"
-    },
-    {
-      "Name": "Valérie Koffi",
-      "EmailId": "valerie@gmail.com",
-      "ContactNo": "0102030405",
-      "Gender": "Woman",
-      "ProfileVerified": "Verified",
-      "JobSought": "Cook",
-      "PublishedDate": "12/2/2018 6:38:09 PM",
-      "MemberType": "Candidate",
-      "Job": null,
-      "ProfileStatus": false,
-      "Age": "NA"
-    },
-    {
-      "Name": "Yann Gbagbo",
-      "EmailId": "Yann@yahoo.com",
-      "ContactNo": "0906050203",
-      "Gender": "Man",
-      "ProfileVerified": "Not Verified",
-      "JobSought": "Nanny",
-      "PublishedDate": "12/2/2018 7:18:23 PM",
-      "MemberType": "Candidate",
-      "Job": null,
-      "ProfileStatus": false,
-      "Age": "NA"
-    },
-    {
-      "Name": "Yao francois",
-      "EmailId": "francois.yao@yahoo.fr",
-      "ContactNo": "+23524455734",
-      "Gender": "Man",
-      "ProfileVerified": "Verified",
-      "JobSought": "Decorator",
-      "PublishedDate": "12/9/2018 11:12:56 PM",
-      "MemberType": "Candidate",
-      "Job": null,
-      "ProfileStatus": false,
-      "Age": "27"
-    },
-    {
-      "Name": "Yao francois",
-      "EmailId": "francois.yao@yahoo.fr",
-      "ContactNo": "+23524455734",
-      "Gender": "Man",
-      "ProfileVerified": "Verified",
-      "JobSought": "Decorator",
-      "PublishedDate": "12/9/2018 11:18:25 PM",
-      "MemberType": "Candidate",
-      "Job": null,
-      "ProfileStatus": false,
-      "Age": "27"
-    },
-    {
-      "Name": "You Ya",
-      "EmailId": "You@gamail.com",
-      "ContactNo": "83838282",
-      "Gender": "Man",
-      "ProfileVerified": "Verified",
-      "JobSought": "Nanny",
-      "PublishedDate": "12/26/2018 7:08:10 PM",
-      "MemberType": "Candidate",
-      "Job": null,
-      "ProfileStatus": false,
-      "Age": "21"
-    }
-  ]
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, private _http: Http,
+    public _dataContext: DataContext, private commonService: CommonServices) {
 
-  this.members.forEach(element => {
-    element.PublishedDate = moment(element.PublishedDate).format("DD MMM YYYY");
-  });
+    this.searchMembersForAdmin();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ExportPage');
   }
+  searchMembersForAdmin() {
 
+
+    this._dataContext.SearchMembersForAdmin(this.searchParam)
+      .subscribe(response => {
+        this.members = response;
+        console.log(this.members);
+        this.members.forEach(element => {
+          element.PublishedDate = moment(element.PublishedDate).format("DD MMM YYYY");
+        });
+      },
+        error => {
+          this.commonService.onMessageHandler("Failed to retrieve members. Please try again", 0);
+        });
+  }
+  openFilter() {
+    let filterModal = this.modalCtrl.create("FilterExportPage");
+    filterModal.onDidDismiss(item => {
+      if (item) {
+        this.members = item.Members;
+        this.searchParam = item.SearchParam
+      }
+    })
+    filterModal.present();
+  }
+  download() {
+
+    let url = this.commonService.getApiServiceUrl()+ "api/Admin/ExportMembersToExcel?MemberType=" + this.searchParam.MemberType;
+    for (var property in this.searchParam) {
+      if (this.searchParam.hasOwnProperty(property)) {
+        console.log(property, ' ', this.searchParam[property]);
+        if (property != "MemberType" && this.searchParam[property] !="") {
+          url = url + "&" + property + "=" + this.searchParam[property];
+        }
+      }
+    }
+    console.log(url);
+    window.open(url);
+  }
 }
