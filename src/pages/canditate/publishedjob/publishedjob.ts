@@ -34,20 +34,23 @@ export class PublishedJob {
     this.getPublishedJobRequest();
     this.getLoggedInUserDetailsFromCache();
   }
-  getLoggedInUserDetailsFromCache(){
-    this.loggedInUserDetails = localStorage.getItem("loggedInUserCredential");
+  getLoggedInUserDetailsFromCache() {
+    this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));;
   }
   getPublishedJobRequest() {
     this._dataContext.GetPublishedJobRequestByJobId(this.searchFilterData)
       .subscribe(response => {
         if (response.length > 0) {
+          this.isAvailable = true;
           this.publishedJobResult = response;
           this.publishedJobResult.forEach(element => {
             element.PublishedDate = moment(element.PublishedDate).format("DD-MMM-YYYY");
           });
         }
-        else
+        else {
+          this.isAvailable = false;
           this.commonService.onMessageHandler("No job found.", 0);
+        }
       },
         error => {
           this.commonService.onMessageHandler("Failed to retrieve jobs. Please try again", 0);
@@ -57,13 +60,16 @@ export class PublishedJob {
     this._dataContext.GetPublishedJobReponseByJobId(this.searchFilterData)
       .subscribe(response => {
         if (response.length > 0) {
+          this.isAvailable = true;
           this.publishedJobResult = response;
           this.publishedJobResult.forEach(element => {
             element.PublishedDate = moment(element.PublishedDate).format("DD-MMM-YYYY");
           });
         }
-        else
+        else {
+          this.isAvailable = false;
           this.commonService.onMessageHandler("No job found.", 0);
+        }
       },
         error => {
           this.commonService.onMessageHandler("Failed to retrieve jobs. Please try again", 0);
@@ -76,6 +82,7 @@ export class PublishedJob {
     this._dataContext.MakeJobOfferAsFavourite(2, id)
       .subscribe(response => {
         if (response.length > 0) {
+          this.commonService.onMessageHandler("You have successfully make this offer as favourite",1);
         }
         else
           this.commonService.onMessageHandler("Something went wrong. Please try again", 0);

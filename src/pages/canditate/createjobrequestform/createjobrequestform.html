@@ -16,9 +16,9 @@
             What gender are you looking for ?
           </p>
         </ion-col>
-        <ion-list class="margin-bottom-5" radio-group [(ngModel)]="jobCriteria.Gender">
+        <ion-list class="margin-bottom-5" radio-group [(ngModel)]="createJobRequest.Gender">
           <ion-item class="radio-btn-sec default-add">
-            <ion-radio item-left value="0"></ion-radio>
+            <ion-radio item-left value="2"></ion-radio>
             <ion-label class="font-size-14">Women</ion-label>
           </ion-item>
           <ion-item class="radio-btn-sec default-add">
@@ -33,10 +33,10 @@
             What type of Staff are you looking for ?
           </p>
         </ion-col>
-        <ion-list class="margin-bottom-5" radio-group [(ngModel)]="jobCriteria.Staff">
+        <ion-list class="margin-bottom-5" radio-group [(ngModel)]="createJobRequest.StaffType">
           <ion-item class="radio-btn-sec default-add">
             <ion-radio item-left value="0"></ion-radio>
-            <ion-label class="font-size-14">Agency</ion-label>
+            <ion-label class="font-size-14">Doesn't Matter</ion-label>
           </ion-item>
           <ion-item class="radio-btn-sec default-add">
             <ion-radio item-left value="1"></ion-radio>
@@ -44,54 +44,106 @@
           </ion-item>
           <ion-item class="radio-btn-sec default-add">
             <ion-radio item-left value="2"></ion-radio>
-            <ion-label class="font-size-14">Doesn't Matter</ion-label>
+            <ion-label class="font-size-14">Agency</ion-label>
           </ion-item>
         </ion-list>
       </ion-row>
+      <!-- <ion-row>
+          <ion-col col-12>
+            <p class="form-header">
+              What age range are you looking for ?
+            </p>
+          </ion-col>
+          <ion-col col-6>
+            <ion-item class="padding-left-10">
+              <ion-input [(ngModel)]="createJobRequest.MinAge" formControlName="MinAge" type="tel" placeholder="Min Age" spellcheck="false"
+                autocapitalize="off" maxlength="2" (keypress)="onlyNumber($event)" [class.error1]="!createJobRequest.controls.MinAge.valid && createJobRequest.controls.MinAge.dirty">
+              </ion-input>
+            </ion-item>
+            <ion-item no-lines *ngIf="createJobRequest.get('MinAge').hasError('required') && createJobRequest.get('MinAge').touched">
+              <div class="error">
+                Required minimum age*
+              </div>
+            </ion-item>
+          </ion-col>
+          <ion-col col-6>
+            <ion-item class="padding-left-10">
+              <ion-input [(ngModel)]="createJobRequest.MaxAge" formControlName="MaxAge" type="tel" placeholder="Max Age" spellcheck="false"
+                autocapitalize="off" maxlength="3" (keypress)="onlyNumber($event)" [class.error1]="!createJobRequest.controls.MaxAge.valid && createJobRequest.controls.MaxAge.dirty">
+              </ion-input>
+            </ion-item>
+            <ion-item no-lines *ngIf="createJobRequest.get('MaxAge').hasError('required') && createJobRequest.get('MaxAge').touched">
+              <div class="error">
+                Required maximum salary*
+              </div>
+            </ion-item>
+          </ion-col>
+        </ion-row> -->
       <ion-row>
         <ion-col col-12>
           <p class="form-header">
-            What age range are you looking for ?
+            What min years of experience do you require ?
           </p>
         </ion-col>
         <ion-col col-6>
           <ion-item class="padding-left-10">
-            <ion-input [(ngModel)]="jobCriteria.MinAge" type="tel" placeholder="Min Age" #minAge="ngModel" spellcheck="false" autocapitalize="off"
+            <ion-input [(ngModel)]="createJobRequest.ExperienceInYears" type="tel" placeholder="Year of exp." spellcheck="false" autocapitalize="off"
               maxlength="2" (keypress)="onlyNumber($event)">
             </ion-input>
           </ion-item>
         </ion-col>
         <ion-col col-6>
           <ion-item class="padding-left-10">
-            <ion-input [(ngModel)]="jobCriteria.MaxAge" type="tel" placeholder="Max Age" #maxAge="ngModel" spellcheck="false" autocapitalize="off"
+            <ion-input [(ngModel)]="createJobRequest.ExperienceInMonths" type="tel" placeholder="Month of exp." spellcheck="false" autocapitalize="off"
               maxlength="3" (keypress)="onlyNumber($event)">
             </ion-input>
           </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col col-12>
-          <p class="form-header">
-            What min years of experience do you require ?
-          </p>
-        </ion-col>
-        <ion-col col-6>
-          <ion-select class="margin-left-10" [(ngModel)]="jobCriteria.MinExp">
-            <ion-option value="0">--Year--</ion-option>
-            <ion-option value="1">1</ion-option>
-            <ion-option value="2">2</ion-option>
-            <ion-option value="3">3</ion-option>
-            <ion-option value="4">4</ion-option>
-            <ion-option value="5">5</ion-option>
-            <ion-option value="6">6</ion-option>
-            <ion-option value="7">7</ion-option>
-            <ion-option value="8">8</ion-option>
-            <ion-option value="9">9</ion-option>
-            <ion-option value="10">10</ion-option>
-          </ion-select>
-        </ion-col>
-      </ion-row>
 
+        </ion-col>
+        <!-- <ion-col col-6>
+            <ion-select class="margin-left-10" [(ngModel)]="createJobRequest.ExperienceInYears" formControlName="ExperienceInYears" [class.error1]="!createJobRequest.controls.ExperienceInYears.valid && createJobRequest.controls.ExperienceInYears.dirty">
+              <ion-option value="-1">--Year--</ion-option>
+              <ion-option value="0">0</ion-option>
+              <ion-option value="1">1</ion-option>
+              <ion-option value="2">2</ion-option>
+              <ion-option value="3">3</ion-option>
+              <ion-option value="4">4</ion-option>
+              <ion-option value="5">5</ion-option>
+              <ion-option value="6">6</ion-option>
+              <ion-option value="7">7</ion-option>
+              <ion-option value="8">8</ion-option>
+              <ion-option value="9">9</ion-option>
+              <ion-option value="10">10</ion-option>
+            </ion-select>
+            <ion-item no-lines *ngIf="createJobRequest.get('ExperienceInYears').hasError('required') && createJobRequest.get('ExperienceInYears').touched">
+              <div class="error">
+                Required year of exp*
+              </div>
+            </ion-item>
+          </ion-col>
+          <ion-col col-6>
+            <ion-select class="margin-left-10" [(ngModel)]="createJobRequest.ExperienceInMonths" formControlName="ExperienceInMonths"
+              [class.error1]="!createJobRequest.controls.ExperienceInMonths.valid && createJobRequest.controls.ExperienceInMonths.dirty">
+              <ion-option value="-1">--Month--</ion-option>
+              <ion-option value="0">0</ion-option>
+              <ion-option value="1">1</ion-option>
+              <ion-option value="2">2</ion-option>
+              <ion-option value="3">3</ion-option>
+              <ion-option value="4">4</ion-option>
+              <ion-option value="5">5</ion-option>
+              <ion-option value="6">6</ion-option>
+              <ion-option value="7">7</ion-option>
+              <ion-option value="8">8</ion-option>
+              <ion-option value="9">9</ion-option>
+              <ion-option value="10">10</ion-option>
+            </ion-select>
+            <ion-item no-lines *ngIf="createJobRequest.get('ExperienceInMonths').hasError('required') && createJobRequest.get('ExperienceInMonths').touched">
+              <div class="error">
+                Required month of exp*
+              </div>
+            </ion-item>
+          </ion-col> -->
+      </ion-row>
       <ion-row>
         <ion-col col-12>
           <p class="form-header">
@@ -99,14 +151,26 @@
           </p>
         </ion-col>
         <ion-col col-6>
-          <ion-select class="margin-left-10" [(ngModel)]="jobCriteria.City">
-            <ion-option *ngFor="let item of cities" value="{{item.Key}}">{{item.Value}}</ion-option>
+          <ion-select class="margin-left-10" [(ngModel)]="createJobRequest.CityId" (ionChange)="onSelectedCity()">
+            <ion-option value="0">--Select City--</ion-option>
+            <ion-option *ngFor="let item of cities" value="{{item.CityId}}">{{item.CityName}}</ion-option>
           </ion-select>
+          <!-- <ion-item no-lines *ngIf="createJobRequest.get('CityId').hasError('required') && createJobRequest.get('CityId').touched">
+              <div class="error">
+                Required city*
+              </div>
+            </ion-item> -->
         </ion-col>
         <ion-col col-6>
-          <ion-select class="margin-left-10" [(ngModel)]="jobCriteria.District" name="dist">
-            <ion-option *ngFor="let item of districts" value="{{item.Key}}">{{item.Value}}</ion-option>
+          <ion-select class="margin-left-10" [(ngModel)]="createJobRequest.DistrictId" [disabled]="createJobRequest.CityId == 0">
+            <ion-option value="0">--Select District--</ion-option>
+            <ion-option *ngFor="let item of districts" value="{{item.DistrictId}}">{{item.DistrictName}}</ion-option>
           </ion-select>
+          <!-- <ion-item no-lines *ngIf="createJobRequest.get('DistrictId').hasError('required') && createJobRequest.get('DistrictId').touched">
+              <div class="error">
+                Required district*
+              </div>
+            </ion-item> -->
         </ion-col>
       </ion-row>
       <ion-row>
@@ -116,7 +180,7 @@
           </p>
         </ion-col>
         <ion-col col-12>
-          <ion-list class="margin-bottom-5" radio-group [(ngModel)]="jobCriteria.SalaryPropose">
+          <ion-list class="margin-bottom-5" radio-group [(ngModel)]="createJobRequest.SalaryType">
             <ion-item class="radio-btn-sec default-add">
               <ion-radio item-left value="1"></ion-radio>
               <ion-label class="font-size-14">Monthly</ion-label>
@@ -133,17 +197,19 @@
         </ion-col>
         <ion-col col-6>
           <ion-item class="padding-left-10">
-            <ion-input [(ngModel)]="jobCriteria.MinSalary" type="tel" placeholder="Min Salary" #minSal="ngModel" spellcheck="false" autocapitalize="off"
+            <ion-input [(ngModel)]="createJobRequest.ExpectedMinSalary" type="tel" placeholder="Min Salary" spellcheck="false" autocapitalize="off"
               maxlength="10" (keypress)="onlyNumber($event)">
             </ion-input>
           </ion-item>
+
         </ion-col>
         <ion-col col-6>
           <ion-item class="padding-left-10">
-            <ion-input [(ngModel)]="jobCriteria.MaxSalary" type="tel" placeholder="Max Salary" #maxSal="ngModel" spellcheck="false" autocapitalize="off"
+            <ion-input [(ngModel)]="createJobRequest.ExpectedMaxSalary" type="tel" placeholder="Max Salary" spellcheck="false" autocapitalize="off"
               maxlength="10" (keypress)="onlyNumber($event)">
             </ion-input>
           </ion-item>
+
         </ion-col>
       </ion-row>
       <ion-row>
@@ -155,7 +221,7 @@
                 <img src="assets/imgs/createJobReq/study.svg" class="img-sub-size margin-left-10" style="width:25px">
               </span>
             </ion-label>
-            <ion-checkbox item-left class="margin-right-15" [(ngModel)]="jobCriteria.isRead" #read="ngModel" spellcheck="false" autocapitalize="off"
+            <ion-checkbox item-left class="margin-right-15" [(ngModel)]="createJobRequest.CanRead" spellcheck="false" autocapitalize="off"
               required>
             </ion-checkbox>
           </ion-item>
@@ -166,7 +232,7 @@
                 <img src="assets/imgs/createJobReq/write-letter.svg" class="img-sub-size margin-left-10" style="width:25px">
               </span>
             </ion-label>
-            <ion-checkbox item-left class="margin-right-15" [(ngModel)]="jobCriteria.isWrite" #read="ngModel" spellcheck="false" autocapitalize="off"
+            <ion-checkbox item-left class="margin-right-15" [(ngModel)]="createJobRequest.CanWrite" spellcheck="false" autocapitalize="off"
               required>
             </ion-checkbox>
           </ion-item>
@@ -177,8 +243,7 @@
                 <img src="assets/imgs/createJobReq/slumber.svg" class="img-sub-size margin-left-10" style="width:25px">
               </span>
             </ion-label>
-            <ion-checkbox item-left class="margin-right-15" [(ngModel)]="jobCriteria.isSleep" #read="ngModel" spellcheck="false" autocapitalize="off"
-              required>
+            <ion-checkbox item-left class="margin-right-15" spellcheck="false" autocapitalize="off" required>
             </ion-checkbox>
           </ion-item>
         </ion-col>
@@ -194,8 +259,8 @@
             <ion-label>
               <ion-icon name="calendar" class="font-size-25"></ion-icon>
             </ion-label>
-            <ion-datetime displayFormat="DD-MMM-YYYY" pickerFormat="DD-MMM-YYYY" name="appo-calendar" min="{{minDate}}" max="{{maxDate}}"
-              [(ngModel)]="showSelectedDate" (click)="isDateSelected = true" (ionChange)="onSelectedDate(true)"></ion-datetime>
+            <ion-datetime displayFormat="DD-MMM-YYYY" pickerFormat="DD-MMM-YYYY" min="{{minDate}}" max="{{maxDate}}" [(ngModel)]="showSelectedDate"
+              (click)="isDateSelected = true" (ionChange)="onSelectedDate(true)"></ion-datetime>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -207,26 +272,35 @@
         </ion-col>
         <ion-col col-6>
           <ion-item class="padding-left-10">
-            <ion-input [(ngModel)]="jobCriteria.Adult" type="tel" placeholder="No of Adults" #adult="ngModel" spellcheck="false" autocapitalize="off"
+            <ion-input [(ngModel)]="createJobRequest.MaxGroupPeople" type="tel" placeholder="No of Adults" spellcheck="false" autocapitalize="off"
               maxlength="2" (keypress)="onlyNumber($event)">
             </ion-input>
           </ion-item>
+
         </ion-col>
         <ion-col col-6>
           <ion-item class="padding-left-10">
-            <ion-input [(ngModel)]="jobCriteria.Children" type="tel" placeholder="No of Children" #children="ngModel" spellcheck="false"
-              autocapitalize="off" maxlength="2" (keypress)="onlyNumber($event)">
+            <ion-input [(ngModel)]="createJobRequest.MinGroupPeople" type="tel" placeholder="No of Children" spellcheck="false" autocapitalize="off"
+              maxlength="2" (keypress)="onlyNumber($event)">
             </ion-input>
           </ion-item>
+
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row *ngIf="jobTasks.length > 0">
+        <ion-col col-12 *ngFor="let item of jobTasks; let i = index">
+          <ion-checkbox item-left class="margin-right-15" [(ngModel)]="item.Selected">
+          </ion-checkbox>
+          <span>{{item.JobTaskName}}</span>
+        </ion-col>
+      </ion-row>
+      <!-- <ion-row>
         <ion-col col-12>
           <ion-list *ngIf="jobs.length > 0" class="margin-bottom-0">
             <ion-col col-12 *ngFor="let job of jobs" text-wrap>
               <ion-row>
                 <ion-col col-12>
-                  <ion-checkbox item-left class="margin-right-15" [(ngModel)]="jobCriteria.isSleep" #read="ngModel" spellcheck="false" autocapitalize="off"
+                  <ion-checkbox item-left class="margin-right-15" [(ngModel)]="createJobRequest.isSleep" #read="ngModel" spellcheck="false" autocapitalize="off"
                     required>
                   </ion-checkbox>
                   <span>{{job.JobName}}</span>
@@ -236,7 +310,7 @@
                 <ion-col col-12 *ngFor="let type of job.JobTypes" text-wrap class="">
                   <ion-row>
                     <ion-col col-12>
-                      <ion-checkbox item-left class="margin-right-15" [(ngModel)]="jobCriteria.isSleep" #read="ngModel" spellcheck="false" autocapitalize="off"
+                      <ion-checkbox item-left class="margin-right-15" [(ngModel)]="createJobRequest.isSleep" #read="ngModel" spellcheck="false" autocapitalize="off"
                         required>
                       </ion-checkbox>
                       <span>{{type.JobTypeName}}</span>
@@ -245,7 +319,7 @@
                   <ion-list *ngIf="type.JobSubTypes.length > 0" class="margin-left-15 margin-bottom-0">
                     <ion-row>
                       <ion-col col-12 *ngFor="let subType of type.JobSubTypes" text-wrap>
-                        <ion-checkbox item-left class="margin-right-15" [(ngModel)]="jobCriteria.isSleep" #read="ngModel" spellcheck="false" autocapitalize="off"
+                        <ion-checkbox item-left class="margin-right-15" [(ngModel)]="createJobRequest.isSleep" #read="ngModel" spellcheck="false" autocapitalize="off"
                           required>
                         </ion-checkbox>
                         <span>{{subType.JobSubTypeName}}</span>
@@ -256,6 +330,11 @@
               </ion-list>
             </ion-col>
           </ion-list>
+        </ion-col>
+      </ion-row> -->
+      <ion-row>
+        <ion-col col-12>
+          <button class="btn" type="button" (click)="onCreateJobRequest()" class="submit-btn">Submit</button>
         </ion-col>
       </ion-row>
     </ion-col>

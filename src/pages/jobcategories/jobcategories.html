@@ -58,17 +58,12 @@
       <ion-label>Browse Categories</ion-label>
     </ion-item>
     <ion-grid>
-      <ion-row *ngIf="selectedJobByCategoryId.length > 0 && categories.length > 0">
+      <ion-row *ngIf="selectedJobByCategoryId.length > 0">
         <ion-col col-6 (click)="gotoSelectedCategory(job.JobId)" *ngFor="let job of selectedJobByCategoryId">
           <ion-card class="job-card">
             <img [src]="job.IconImage"/>
             <div class="card-title">{{job.JobName}}</div>
           </ion-card>
-        </ion-col>
-      </ion-row>
-      <ion-row *ngIf="!isAvailable && (categories.length == 0 || selectedJobByCategoryId.length == 0)">
-        <ion-col col-12>
-          <p class="not-available">No result found!</p>
         </ion-col>
       </ion-row>
     </ion-grid>

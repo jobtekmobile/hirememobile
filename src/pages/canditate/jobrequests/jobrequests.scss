@@ -59,11 +59,13 @@ page-jobrequests {
         width: calc(100% - 10px);
     }
     .img-sub-size{
-        width: 17px;
+        //width: 17px;
         margin-top: 5px;
         display: inline;
         vertical-align: bottom;
-        margin-left: -2px;
+        margin-left: 1px;
+        
+    //color: #d84d7f;
     }
     .rating-sec > ul {
         padding: 0px;
@@ -102,5 +104,11 @@ page-jobrequests {
         background: transparent;
         color: #f5005b;
     }
+    .sub-header-title{
+        font-weight: 500;
+        font-size: 14px;
+        color: #55555f;
+      }
+  
       /***********************************/
 }

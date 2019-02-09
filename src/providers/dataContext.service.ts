@@ -76,4 +76,47 @@ export class DataContext {
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
+    //Create New job request
+    CreateNewJobRequest = (userData: any): Observable<any> => {
+        return this._http.post(this.commonService.getApiControllerName("createNewJobRequest").toString() + "/" + userData.CandidateId + "/JobRequests", userData)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    //Create New job response
+    CreateNewJobResponse = (userData: any): Observable<any> => {
+        return this._http.post(this.commonService.getApiControllerName("createNewJobResponse").toString() + "/" + userData.CandidateId + "/JobRequests", userData)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    //get job task based on job id
+    GetJobTasks = (jobId: number): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getJobTasks").toString() + "?jobId=" + jobId)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    //Get all my saved job request
+    GetMySavedJobRequest = (candidateId: number): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getMySavedJobRequest").toString() + "/" + candidateId + "/JobRequests")
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    //Get all my saved job request
+    GetActiveCities = (countryId: number): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getActiveCities").toString() + "?countryId=" + countryId)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    //Get all my saved job request
+    GetActiveDistricts = (cityId: number): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getActiveDistricts").toString() + "?cityId=" + cityId)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    //Delete selected job request
+    DeleteJobRequest = (candidateId: number, jobRequestId: number, ): Observable<any> => {
+        return this._http.delete(this.commonService.getApiControllerName("deleteJobRequest").toString() + "/" + candidateId + "/JobRequests/" + jobRequestId)
+            .map((response: any) => response.json())
+            .catch(this._http.handleError);
+    }
+
 }

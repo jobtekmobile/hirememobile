@@ -39,13 +39,16 @@ export class NotificationPage {
     this._dataContext.GetActiveNotificationByUserId(2)
     .subscribe(response => {
       if (response.length > 0) {
+        this.isAvailable = true;
         this.notificationList = response;
         this.notificationList.forEach(element => {
           element.CreatedDate = moment(element.CreatedDate).format("DD-MMM-YYYY");
         });
       }
-      else
+      else{
+        this.isAvailable = false;
         this.commonService.onMessageHandler("No notification found.", 0);
+      }
     },
       error => {
         this.commonService.onMessageHandler("Failed to retrieve notification details. Please try again", 0);

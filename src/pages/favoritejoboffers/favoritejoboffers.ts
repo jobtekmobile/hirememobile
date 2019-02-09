@@ -82,11 +82,11 @@ export class FavoritejoboffersPage {
         else {
           this.myFavListByCategoryId = [];
           this.isAvailable = false;
-          this.commonService.onMessageHandler("No category found.", 0);
+          this.commonService.onMessageHandler("No result found.", 0);
         }
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve categories. Please try again", 0);
+          this.commonService.onMessageHandler("Failed to retrieve favourite job offers. Please try again", 0);
         });
   }
   deleteFavouriteJobOffer(id) {

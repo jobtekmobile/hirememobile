@@ -1,5 +1,8 @@
 import { Component, ViewChild, Injector } from '@angular/core';
-import { IonicPage, NavController, NavParams,Slides } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides, AlertController } from 'ionic-angular';
+import { DataContext } from '../../../providers/dataContext.service';
+import { CommonServices } from '../../../providers/common.service';
+import moment from 'moment';
 
 /**
  * Generated class for the JobrequestsPage page.
@@ -22,76 +25,72 @@ export class JobrequestsPage {
   tabValue: number;
   isAvailable: boolean = true;
   publishedJobResult: any = [];
-  constructor(public injector: Injector,public navCtrl: NavController, public navParams: NavParams) {
-    this.categories = [
-      { id: 1, name: "Home Job" }, 
-      { id: 2, name: "Troubleshooting" }, 
-      { id: 3, name: "HairStyle/Care" }, 
-      { id: 4, name: "Ceremony" }, 
-      { id: 5, name: "Course" }
-    ];
-    this.selectedCategory = this.categories[0];
+  allMyJobRequestList: any = [];
+  loggedInUserDetails: any = {};
+  myJobRequestListByCategoryId: any = [];
 
+  constructor(public injector: Injector, public navCtrl: NavController,
+    public navParams: NavParams,
+    public _dataContext: DataContext,
+    private commonService: CommonServices, public alerCtrl: AlertController) {
     this.publishedJobResult = [];
-    this.tabValue = 0;
-    //if (option == 0) {
-      this.publishedJobResult.push({
-        Name: "Ashis",
-        Image: "assets/imgs/publishedjob/user.svg",
-        Age: 32,
-        Experience: 4,
-        Rating: 3,
-        RequestType: "Individual",
-        Location: "Kailash vihar, Bhubaneswar",
-        Email: "ashis.mahapatra@gmail.com",
-        ContactNo: "9439392845",
-        PublishedDate: "27-02-1991",
-        Disponability: "28-03-2019"
-      });
-      this.publishedJobResult.push({
-        Name: "Ashis",
-        Image: "assets/imgs/publishedjob/user.svg",
-        Age: 32,
-        Experience: 4,
-        Rating: 3,
-        RequestType: "Individual",
-        Location: "Kailash vihar, Bhubaneswar",
-        Email: "ashis.mahapatra@gmail.com",
-        ContactNo: "9439392845",
-        PublishedDate: "27-02-1991",
-        Disponability: "28-03-2019"
-      });
-    
-      this.publishedJobResult.push({
-        Name: "Ashis Mahapatra",
-        Image: "assets/imgs/publishedjob/user.svg",
-        Age: 32,
-        Experience: 4,
-        Rating: 4,
-        RequestType: "Agency",
-        Location: "Kailash vihar, Bhubaneswar",
-        Email: "ashis.mahapatra@gmail.com",
-        ContactNo: "9439392845",
-        PublishedDate: "27-02-1991",
-        Disponability: "28-03-2019"
-      });
-      this.publishedJobResult.push({
-        Name: "Ashis Mahapatra",
-        Image: "assets/imgs/publishedjob/user.svg",
-        Age: 32,
-        Experience: 4,
-        Rating: 4,
-        RequestType: "Agency",
-        Location: "Kailash vihar, Bhubaneswar",
-        Email: "ashis.mahapatra@gmail.com",
-        ContactNo: "9439392845",
-        PublishedDate: "27-02-1991",
-        Disponability: "28-03-2019"
-      });
-    //}
   }
   // ...
-
+  ionViewWillEnter() {
+    this.getLoggedInUserDetailsFromCache();
+  }
+  getLoggedInUserDetailsFromCache() {
+    this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));
+    this.getActiveCategories();
+  }
+  //Get all active categories for search job
+  getActiveCategories() {
+    this._dataContext.GetActiveCategories()
+      .subscribe(response => {
+        if (response.length > 0) {
+          this.categories = response;
+          this.selectedCategory = this.categories[0];
+          this.getMySavedJobRequest();
+          //this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
+        }
+        else
+          this.commonService.onMessageHandler("No category found.", 0);
+      },
+        error => {
+          this.commonService.onMessageHandler("Failed to retrieve categories. Please try again", 0);
+        });
+  }
+  public filterDataBySelectedCategory(categoryId: number): void {
+    // Handle what to do when a category is selected
+    this.myJobRequestListByCategoryId = [];
+    let pageNo = categoryId - 1;
+    this.slides.slideTo(pageNo, 500);
+    this.allMyJobRequestList.filter(item => {
+      if (item.JobCategoryId == categoryId)
+        this.myJobRequestListByCategoryId.push(item);
+    });
+  }
+  getMySavedJobRequest() {
+    this._dataContext.GetMySavedJobRequest(this.loggedInUserDetails.userId)
+      .subscribe(response => {
+        if (response.length > 0) {
+          this.isAvailable = true;
+          this.allMyJobRequestList = response;
+          this.allMyJobRequestList.forEach(element => {
+            element.PublishedDate = moment(element.PublishedDate).format("DD-MMM-YYYY");
+          });
+          this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
+        }
+        else {
+          this.myJobRequestListByCategoryId = [];
+          this.isAvailable = false;
+          this.commonService.onMessageHandler("No result found.", 0);
+        }
+      },
+        error => {
+          this.commonService.onMessageHandler("Failed to retrieve notification details. Please try again", 0);
+        });
+  }
   private initializeCategories(): void {
 
     // Select it by defaut
@@ -104,9 +103,9 @@ export class JobrequestsPage {
 
   public filterData(categoryId: number): void {
     // Handle what to do when a category is selected
-    let pageNo = categoryId-1;
+    let pageNo = categoryId - 1;
     this.slides.slideTo(pageNo, 500);
-    
+
   }
 
   // Method executed when the slides are changed
@@ -125,14 +124,52 @@ export class JobrequestsPage {
   public slidePrev(): void {
     this.slides.slidePrev();
   }
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad JobrequestsPage');
+  gotoCreate() {
+    this.navCtrl.push("JobCategory", { category: this.categories });
   }
-  gotoCreate(){
-    this.navCtrl.push("CreateJobRequestForm");
+  gotoDetails() {
+    // this.navCtrl.push("JobRequestDescDetails",{jobRequestId:});
   }
-  gotoDetails(){
-  
-    this.navCtrl.push("PublishedJobDesc");
+  getSelectedDetails(id) {
+    this.navCtrl.push("JobRequestDescDetails", { jobRequestId: id });
+  }
+  deleteSelectedJobRequests(id) {
+    let method = this.alerCtrl.create({
+      title: "Please Confirm!",
+      message: "Do you want to delete ?",
+      cssClass: 'alert-header-back-style',
+      buttons: [
+        {
+          text: 'CANCEL',
+          cssClass: 'cancel-btn-style',
+          handler: () => {
+            // return false;
+          }
+        },
+        {
+          text: "DELETE",
+          cssClass: 'ok-btn-style',
+          handler: () => {
+            this._dataContext.DeleteJobRequest(this.loggedInUserDetails.userId, id)
+              .subscribe(response => {
+                if (response.Status == "OK") {
+                  this.allMyJobRequestList.filter((item, index) => {
+                    if (item.JobCategoryId == id) {
+                      this.allMyJobRequestList.splice(this.allMyJobRequestList, 1);
+                    }
+                  });
+                  this.commonService.onMessageHandler(response.Message, 1);
+                }
+                else
+                  this.commonService.onMessageHandler("Failed to delete. Please try again", 0);
+              },
+                error => {
+                  this.commonService.onMessageHandler("Failed to delete. Please try again", 0);
+                });
+          }
+        }
+      ]
+    });
+    method.present();
   }
 }

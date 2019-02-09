@@ -14,8 +14,6 @@ export class CreateJobOfferForm {
   jobCriteria: any = {
     Gender: 0,
     Staff: 0,
-    MinAge: "",
-    MaxAge: "",
     MinExp: 0,
     City: 0,
     District: 0,

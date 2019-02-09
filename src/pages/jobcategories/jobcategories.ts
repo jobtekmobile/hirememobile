@@ -19,44 +19,45 @@ import { DataContext } from '../../providers/dataContext.service';
 
 @IonicPage()
 @Component({
-  selector: 'page-serchjobs',
-  templateUrl: 'serchjobs.html',
+  selector: 'page-jobcategories',
+  templateUrl: 'jobcategories.html',
 })
-export class SearchjobsPage {
+export class JobCategory {
   @ViewChild(Slides) slides: Slides;
   public selectedCategory: any;
   public categories: Array<any> = [];
   public showLeftButton: boolean;
   public showRightButton: boolean;
-  isAvailable: boolean = true;
   selectedJobByCategoryId: any = [];
   constructor(
     public injector: Injector,
     public navCtrl: NavController,
     public navParams: NavParams,
     public _dataContext: DataContext,
-    private commonService: CommonServices
+    private commonService: CommonServices,
+    public navParam: NavParams,
   ) {
-
+    this.categories = this.navParam.get("category");
   }
   ionViewWillEnter() {
-    this.getActiveCategories();
+    if (this.categories.length == 0)
+      this.getActiveCategories();
+    else {
+      this.selectedCategory = this.categories[0];
+      this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
+    }
   }
-  
   //Get all active categories for search job
   getActiveCategories() {
     this._dataContext.GetActiveCategories()
       .subscribe(response => {
         if (response.length > 0) {
-          this.isAvailable = true;
           this.categories = response;
           this.selectedCategory = this.categories[0];
           this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
         }
-        else {
-          this.isAvailable = true;
+        else
           this.commonService.onMessageHandler("No category found.", 0);
-        }
       },
         error => {
           this.commonService.onMessageHandler("Failed to retrieve categories. Please try again", 0);
@@ -79,8 +80,6 @@ export class SearchjobsPage {
       if (item.JobCategoryId == categoryId)
         this.selectedJobByCategoryId = item.Jobs;
     });
-    if (this.selectedJobByCategoryId.length == 0)
-      this.isAvailable = false;
   }
 
   // Method executed when the slides are changed
@@ -101,7 +100,7 @@ export class SearchjobsPage {
   }
   //get selected job id and get all the published jobs.
   gotoSelectedCategory(id) {
-    this.navCtrl.push("PublishedJob", { jobId: id });
+    this.navCtrl.push("CreateJobRequestForm", { jobId: id });
   }
 
 }
