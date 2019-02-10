@@ -7,9 +7,9 @@
 <ion-header>
 
   <ion-navbar>
-      <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </button>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Register Candidate</ion-title>
   </ion-navbar>
 
@@ -17,90 +17,103 @@
 
 
 <ion-content padding>
-    <div class="register-form">
-      <div class="register-input-con">
-        <ion-list>
-          <ion-item class="dropdown-text">
-            <ion-label>Gender</ion-label>
-            <ion-select>
-              <ion-option value="f">Female</ion-option>
-              <ion-option value="m">Male</ion-option>
-            </ion-select>
-          </ion-item>
-  
-        </ion-list>
+  <div class="register-form" style="height: 100%;">
+    <ion-slides #registercandidate>
+      <ion-slide>
         <p class="register-label-text">Personal Details</p>
-        <ion-list>
-  
-          <ion-item>
-            <ion-input type="text" placeholder="First Name"></ion-input>
-          </ion-item>
-  
-          <ion-item>
-            <ion-input type="text" placeholder="Last Name"></ion-input>
-          </ion-item>
-          <ion-item class="date-text">
-            <ion-label>Date Of Birth</ion-label>
-            <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A"></ion-datetime>
-          </ion-item>
-        </ion-list>
-        <p class="register-label-text">Address Details</p>
-        <ion-list>
-          <ion-item class="dropdown-text">
-            <ion-label>Country</ion-label>
-            <ion-select>
-              <ion-option value="f">Female</ion-option>
-              <ion-option value="m">Male</ion-option>
-            </ion-select>
-          </ion-item>
-          <ion-item class="dropdown-text">
-            <ion-label>City</ion-label>
-            <ion-select>
-              <ion-option value="f">Female</ion-option>
-              <ion-option value="m">Male</ion-option>
-            </ion-select>
-          </ion-item>
-          <ion-item class="dropdown-text">
-            <ion-label>District</ion-label>
-            <ion-select>
-              <ion-option value="f">Female</ion-option>
-              <ion-option value="m">Male</ion-option>
-            </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-textarea placeholder="Address"></ion-textarea>
-          </ion-item>
-        </ion-list>
+        <div class="register-input-con">
+          <ion-list>
+            <ion-item class="dropdown-text">
+              <ion-label>Gender</ion-label>
+              <ion-select [(ngModel)]="registerObj.Gender">
+                <ion-option value="2">Female</ion-option>
+                <ion-option value="1">Male</ion-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-input type="text" [(ngModel)]="registerObj.FirstName" placeholder="First Name"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input type="text" [(ngModel)]="registerObj.LastName" placeholder="Last Name"></ion-input>
+            </ion-item>
+            <ion-item class="date-text">
+              <ion-label>Date Of Birth</ion-label>
+              <ion-datetime displayFormat="DD-MM-YYYY" pickerFormat="DD-MM-YYYY" min="1900-12-31" max="{{maxDate}}" [(ngModel)]="registerObj.DOB"></ion-datetime>
+            </ion-item>
+          </ion-list>
+          <p class="register-label-text">Address Details</p>
+          <ion-list>
+            <ion-item class="dropdown-text"> 
+              <ion-label>Country</ion-label>
+              <ion-select [(ngModel)]="registerObj.CountryId" (ionChange)="getActiveCities()">
+                <ion-option value="0">--Select Country--</ion-option>
+                <ion-option *ngFor="let country of countries" value="{{country.CountryId}}">{{country.CountryName}}</ion-option>
+              </ion-select>
+            </ion-item>
+            <ion-item class="dropdown-text">
+              <ion-label>City</ion-label>
+              <ion-select [(ngModel)]="registerObj.CityId" (ionChange)="getActiveDistricts()" [disabled]="registerObj.CountryId == 0">
+                <ion-option value="0">--Select City--</ion-option>
+                <ion-option *ngFor="let city of cities" value="{{city.CityId}}">{{city.CityName}}</ion-option>
+              </ion-select>
+            </ion-item>
+            <ion-item class="dropdown-text">
+              <ion-label>District</ion-label>
+              <ion-select [(ngModel)]="registerObj.DistrictId" [disabled]="registerObj.CityId == 0">
+                <ion-option value="0">--Select District--</ion-option>
+                <ion-option *ngFor="let district of districts" value="{{district.DistrictId}}">{{district.DistrictName}}</ion-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-textarea placeholder="Address" [(ngModel)]="registerObj.Address"></ion-textarea>
+            </ion-item>
+          </ion-list>
+          <div class="register-btn-con">
+            <button ion-button round full pr class="login-button" (click)="continue()">continue</button>
+          </div>
+        </div>
+      </ion-slide>
+      <ion-slide class="slide2">
         <p class="register-label-text">Email & Contact</p>
-        <ion-list>
-  
-          <ion-item>
-            <ion-input type="Email" placeholder="Email"></ion-input>
-          </ion-item>
-  
-  
-          <ion-row>
-            <ion-col col-6>
-              <ion-item class="dropdown-text">
-                <ion-label>Code</ion-label>
-                <ion-select>
-                  <ion-option value="f">+225</ion-option>
-                 
-                </ion-select>
-              </ion-item>
-            </ion-col>
-  
-            <ion-col col-6>
-              <ion-item>
-                <ion-input type="text" placeholder="Contact"></ion-input>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-        </ion-list>
-      </div>
-      <div class="register-btn-con">
-        <button ion-button round full pr class="login-button">register</button>
-      </div>
-      
-    </div>
-  </ion-content>
+        <div class="register-input-con">
+          <ion-list>
+            <ion-item>
+              <ion-input type="Email" [(ngModel)]="registerObj.Email" placeholder="Email"></ion-input>
+            </ion-item>
+            <ion-row>
+              <ion-col col-3>
+                <ion-item class="dropdown-text">
+                  <ion-select [(ngModel)]="registerObj.CountryCode" style="max-width: 100%;padding: 0px 0px 0px 0px;">
+                    <ion-option value="+225">+225</ion-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+              <ion-col col-9>
+                <ion-item>
+                    <ion-input [(ngModel)]="registerObj.PhoneNumber" type="tel" placeholder="Contact" spellcheck="false" autocapitalize="off"
+                    maxlength="10" (keypress)="onlyNumber($event)">
+                  </ion-input>
+                
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-row>
+                  <ion-col col-4 *ngFor="let item of images">
+                    <img class="img-size" [src]="item.file && item.file!=''? item.file:'assets/imgs/no-record-found.png'" (click)="uploadImage(item)"
+                    />
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-list>
+        </div>
+        <div class="register-btn-con">
+          <button ion-button round full pr class="login-button" (click)="onRegister()">Register</button>
+          <p class="back-style" text-center (click)="back()">back</p>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </div>
+</ion-content>

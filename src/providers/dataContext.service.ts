@@ -242,7 +242,7 @@ export class DataContext {
             .catch(this._http.handleError);
     }
 
-    SearchMembersForAdmin= (searchParam: any): Observable<any> => {
+    SearchMembersForAdmin = (searchParam: any): Observable<any> => {
         return this._http.post(this.commonService.getApiControllerName("searchMembersForAdmin").toString() + "/SearchMembers/", searchParam)
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
@@ -258,12 +258,12 @@ export class DataContext {
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
-    GetJobs= (): Observable<any> => {
+    GetJobs = (): Observable<any> => {
         return this._http.get(this.commonService.getApiControllerName("getJobs").toString() + "/GetJobs")
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
-    
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     LoginUser = (login: any): Observable<any> => {
@@ -340,6 +340,26 @@ export class DataContext {
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
+    //Register new user
+    RegisterUser = (register: any): Observable<any> => {
+        return this._http.post(this.commonService.getApiControllerName("registerUser").toString(), register)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    //Register new user
+    RegisterCandidateByAgency = (agencyId: number, register: any): Observable<any> => {
+        return this._http.post(this.commonService.getApiControllerName("registerCandidateByAgency").toString() + "/" + agencyId + "/Candidates", register)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    //Get security questions
+    GetSecurityQuestions = (): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getSecurityQuestions").toString())
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+
+
 
     getAgencyDetails(agencyId: number){
         return this._http.get(this.commonService.getApiControllerName("getAgencyDetails").toString() + "/Agencies/" + agencyId )
