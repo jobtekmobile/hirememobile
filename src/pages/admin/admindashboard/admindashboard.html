@@ -7,50 +7,45 @@
 <ion-header>
 
   <ion-navbar>
-      <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </button>
-        <ion-title>Admin Dashboard</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Admin Dashboard</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
-    <ion-row  >
-        <ion-col col-12 class="padding-0">
-          <ion-segment>
-            <ion-segment-button value="0" (click)="tabSelection(0)">
-              <ion-label class="segment-option">JOB REQUEST</ion-label>
-            </ion-segment-button>
-            <ion-segment-button value="1" (click)="tabSelection(1)">
-              <ion-label class="segment-option">JOB OFFER</ion-label>
-            </ion-segment-button>
-          </ion-segment>
-        </ion-col>
-        <ion-col col-12>
-          <div [ngSwitch]="tabValue">
-            <div *ngSwitchCase="tabValue">
-                <ion-list>
-                    <ion-item>
-                      <ion-label>Year</ion-label>
-                      <ion-select [(ngModel)]="year">
-                        <ion-option value="2018">2018</ion-option>
-                      </ion-select>
-                    </ion-item>
-                  </ion-list>
-              <div>
-                <p class="graph-header" text-center>Dashboard Members</p>
-                  <canvas #lineCanvas height="280vh"></canvas>
-              </div>
-              <div>
-                  <p class="graph-header" text-center>Our Members</p>
-                <canvas #doughnutCanvas height="280vh"></canvas>
-                </div>
-            </div>
-          
+  <ion-row>
+    <ion-col col-12 class="padding-0">
+      <ion-segment [(ngModel)]="tabValue">
+        <ion-segment-button *ngFor="let option of tapOption ;  let i = index;" value="{{option.Key}}" (click)="tabSelection($event,i)">
+          {{option.Value}}
+        </ion-segment-button>
+      </ion-segment>
+    </ion-col>
+    <ion-col col-12>
+      <div>
+        <div>
+          <ion-list>
+            <ion-item>
+              <ion-label>Year</ion-label>
+              <ion-select [(ngModel)]="year">
+                <ion-option value="2018">2018</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+          <div>
+            <p class="graph-header" text-center>Dashboard Members</p>
+            <canvas #lineCanvas height="280vh"></canvas>
           </div>
-        </ion-col>
-      </ion-row>
-   
+          <div>
+            <p class="graph-header" text-center>Our Members</p>
+            <canvas #doughnutCanvas height="280vh"></canvas>
+          </div>
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
+
 </ion-content>

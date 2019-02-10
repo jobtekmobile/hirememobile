@@ -20,15 +20,27 @@ export class VerifyjobofferprofilePage {
   selectedJobByCategoryId: Array<any> = [];
   _imageViewerCtrl: ImageViewerController;
   joboffers: any = [];
+  loggedInUserDetails:any={};
   allJobOffersList : any = [];
   constructor(public navCtrl: NavController, public navParams: NavParams,imageViewerCtrl: ImageViewerController,
     public _dataContext: DataContext, private commonService: CommonServices, public alertCtrl: AlertController) {
     this._imageViewerCtrl = imageViewerCtrl;
-    this.getActiveCategories();
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad VerifycandidateprofilePage');
+    this.getLoggedInUserDetailsFromCache();
+  }
+  getLoggedInUserDetailsFromCache() {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+      .then((result) => {
+        if (result && result.userId) {
+          this.loggedInUserDetails = result;
+          this.getActiveCategories();
+        }
+        else {
+          this.navCtrl.setRoot("LoginPage");
+        }
+      });
   }
   presentImage(myImage) {
   

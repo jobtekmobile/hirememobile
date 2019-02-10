@@ -11,13 +11,13 @@ import moment from 'moment';
   templateUrl: 'publishedjob.html'
 })
 export class PublishedJob {
-  tabValue: string;
   isAvailable: boolean = true;
   publishedJobResult: any = [];
   searchFilterData: any = {
     Job: 0
   };
   tapOption = [];
+  tabValue: string;
   loggedInUserDetails: any = {};
   title: string;
   constructor(
@@ -36,11 +36,19 @@ export class PublishedJob {
   }
   ionViewDidEnter() {
     this.tabValue = "JobRequest";
-    this.getPublishedJobRequest();
     this.getLoggedInUserDetailsFromCache();
   }
   getLoggedInUserDetailsFromCache() {
-    this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+    .then((result) => {
+      if (result && result.userId) {
+        this.loggedInUserDetails = result;
+        this.getPublishedJobRequest();
+      }
+      else {
+        this.navCtrl.setRoot("LoginPage");
+      }
+    });
   }
   getPublishedJobRequest() {
     this._dataContext.GetPublishedJobRequestByJobId(this.searchFilterData)
