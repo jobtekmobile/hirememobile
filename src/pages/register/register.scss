@@ -1,5 +1,4 @@
 page-register {
-
     .scroll-content {
         background: url("../assets/imgs/bg.png") !important;
 
@@ -81,5 +80,26 @@ box-shadow: inset 0 -1px 0 0 transparent !important;
 ion-label{
   color:white !important;
 }
-  
+.label {
+  margin: 13px 9px 13px 7px !important;
+  font-size: 13px !important;
+}
+.checkbox-icon{
+  width: 20px !important;
+  height: 20px !important;
+
+  .checkbox-inner{
+    left: 6px !important;
+    top: 2px !important;
+  }
+
+}
+ion-checkbox{
+  margin: 0px !important;
+}
+.pass-hints{
+  color: #ff9800;
+  text-align: left;
+  font-size: 12px;
+}
 }

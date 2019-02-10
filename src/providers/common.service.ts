@@ -85,11 +85,14 @@ export class CommonServices {
     this._apiList["getJobs"] = { controller: " jobtekapi", method: "GetJobs", api: "api/jobtekapi" };
     this._apiList["getSearchPublishedJobRequest"] = { controller: "JobRequests", method: "SearchJobRequests", api: "api/JobRequests" };
     this._apiList["getSearchPublishedJobResponse"] = { controller: "JobOffers", method: "SearchJobOffers", api: "api/JobOffers" };
+    this._apiList["getSecurityQuestions"] = { controller: "Accounts", method: "SecurityQuestions", api: "api/Accounts/SecurityQuestions" };
 
     
     
     /////////////////////////////////////////////////////////////////
     this._apiList["loginUser"] = { controller: "Accounts", method: "Login", api: "api/Accounts" };
+    this._apiList["registerUser"] = { controller: "Accounts", method: "Register", api: "api/Accounts/Register" };
+    this._apiList["registerCandidateByAgency"] = { controller: "Agencies", method: "RegisterCandidate", api: "api/Agencies" };
     //////////////////////////////// Employer API Services ////////////////////////////////
     this._apiList["getMyFavJobRequestForEmployer"] = { controller: "Employers", method: "MyFavouriteJobRequests", api: "api/Employers" };
     this._apiList["getMyJobOfferForEmployee"] = { controller: "Employers", method: "MyJobOffers", api: "api/Employers" };
