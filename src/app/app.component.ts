@@ -13,7 +13,7 @@ export class MyApp {
 
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = "";
+  rootPage: any = "AppStartUp";
 
   pages: Array<{ title: string, component: any, imagepath: string }>;
   employeepages: Array<{ title: string, component: any, imagepath: string }>;
@@ -22,9 +22,8 @@ export class MyApp {
   adminpages: Array<{ title: string, component: any, imagepath: string }>;
   userDetails: any = {};
   constructor(private commonService: CommonServices, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public events: Events) {
-    this.getLoggedInUserDetails();
 
-    this.initializeApp();
+    this.getLoggedInUserDetails();
 
     // used for an example of ngFor and navigation
     this.employeepages = [
@@ -73,7 +72,31 @@ export class MyApp {
       // } else {
       //   this.pages = this.agencypages;
       // }
-      this.getLoggedInUserDetails();
+
+      this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+      .then((result) => {
+        this.userDetails = result;
+        if (result && result.userId) {
+          if (result.type == "Admin") {
+            this.pages = this.adminpages;
+            // this.rootPage = "AdmindashboardPage";
+          }
+          else if (result.type == "Candidate") {
+            this.pages = this.employeepages;
+            // this.rootPage = "DashboardPage";
+          }
+          else if (result.type == "Employer") {
+            this.pages = this.employerpages;
+            // this.rootPage = "DashboardPage";
+          } else {
+            this.pages = this.agencypages;
+            // this.rootPage = "DashboardPage";
+          }
+        }
+        else {
+          this.rootPage = "LoginPage";
+        }
+      });
     })
   }
 
@@ -102,20 +125,20 @@ export class MyApp {
         if (result && result.userId) {
           if (result.type == "Admin") {
             this.pages = this.adminpages;
-            this.rootPage = "AdmindashboardPage";
+            // this.rootPage = "AdmindashboardPage";
           }
           else if (result.type == "Candidate") {
             this.pages = this.employeepages;
-            this.rootPage = "DashboardPage";
+            // this.rootPage = "DashboardPage";
           }
           else if (result.type == "Employer") {
             this.pages = this.employerpages;
-            this.rootPage = "DashboardPage";
+            // this.rootPage = "DashboardPage";
           } else {
             this.pages = this.agencypages;
-            this.rootPage = "DashboardPage";
+            // this.rootPage = "DashboardPage";
           }
-
+          this.initializeApp();
         }
         else {
           this.rootPage = "LoginPage";
