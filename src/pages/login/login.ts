@@ -27,16 +27,17 @@ export class LoginPage {
   onLogin() {
     this._dataContext.LoginUser(this.login)
       .subscribe(response => {
-        this.onSetAuthToken({ userId: response.UserId, type: response.Role,email:response.Email,userName:response.UserName });
-        this.events.publish('user:loginsuccessfully', response.Role, Date.now());
+        this.onSetAuthToken({ userId: response.UserId, type: response.Role,email:response.Email,userName:response.UserName });   
       },
         error => {
           this.commonService.onMessageHandler("Failed to login. Please try again", 0);
         });
   }
   onSetAuthToken(response) {
-    this.commonService.setStoreDataIncache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"), response);
-    this.gotoDashboard();
+    this.commonService.setStoreDataIncache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"), response).then(res=>{
+    //this.gotoDashboard();
+    this.events.publish('user:loginsuccessfully', response.Role, Date.now());
+    });
   }
   gotoDashboard() {
     this.navCtrl.setRoot("DashboardPage");

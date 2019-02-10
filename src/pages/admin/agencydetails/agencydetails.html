@@ -42,7 +42,7 @@
 
 
     </ion-item>
-    <ion-row no-padding class="action-con">
+    <ion-row no-padding class="action-con" *ngIf="loggedInUserDetails.type=='Admin'">
       <ion-col class="action-con-image">
         <img src="data:image/png;base64,{{agencyDetails.IdProofDoc}}" *ngIf="agencyDetails.IdProofDoc != '' && agencyDetails.IdProofDoc != null" #myImage1 (click)="presentImage(myImage1)" class="action-con-image-size">
         <img src="assets/imgs/noidcard.jpg" *ngIf="agencyDetails.IdProofDoc == '' || agencyDetails.IdProofDoc == null" class="action-con-image-size">

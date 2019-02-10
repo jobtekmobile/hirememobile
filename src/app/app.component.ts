@@ -10,6 +10,7 @@ import { CommonServices } from '../providers/common.service';
   templateUrl: 'app.html'
 })
 export class MyApp {
+
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = "";
@@ -21,33 +22,7 @@ export class MyApp {
   adminpages: Array<{ title: string, component: any, imagepath: string }>;
   userDetails: any = {};
   constructor(private commonService: CommonServices, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public events: Events) {
-    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
-      .then((result) => {
-        this.userDetails = result;
-        if (result && result.userId) {
-          if (result.type == "Admin") {
-            this.pages = this.adminpages;
-          }
-          else if (result.type == "Candidate") {
-            this.pages = this.employeepages;
-          }
-          else if (result.type == "Employer") {
-            this.pages = this.employerpages;
-          } else {
-            this.pages = this.agencypages;
-          }
-          if (result.type == "Admin") {
-            this.rootPage = "AdmindashboardPage";
-          }
-          else {
-            this.rootPage = "DashboardPage";
-          }
-         
-        }
-        else {
-          this.rootPage = "LoginPage";
-        }
-      });
+    this.getLoggedInUserDetails();
 
     this.initializeApp();
 
@@ -78,7 +53,7 @@ export class MyApp {
       { title: 'Manage My Settings', component: "ManagemysettingPage", imagepath: "../assets/imgs/menu/manage-setting.png" }
     ];
     this.adminpages = [
-      { title: 'Admin Dashboard', component: "AdmindashboardPage", imagepath: "../assets/imgs/menu/dashboard.png" },
+      { title: 'Dashboard', component: "AdmindashboardPage", imagepath: "../assets/imgs/menu/dashboard.png" },
       { title: 'Verify Agency', component: "VerifyagencyprofilePage", imagepath: "../assets/imgs/menu/check.png" },
       { title: 'Verify Candidate', component: "VerifycandidateprofilePage", imagepath: "../assets/imgs/menu/check.png" },
       { title: 'Verify Employer', component: "VerifyemployerprofilePage", imagepath: "../assets/imgs/menu/check.png" },
@@ -87,17 +62,18 @@ export class MyApp {
       { title: 'Export', component: "ExportPage", imagepath: "../assets/imgs/menu/export.png" }
     ];
     this.events.subscribe('user:loginsuccessfully', (role, time) => {
-      if (role == "Admin") {
-        this.pages = this.adminpages;
-      }
-      else if (role == "Candidate") {
-        this.pages = this.employeepages;
-      }
-      else if (role == "Employer") {
-        this.pages = this.employerpages;
-      } else {
-        this.pages = this.agencypages;
-      }
+      // if (role == "Admin") {
+      //   this.pages = this.adminpages;
+      // }
+      // else if (role == "Candidate") {
+      //   this.pages = this.employeepages;
+      // }
+      // else if (role == "Employer") {
+      //   this.pages = this.employerpages;
+      // } else {
+      //   this.pages = this.agencypages;
+      // }
+      this.getLoggedInUserDetails();
     })
   }
 
@@ -118,5 +94,32 @@ export class MyApp {
   logout() {
     this.commonService.clearAllCache();
     this.nav.setRoot("LoginPage");
+  }
+  getLoggedInUserDetails(): any {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+      .then((result) => {
+        this.userDetails = result;
+        if (result && result.userId) {
+          if (result.type == "Admin") {
+            this.pages = this.adminpages;
+            this.rootPage = "AdmindashboardPage";
+          }
+          else if (result.type == "Candidate") {
+            this.pages = this.employeepages;
+            this.rootPage = "DashboardPage";
+          }
+          else if (result.type == "Employer") {
+            this.pages = this.employerpages;
+            this.rootPage = "DashboardPage";
+          } else {
+            this.pages = this.agencypages;
+            this.rootPage = "DashboardPage";
+          }
+
+        }
+        else {
+          this.rootPage = "LoginPage";
+        }
+      });
   }
 }

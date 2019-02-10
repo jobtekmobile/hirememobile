@@ -12,9 +12,10 @@ import moment from 'moment';
 export class AgencydetailsPage {
   agencyId: any;
   agencyDetails: any = {};
+  loggedInUserDetails:any={};
   constructor(public navCtrl: NavController, public navParams: NavParams, public _dataContext: DataContext, private commonService: CommonServices) {
     this.agencyId = this.navParams.get("AgencyId");
-    this.getAgencyDetailsForAdmin();
+   
 
   }
   getAgencyDetailsForAdmin() {
@@ -34,7 +35,19 @@ export class AgencydetailsPage {
         });
   }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AgencydetailsPage');
+    this.getLoggedInUserDetailsFromCache();
   }
+  getLoggedInUserDetailsFromCache() {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+        .then((result) => {
+            if (result && result.userId) {
+                this.loggedInUserDetails = result;
+                this.getAgencyDetailsForAdmin();
+            }
+            else {
+                this.navCtrl.setRoot("LoginPage");
+            }
+        });
+}
 
 }
