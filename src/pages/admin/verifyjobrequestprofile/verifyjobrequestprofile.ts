@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides, Events } from 'ionic-angular';
 import { ImageViewerController } from 'ionic-img-viewer';
 import { DataContext } from '../../../providers/dataContext.service';
 import { CommonServices } from '../../../providers/common.service';
@@ -23,8 +23,11 @@ export class VerifyjobrequestprofilePage {
   allJobRequestList : any = [];
   loggedInUserDetails:any={};
   constructor(public navCtrl: NavController, public navParams: NavParams,imageViewerCtrl: ImageViewerController,
-    public _dataContext: DataContext, private commonService: CommonServices, public alertCtrl: AlertController) {
+    public _dataContext: DataContext, private commonService: CommonServices, public alertCtrl: AlertController,public events:Events) {
     this._imageViewerCtrl = imageViewerCtrl;
+    this.events.subscribe('reloadPage1',(time) => {
+      this.getUnverifiedJobRequestsForAdmin();
+     });
   }
   ionViewDidLoad() {
     this.getLoggedInUserDetailsFromCache();

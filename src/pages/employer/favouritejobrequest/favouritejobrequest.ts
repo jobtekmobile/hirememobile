@@ -1,5 +1,5 @@
 import { Component, ViewChild, Injector } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides, AlertController, ModalController } from 'ionic-angular';
 import { DataContext } from '../../../providers/dataContext.service';
 import { CommonServices } from '../../../providers/common.service';
 import moment from 'moment';
@@ -33,7 +33,7 @@ export class EmployerFavouriteJobRequest {
   constructor(public injector: Injector, public navCtrl: NavController,
     public navParams: NavParams,
     public _dataContext: DataContext,
-    private commonService: CommonServices, public alerCtrl: AlertController) {
+    private commonService: CommonServices, public alerCtrl: AlertController,public modalCtrl: ModalController) {
     this.publishedJobResult = [];
   }
   // ...
@@ -70,14 +70,18 @@ export class EmployerFavouriteJobRequest {
         });
   }
   public filterDataBySelectedCategory(categoryId: number): void {
+    this.isAvailable = true;
     // Handle what to do when a category is selected
     this.myJobRequestListByCategoryId = [];
     let pageNo = categoryId - 1;
     this.slides.slideTo(pageNo, 500);
     this.allMyJobRequestList.filter(item => {
-      if (item.JobRequestId == categoryId)
+      if (item.Job.JobCategoryId == categoryId)
         this.myJobRequestListByCategoryId.push(item);
     });
+    if( this.myJobRequestListByCategoryId.length == 0){
+      this.isAvailable = false;
+    }
   }
   getMyFavJobRequest() {
     this._dataContext.GetMyFavJobRequestForEmployer(this.loggedInUserDetails.userId)
@@ -180,5 +184,20 @@ export class EmployerFavouriteJobRequest {
       ]
     });
     method.present();
+  }
+  addNote(offer){
+    console.log(offer)
+    //this.loggedInUserDetails.userId
+    let filterModal = this.modalCtrl.create("JobRequestNotePage",{
+      info:offer,
+      userId:this.loggedInUserDetails.userId
+    });
+      filterModal.onDidDismiss(item => {
+        if (item) {
+          //this.members = item.Members;
+         // this.searchParam = item.SearchParam
+        }
+      })
+      filterModal.present();
   }
 }

@@ -28,17 +28,17 @@
         <ion-card class="job-card-con" *ngFor="let item of myJobRequestListByCategoryId; let i = index">
           <ion-item class="">
             <ion-avatar item-start class="avatar-top">
-              <img class="img-size" *ngIf="item.Gender == 2"
-                [src]="item.Image && item.Image!=null?item.Image:'assets/imgs/maledefault.svg'" />
               <img class="img-size" *ngIf="item.Gender == 1"
+                [src]="item.Image && item.Image!=null?item.Image:'assets/imgs/maledefault.svg'" />
+              <img class="img-size" *ngIf="item.Gender == 2"
                 [src]="item.Image && item.Image!=null?item.Image:'assets/imgs/femaledefault.svg'" />
             </ion-avatar>
             <div class="card">
               <h4 class="para-overflow-hidden margin-bottom-5">
                 <span class="margin-right-10 font-weight-500 font-size-16 ">
                   <span>
-                    <img src="assets/imgs/woman.svg" *ngIf="item.Gender == 1" class="card-name-geneder-icon">
-                    <img src="assets/imgs/male.svg" *ngIf="item.Gender == 2" class="card-name-geneder-icon">
+                    <img src="assets/imgs/woman.svg" *ngIf="item.Gender == 2" class="card-name-geneder-icon">
+                    <img src="assets/imgs/male.svg" *ngIf="item.Gender == 1" class="card-name-geneder-icon">
                   </span>
                   <span *ngIf="item.FirstName && item.FirstName !=''">{{item.FirstName }} </span>
                   <span *ngIf="item.LastName && item.LastName !=''">{{item.LastName }}</span>
@@ -54,9 +54,9 @@
                   <img src="assets/imgs/usertype.svg" class="img-sub-size">
                 </span>
                 <span class="req-type-color">
-                  <span *ngIf="item.StaffType && item.StaffType == 0">Agency</span>
+                  <span *ngIf="item.StaffType && item.StaffType == 2">Agency</span>
                   <span *ngIf="item.StaffType && item.StaffType == 1">Independant</span>
-                  <span *ngIf="item.StaffType && item.StaffType == 2">Doesn't Matter</span>
+                  <span *ngIf="item.StaffType && item.StaffType == 0">Doesn't Matter</span>
                 </span>
               </p>
               <p class="para-overflow-hidden">

@@ -10,7 +10,7 @@
       <ion-col no-padding col-12>
         <ion-slides (ionSlideDidChange)="slideChanged()" slidesPerView="3">
           <ion-slide (click)="filterDataBySelectedCategory(category.JobCategoryId)" *ngFor="let category of categories">
-            <p [class.selected]="selectedCategory?.JobCategoryId === category.JobCategoryId" style="text-transform: uppercase;">{{ category.CategoryName }}</p>
+            <p class="para-overflow-hidden" [class.selected]="selectedCategory?.JobCategoryId === category.JobCategoryId" style="text-transform: uppercase;">{{ category.CategoryName }}</p>
           </ion-slide>
         </ion-slides>
       </ion-col>
@@ -26,39 +26,41 @@
         <ion-card class="job-card-con" *ngFor="let item of myJobRequestListByCategoryId; let i = index">
           <ion-item class="">
             <ion-avatar item-start class="avatar-top">
-              <img class="img-size" *ngIf="item.Candidate.Gender == 2" [src]="item.ProfilePicUrl && item.ProfilePicUrl!=null?item.ProfilePicUrl:'assets/imgs/male.svg'"
+              <img class="img-size" *ngIf="item.Candidate.Gender == 1" [src]="item.ProfilePicUrl && item.ProfilePicUrl!=null?item.ProfilePicUrl:'assets/imgs/male.svg'"
               />
-              <img class="img-size" *ngIf="item.Candidate.Gender == 1" [src]="item.ProfilePicUrl && item.ProfilePicUrl!=null?item.ProfilePicUrl:'assets/imgs/woman.svg'"
+              <img class="img-size" *ngIf="item.Candidate.Gender == 2" [src]="item.ProfilePicUrl && item.ProfilePicUrl!=null?item.ProfilePicUrl:'assets/imgs/woman.svg'"
               />
+              <img src="assets/imgs/verified.png" class="verified-img" *ngIf="item.ProfileVerified" alt="">
             </ion-avatar>
             <div class="card">
               <h4 class="para-overflow-hidden margin-bottom-5">
                 <span class="margin-right-10 font-weight-500 font-size-16 ">
-                  <ion-icon name="person" class="img-sub-size"></ion-icon>
+                    <img src="assets/imgs/woman.svg" *ngIf="item.Candidate.Gender == 2" class="card-name-geneder-icon">
+                    <img src="assets/imgs/male.svg" *ngIf="item.Candidate.Gender == 1" class="card-name-geneder-icon">
                   <span *ngIf="item.Candidate.FirstName && item.Candidate.FirstName !=''">{{item.Candidate.FirstName }} </span>
                   <span *ngIf="item.Candidate.LastName && item.Candidate.LastName !=''">{{item.Candidate.LastName }}</span>
                 </span>
                 <span class="req-type-color">
-                  <span *ngIf="item.Candidate.StaffType && item.Candidate.StaffType == 0">(Agency)</span>
+                  <span *ngIf="item.Candidate.StaffType && item.Candidate.StaffType == 2">(Agency)</span>
                   <span *ngIf="item.Candidate.StaffType && item.Candidate.StaffType == 1">(Independant)</span>
-                  <span *ngIf="item.Candidate.StaffType && item.Candidate.StaffType == 2">(Doesn't Matter)</span>
+                  <span *ngIf="item.Candidate.StaffType && item.Candidate.StaffType == 0">(Doesn't Matter)</span>
                 </span>
               </h4>
               <p class="para-overflow-hidden">
                 <rating class="rating-sec" [(ngModel)]="item.Candidate.StarRating" readOnly="true" max="5" emptyStarIconName="star-outline"
                   halfStarIconName="star-half" starIconName="star" nullable="false"></rating>
               </p>
-
+              <p class="card-job-item-name">{{item.Job.JobName}}</p>
               <p class="para-overflow-hidden">
-                <span>
-                  <ion-icon name="pin" class="img-sub-size"></ion-icon>
-                </span>
-                <span class=""> {{item.Candidate.Address}}</span>
-              </p>
+                  <span>
+                    <img src="assets/imgs/location.svg" class="img-sub-size">
+                  </span>
+                  <span class=""> {{item.Candidate.Country}}, {{item.Candidate.City}}, {{item.Candidate.District}}</span>
+                </p>
               <p class="para-overflow-hidden">
-                <span>
-                  <ion-icon name="pricetag" class="img-sub-size"></ion-icon>
-                </span>
+                  <span>
+                      <img src="assets/imgs/salary.svg" class="img-sub-size">
+                    </span>
                 <span class=""> Exp. Salary: {{item.Candidate.ExpectedMinSalary}} - {{item.Candidate.ExpectedMaxSalary}}</span>
               </p>
 
@@ -76,18 +78,24 @@
                       </p> -->
               <p class="para-overflow-hidden">
                 <span class="margin-right-10" *ngIf="item.Candidate.Age > 0">
-                  Age: {{item.Candidate.Age}} Yrs.
+                    <span>
+                        <img src="assets/imgs/age.svg" class="img-sub-size">
+                      </span>
+                      Age: {{item.Candidate.Age}} Yrs.
                 </span>
                 <span class="" *ngIf="item.Candidate.ExperienceInYears > 0">
-                  Experience:
+                    <span>
+                        <img src="assets/imgs/experience.svg" class="img-sub-size">
+                      </span>
+                      Experience:
                   <span *ngIf="item.Candidate.ExperienceInYears > 0">{{item.Candidate.ExperienceInYears}} Yrs.</span>
 
                 </span>
               </p>
-              <p class="para-overflow-hidden" *ngIf="item.Candidate.PublishedDate">
-                <span>
-                  <ion-icon name="calendar" class="img-sub-size"></ion-icon>
-                </span>
+              <p class="para-overflow-hidden" *ngIf="item.PublishedDate">
+                  <span>
+                      <img src="assets/imgs/date.svg" class="img-sub-size">
+                    </span>
                 <span>
                   Published {{item.PublishedDate}}
                 </span>
@@ -108,7 +116,7 @@
               </button>
             </ion-col>
             <ion-col class="action-con-inner">
-              <button ion-button clear small icon-start class="action-btn" (click)="addNote(item.JobOfferId)">
+              <button ion-button clear small icon-start class="action-btn" (click)="addNote(item)">
                 <ion-icon name="create"></ion-icon>
                 Note
               </button>
@@ -124,9 +132,9 @@
       </div>
     </ion-col>
   </ion-row>
-  <ion-row *ngIf="!isAvailable && myJobRequestListByCategoryId.length > 0">
+  <ion-row *ngIf="!isAvailable && myJobRequestListByCategoryId.length == 0">
     <ion-col col-12 text-center>
-      <p class="not-available">No result found!</p>
+        <img src="assets/imgs/no-record-found.png">
     </ion-col>
   </ion-row>
 

@@ -172,4 +172,7 @@ openNote(){
     })
     filterModal.present();
 }
+selectedFavDetails(JobOfferId){
+  this.navCtrl.push("JobOfferDetails", { jobOfferId: JobOfferId });
+ }
 }

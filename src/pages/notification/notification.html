@@ -21,11 +21,11 @@
           <ion-avatar item-start>
             <img src="assets/imgs/maledefault.svg">
           </ion-avatar>
-          <h2 float-left>
+          <h2 float-left class="para-overflow-hidden" style="width:67%;">
             <span *ngIf="item.FirstName != null">{{item.FirstName}} </span>
             <!-- <span *ngIf="item.Sender && item.Sender.LastName != null">{{item.Sender.LastName}}</span> -->
           </h2>
-          <h3 text-right *ngIf="item.CreatedDate && item.CreatedDate != null && item.CreatedDate!=''">{{item.CreatedDate}}</h3>
+          <h3 text-right style="    font-style: italic; color: #fe005a;" *ngIf="item.CreatedDate && item.CreatedDate != null && item.CreatedDate!=''">{{item.CreatedDate}}</h3>
           <p *ngIf="item.Subject && item.Subject != null && item.Subject != ''">{{item.Subject}}</p>
         </ion-item>
         <ion-card-content>

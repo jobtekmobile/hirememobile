@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PopoverController, IonicPage, NavController, DateTime, NavParams, AlertController } from 'ionic-angular';
+import { PopoverController, IonicPage, NavController, DateTime, NavParams, AlertController, Events } from 'ionic-angular';
 import { DataContext } from '../../providers/dataContext.service';
 import { CommonServices } from '../../providers/common.service';
 import moment from 'moment';
@@ -20,7 +20,8 @@ export class JobRequestDescDetails {
     public navParam: NavParams,
     public _dataContext: DataContext,
     private commonService: CommonServices,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public events:Events
   ) {
     this.jobRequestId = this.navParam.get("jobRequestId");
     this.userDetails = this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
@@ -63,6 +64,7 @@ export class JobRequestDescDetails {
         if (response.Status == "OK") {
           this.commonService.onMessageHandler(response.Message, 1);
          // this.getUnverifiedJobRequestsForAdmin();
+         this.events.publish('reloadPage1',Date());
          this.navCtrl.pop();
         }
       },
