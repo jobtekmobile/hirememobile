@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PopoverController, IonicPage, NavController, DateTime, NavParams, AlertController } from 'ionic-angular';
+import { PopoverController, IonicPage, NavController, DateTime, NavParams, AlertController, Events } from 'ionic-angular';
 import { DataContext } from '../../providers/dataContext.service';
 import { CommonServices } from '../../providers/common.service';
 import moment from 'moment';
@@ -20,7 +20,8 @@ export class JobOfferDetails {
     public navParam: NavParams,
     public _dataContext: DataContext,
     private commonService: CommonServices,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public events:Events
   ) {
     this.jobOfferId = this.navParam.get("jobOfferId");
     
@@ -65,6 +66,7 @@ export class JobOfferDetails {
         if (response.Status == "OK") {
           this.commonService.onMessageHandler(response.Message, 1);
          // this.getUnverifiedJobOffersForAdmin();
+         this.events.publish('jobofferdetailpage',Date());
          this.navCtrl.pop();
         }
       },

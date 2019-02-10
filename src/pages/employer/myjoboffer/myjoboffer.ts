@@ -47,7 +47,7 @@ export class EployerJobOffer {
   }
 
   gotoDetails(item) {
-    this.navCtrl.push("JobOfferDetails", { jobOfferId: item.JobOfferId });
+    this.navCtrl.push("JobOfferDetails", { jobOfferId: item.JobofferId });
   }
   getActiveCategories() {
     this._dataContext.GetActiveCategories()
@@ -71,6 +71,9 @@ export class EployerJobOffer {
         if (response.length > 0) {
           this.isAvailable = true;
           this.employeeJobOfferList = response;
+          this.employeeJobOfferList.forEach(element => {
+            element.PublishedDate = moment(element.PublishedDate).format("DD MMM YYYY");
+          });
           this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
         }
         else {

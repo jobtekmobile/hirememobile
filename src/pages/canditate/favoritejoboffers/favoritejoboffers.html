@@ -30,9 +30,9 @@
       <ion-card class="job-card-con" *ngFor="let item of myFavListByCategoryId;let i = index">
         <ion-item class="">
           <ion-avatar item-start class="avatar-top">
-            <img class="img-size" *ngIf="item.Employer.ProfilePicUrl == '' && item.Employer.Gender == 1" src="data:image/png;base64,{{item.Employer.ProfilePicUrl}}"
+            <img class="img-size" *ngIf="item.Employer.ProfilePicUrl == '' && item.Employer.Gender == 1" src="assets/imgs/maledefault.svg"
             />
-            <img class="img-size" *ngIf="item.Employer.ProfilePicUrl == '' && item.Employer.Gender == 2" src="data:image/png;base64,{{item.Employer.ProfilePicUrl}}"
+            <img class="img-size" *ngIf="item.Employer.ProfilePicUrl == '' && item.Employer.Gender == 2" src="assets/imgs/femaledefault.svg"
             />
             <img class="img-size" *ngIf="item.Employer.ProfilePicUrl != ''" src="data:image/png;base64,{{item.Employer.ProfilePicUrl}}"
             />
@@ -54,6 +54,7 @@
               <ion-col col-4 class="card-job-item-con">
                 <p class="req-type-color" *ngIf="item.StaffType == 1">( Individual )</p>
                 <p class="req-type-color" *ngIf="item.StaffType == 2">( Agency )</p>
+                <p class="req-type-color" *ngIf="item.StaffType == 0">( Doesn't Matter )</p>
               </ion-col>
             </ion-row>
             <p class="para-overflow-hidden">
@@ -95,12 +96,12 @@
               Delete
             </button>
           </ion-col>
-          <ion-col class="action-con-inner">
+          <!-- <ion-col class="action-con-inner">
             <button ion-button clear small icon-start class="action-btn" (click)="addNote(item.JobOfferId)">
               <ion-icon name="create"></ion-icon>
               Note
             </button>
-          </ion-col>
+          </ion-col> -->
           <ion-col text-right class="action-con-inner">
             <button ion-button clear small icon-start class="action-btn" (click)="selectedFavDetails(item.JobOfferId)">
               <ion-icon name="checkmark"></ion-icon>
@@ -113,7 +114,7 @@
   </ion-row>
   <ion-row *ngIf="!isAvailable && myFavListByCategoryId.length==0">
     <ion-col col-12 text-center>
-      <p class="not-available">No result found!</p>
+        <img src="assets/imgs/no-record-found.png">
     </ion-col>
   </ion-row>
 </ion-content>

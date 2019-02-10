@@ -69,12 +69,12 @@ export class ManagemysettingPage {
   getProfileDetails() {
 
 
-    if (this.loggedInUserDetails.type = "Employee") {
+    if (this.loggedInUserDetails.type == "Employee") {
       this.getEmployeeProfile();
-    } else if (this.loggedInUserDetails.type = "Employer") {
+    } else if (this.loggedInUserDetails.type == "Employer") {
       this.getEmployerProfile();
-    } else if (this.loggedInUserDetails.type = "Agency") {
-
+    } else if (this.loggedInUserDetails.type == "Agency") {
+      this.getAgencyProfile();
     }
 
 
@@ -128,6 +128,51 @@ export class ManagemysettingPage {
 
   getEmployerProfile() {
     this._dataContext.GetEmployerProfileDetails(this.loggedInUserDetails.userId)
+      .subscribe(response => {
+        this.userDetails = response;
+        console.log(this.userDetails);
+
+        for (let i = 0; i < this.userDetails.ContactOption.length; i++) {
+
+          switch (this.userDetails.ContactOption[i]) {
+            case "Email":
+              this.isEmailSelected = true;
+              break;
+            case "Phone":
+              this.isPhoneSelected = true;
+              break;
+          }
+
+        }
+
+
+
+
+        if (this.userDetails.CountryId != undefined && this.userDetails.CountryId != "") {
+          this.selectedCountry = this.userDetails.CountryId;
+        }
+        this.selectedCity = this.userDetails.CityId;
+        this.selectedDistrict = this.userDetails.DistrictId;
+        this.getCountriesDetails();
+        this.getCitiesDetails();
+        this.getDistrictDetails();
+
+        // if (response.length > 0) {
+        //   // this.notificationList = response;
+        //   // this.notificationList.forEach(element => {
+        //   //   element.CreatedDate = moment(element.CreatedDate).format("DD-MMM-YYYY");
+        //   //});
+        // }
+        // else
+        //   this.commonService.onMessageHandler("No notification found.", 0);
+      },
+        error => {
+          this.commonService.onMessageHandler("Failed to retrieve profile details. Please try again", 0);
+        });
+  }
+
+  getAgencyProfile() {
+    this._dataContext.GetAgencyProfileDetails(this.loggedInUserDetails.userId)
       .subscribe(response => {
         this.userDetails = response;
         console.log(this.userDetails);

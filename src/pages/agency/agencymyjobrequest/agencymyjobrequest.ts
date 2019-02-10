@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import { CommonServices } from '../../../providers/common.service';
 import { DataContext } from '../../../providers/dataContext.service';
 import { ImageViewerController } from 'ionic-img-viewer';
+import moment from 'moment';
 /**
  * Generated class for the AgencymyjobrequestPage page.
  *
@@ -69,6 +70,10 @@ export class AgencymyjobrequestPage {
       .subscribe(response => {
         console.log(response);
         this.allJobRequestList = response;
+        this.allJobRequestList.forEach(element => {
+          element.PublishedDate = moment(element.PublishedDate).format("DD-MMM-YYYY");
+          
+        });  
         this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
         // if (response.length > 0) {
         //   this.categories = response;

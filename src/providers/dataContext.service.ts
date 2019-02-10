@@ -319,5 +319,31 @@ export class DataContext {
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
+    //{employerId}/JobRequests/{jobRequestId}/JobRequestNotes"
+    GetNotesforJobRequest = (employerId: number,jobequestId:number): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getNoteForEmployer").toString() + "/" + employerId + "/JobRequests/"+jobequestId+"/JobRequestNotes")
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    SaveNotesforJobRequest= (craeteNoteObj:any,employerId: number,jobequestId:number): Observable<any> => {
+        return this._http.post(this.commonService.getApiControllerName("saveNotesforJobRequest").toString() + "/"+employerId+"/JobRequests/" + jobequestId +"/JobRequestNotes", craeteNoteObj)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    GetAgencyNotificationDetails= (agencyId: number): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getAgencyNotificationDetails").toString() + "/" + agencyId + "/Notifications")
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    GetAgencyProfileDetails= (agencyId: number): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getAgencyProfileDetails").toString() + "/" + agencyId + "/MyProfile")
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
 
+    getAgencyDetails(agencyId: number){
+        return this._http.get(this.commonService.getApiControllerName("getAgencyDetails").toString() + "/Agencies/" + agencyId )
+        .map((response: Response) => response.json())
+        .catch(this._http.handleError);
+    }
 }

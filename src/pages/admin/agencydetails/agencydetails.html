@@ -18,22 +18,22 @@
   <ion-card class="job-card-con">
     <ion-item class="">
       <ion-avatar item-start class="avatar-top">
-        <!-- <img class="img-size" #myImage (click)="presentImage(myImage)" *ngIf="userDetails.profile_pic != '' && userDetails.profile_pic != null" src="data:image/png;base64,{{userDetails.profile_pic}}" /> -->
-        <img class="img-size" src="assets/imgs/maledefault.svg" />
+         <img class="img-size" #myImage (click)="presentImage(myImage)" *ngIf="agencyDetails.AgencyLogo != '' && agencyDetails.AgencyLogo != null" src="data:image/png;base64,{{agencyDetails.AgencyLogo}}" />
+        <img class="img-size" src="assets/imgs/maledefault.svg" *ngIf="agencyDetails.AgencyLogo == '' || agencyDetails.AgencyLogo == null" />
 
       </ion-avatar>
       <div class="card">
         <h4 class="para-overflow-hidden margin-bottom-5">
           <span class="margin-right-10 font-weight-500 font-size-13 ">
-            ss fsfsf</span>
+            {{agencyDetails.AgencyName}}</span>
 
         </h4>
         <h4 class="para-overflow-hidden margin-bottom-5">
-          <span class="margin-right-10 font-weight-500 font-size-13 "> gvngh@rdgrdh.gu</span>
+          <span class="margin-right-10 font-weight-500 font-size-13 "> {{agencyDetails.EmailId}}</span>
 
         </h4>
         <h4 class="para-overflow-hidden margin-bottom-5">
-          <span class="margin-right-10 font-weight-500 font-size-13 "> 999999999</span>
+          <span class="margin-right-10 font-weight-500 font-size-13 "> {{agencyDetails.PhoneNo}}</span>
 
         </h4>
 
@@ -44,15 +44,15 @@
     </ion-item>
     <ion-row no-padding class="action-con">
       <ion-col class="action-con-image">
-        <!-- <img src="data:image/png;base64,{{userDetails.id_proof}}" *ngIf="userDetails.id_proof != '' && userDetails.id_proof != null" #myImage1 (click)="presentImage(myImage1)" class="action-con-image-size"> -->
-        <img src="assets/imgs/noidcard.jpg" class="action-con-image-size">
+        <img src="data:image/png;base64,{{agencyDetails.IdProofDoc}}" *ngIf="agencyDetails.IdProofDoc != '' && agencyDetails.IdProofDoc != null" #myImage1 (click)="presentImage(myImage1)" class="action-con-image-size">
+        <img src="assets/imgs/noidcard.jpg" *ngIf="agencyDetails.IdProofDoc == '' || agencyDetails.IdProofDoc == null" class="action-con-image-size">
 
 
       </ion-col>
 
       <ion-col text-right class="action-con-image">
-        <!-- <img src="data:image/png;base64,{{userDetails.id_proof}}" *ngIf="userDetails.id_proof != '' && userDetails.id_proof != null" #myImage2 (click)="presentImage(myImage2)" class="action-con-image-size"> -->
-        <img src="assets/imgs/noidcard.jpg" class="action-con-image-size">
+        <img src="data:image/png;base64,{{agencyDetails.IdProofDoc1}}" *ngIf="agencyDetails.IdProofDoc1 != '' && agencyDetails.IdProofDoc1 != null" #myImage2 (click)="presentImage(myImage2)" class="action-con-image-size">
+        <img src="assets/imgs/noidcard.jpg" *ngIf="agencyDetails.IdProofDoc1 == '' || agencyDetails.IdProofDoc1 == null" class="action-con-image-size">
 
       </ion-col>
     </ion-row>
@@ -61,64 +61,64 @@
     <ion-item>
       Manager first name
       <ion-note item-end>
-        Manager first name
+          {{agencyDetails.ManagerFirstName}}
       </ion-note>
     </ion-item>
 
     <ion-item>
       Manager last name
       <ion-note item-end>
-        Manager last name
+          {{agencyDetails.ManagerLastName}}
       </ion-note>
     </ion-item>
     <ion-item>
       Manager DOB
       <ion-note item-end>
-        Poisonous
+          {{agencyDetails.ManagerDOB}}
       </ion-note>
     </ion-item>
     <ion-item>
       Company Activity Desc
     </ion-item>
     <ion-item>
-      Company Activity Desc
-      <ion-note item-end>
-        Nous sommes une agence de placement qui formons en interne des profils de confiance pour vous garantir de la
-        sécurité
+     
+      <ion-note item-end style="padding-left:10px;">
+          {{agencyDetails.CompanyActivityDesc}}
       </ion-note>
     </ion-item>
     <ion-item>
-      Potions
+      Country
       <ion-note item-end>
-        Country
-      </ion-note>
-    </ion-item>
-
-    <ion-item>
-      Potions
-      <ion-note item-end>
-        City
+          {{agencyDetails.Country}}
       </ion-note>
     </ion-item>
 
     <ion-item>
-      Potions
+      City
       <ion-note item-end>
+          {{agencyDetails.City}}
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
         District
+      <ion-note item-end>
+        {{agencyDetails.District}}
       </ion-note>
     </ion-item>
 
     <ion-item>
       Profile Verified
       <ion-note item-end>
-        Manager last name
+          <span *ngIf="agencyDetails.ProfileVerified">Verified</span>
+          <span *ngIf="!agencyDetails.ProfileVerified">Not Verified</span>
       </ion-note>
     </ion-item>
 
     <ion-item>
       Created Date
       <ion-note item-end>
-        Manager last name
+          {{agencyDetails.CreatedDate}}
       </ion-note>
     </ion-item>
 

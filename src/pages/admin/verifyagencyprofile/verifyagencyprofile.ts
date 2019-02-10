@@ -81,6 +81,6 @@ export class VerifyagencyprofilePage {
     confirm.present();
   }
   gotoDetails(item){
-    this.navCtrl.push("JobRequestDescDetails", { AgencyId: item.AgencyId });
+    this.navCtrl.push("AgencydetailsPage", { AgencyId: item.AgencyId });
   }
 }

@@ -97,8 +97,12 @@ export class CommonServices {
     this._apiList["deleteEmployerJobOffer"] = { controller: "Employers", method: "DeleteFavouriteJobRequest", api: "api/Employers" };
     this._apiList["getEmployerProfileDetails"] = { controller: "Employers", method: "MyProfile", api: "api/Employers" };
     this._apiList["getEmployerNotificationDetails"] = { controller: "Employers", method: "Notifications", api: "api/Employers" };
-
-
+    this._apiList["getNoteForEmployer"] = { controller: "Employers", method: "GetJobRequestNotes", api: "api/Employers" };
+    this._apiList["saveNotesforJobRequest"] = { controller: "Employers", method: "SaveJobRequestNote", api: "api/Employers" };
+    this._apiList["getAgencyNotificationDetails"] = { controller: "Agencies", method: "Notifications", api: "api/Agencies" };
+    this._apiList["getAgencyProfileDetails"] = { controller: "Agencies", method: "MyProfile", api: "api/Agencies" };
+    this._apiList["getAgencyDetails"] = { controller: "jobtekapi", method: "GetAgencyDetails", api: "api/jobtekapi" };
+    
   }
   //Clear all cache
   clearAllCache() {
