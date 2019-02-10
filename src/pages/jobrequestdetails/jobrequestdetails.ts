@@ -28,7 +28,6 @@ export class JobRequestDescDetails {
   }
   ionViewDidEnter() {
     this.getLoggedInUserDetailsFromCache();
-    this.getJobRequestDescription();
   }
   getLoggedInUserDetailsFromCache() {
     //this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));;
@@ -36,6 +35,7 @@ export class JobRequestDescDetails {
     .then((result) => {
       if (result && result.userId) {
         this.userDetails = result;
+        this.getJobRequestDescription();
       }
       else {
         this.navCtrl.setRoot("LoginPage");

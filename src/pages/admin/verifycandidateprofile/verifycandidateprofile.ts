@@ -15,14 +15,25 @@ export class VerifycandidateprofilePage {
 
   _imageViewerCtrl: ImageViewerController;
   candidates: any = [];
+  loggedInUserDetails: any = {};
   constructor(public navCtrl: NavController, public navParams: NavParams, imageViewerCtrl: ImageViewerController,
     public _dataContext: DataContext, private commonService: CommonServices, public alertCtrl: AlertController) {
     this._imageViewerCtrl = imageViewerCtrl;
-    this.getUnverifiedAgenciesForAdmin();
   }
-
   ionViewDidLoad() {
-    console.log('ionViewDidLoad VerifycandidateprofilePage');
+    this.getLoggedInUserDetailsFromCache();
+  }
+  getLoggedInUserDetailsFromCache() {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+      .then((result) => {
+        if (result && result.userId) {
+          this.loggedInUserDetails = result;
+          this.getUnverifiedAgenciesForAdmin();
+        }
+        else {
+          this.navCtrl.setRoot("LoginPage");
+        }
+      });
   }
   presentImage(myImage) {
 

@@ -12,15 +12,27 @@ export class AgencyverifycandidatePage {
 
   _imageViewerCtrl: ImageViewerController;
   public candidates: Array<any> = [];
-
+  userDetails:any={};
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     public _dataContext: DataContext, private commonService: CommonServices,imageViewerCtrl: ImageViewerController) {
       this._imageViewerCtrl = imageViewerCtrl;
   }
 
   ionViewWillEnter() {
-    //this.getActiveCategories();
-    this.getMyCandidates();
+    this.getLoggedInUserDetailsFromCache();
+  }
+  getLoggedInUserDetailsFromCache() {
+    //this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));;
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+      .then((result) => {
+        if (result && result.userId) {
+          this.userDetails = result;
+          this.getMyCandidates();
+        }
+        else {
+          this.navCtrl.setRoot("LoginPage");
+        }
+      });
   }
   //   getActiveCategories() {
   //     this._dataContext.GetActiveCategories()
@@ -49,7 +61,7 @@ export class AgencyverifycandidatePage {
 
   //   }
   getMyCandidates() {
-    this._dataContext.GetMyCandidatesForAgency(1)
+    this._dataContext.GetMyCandidatesForAgency(this.userDetails.userId)
       .subscribe(response => {
         console.log(response);
         this.candidates = response;

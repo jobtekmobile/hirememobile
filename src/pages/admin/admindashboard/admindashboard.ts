@@ -12,12 +12,14 @@ import { CommonServices } from '../../../providers/common.service';
 export class AdmindashboardPage {
     @ViewChild('doughnutCanvas') doughnutCanvas;
     @ViewChild('lineCanvas') lineCanvas;
-    tabValue: number;
     doughnutChart: any;
     lineChart: any;
     doughnutdata: any = [];
     linedata: any = [];
+    tapOption = [];
+    tabValue: string;
     year: string = "2018";
+    loggedInUserDetails: any = {};
     colors = [
         "#2E8B57",
         "#f0ad4e",
@@ -50,8 +52,24 @@ export class AdmindashboardPage {
         "#6a6a92"
     ];
     constructor(public navCtrl: NavController, public navParams: NavParams, public _dataContext: DataContext, private commonService: CommonServices) {
-        this.tabValue = 0;
-        this.getJobRequestCountsForAdmin();
+        this.tapOption = [{ Value: "JOB REQUEST", Key: "JobRequest" }, { Value: "JOB OFFER", Key: "JobOffer" }];
+
+    }
+    ionViewDidEnter() {
+        this.tabValue = "JobRequest";
+        this.getLoggedInUserDetailsFromCache();
+    }
+    getLoggedInUserDetailsFromCache() {
+        this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+            .then((result) => {
+                if (result && result.userId) {
+                    this.loggedInUserDetails = result;
+                    this.getJobRequestCountsForAdmin();
+                }
+                else {
+                    this.navCtrl.setRoot("LoginPage");
+                }
+            });
     }
     getJobOfferDoughnotDataForAdmin() {
         this._dataContext.GetJobOfferDoughnotDataForAdmin()
@@ -90,7 +108,7 @@ export class AdmindashboardPage {
                 this.linedata = response;
                 this.setLinechart();
                 this.getJobRequestDoughnotDataForAdmin();
-                
+
             },
                 error => {
                     this.commonService.onMessageHandler("Failed to retrieve countries details. Please try again", 0);
@@ -98,7 +116,6 @@ export class AdmindashboardPage {
     }
 
     setDoughnut() {
-
         let doughnutdatasets = [];
         let doughnutlabels = [];
         let doughnutcolors = [];
@@ -123,7 +140,6 @@ export class AdmindashboardPage {
         });
     }
     setLinechart() {
-
         let linelabels = [];
         let linedatasets = [];
 
@@ -170,16 +186,17 @@ export class AdmindashboardPage {
 
         });
     }
-
-    ionViewDidLoad() {
-
-    }
-
-    tabSelection(option) {
-if(option==0){
-    this.getJobRequestCountsForAdmin();
-}else{
-    this.getJobOfferCountsForAdmin();
-}
+    //While Tab change
+    tabSelection(event, option) {
+        this.linedata = [];
+        this.doughnutdata = [];
+        if (option == 0) {
+            this.tabValue = "JobRequest";
+            this.getJobRequestCountsForAdmin();
+        }
+        else {
+            this.tabValue = "JobOffer";
+            this.getJobOfferCountsForAdmin();
+        }
     }
 }

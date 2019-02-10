@@ -19,9 +19,11 @@ export class LoginPage {
     public events: Events,
     public _dataContext: DataContext,
     private commonService: CommonServices) {
-
   }
 
+  ionViewDidEnter() {
+    this.commonService.clearAllCache();
+  }
   onLogin() {
     this._dataContext.LoginUser(this.login)
       .subscribe(response => {
@@ -31,10 +33,9 @@ export class LoginPage {
         error => {
           this.commonService.onMessageHandler("Failed to login. Please try again", 0);
         });
-
   }
   onSetAuthToken(response) {
-    this.commonService.setStoreDataIncache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"),response);
+    this.commonService.setStoreDataIncache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"), response);
     this.gotoDashboard();
   }
   gotoDashboard() {

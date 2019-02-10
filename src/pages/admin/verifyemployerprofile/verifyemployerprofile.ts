@@ -12,23 +12,34 @@ import { AlertController } from 'ionic-angular';
   templateUrl: 'verifyemployerprofile.html',
 })
 export class VerifyemployerprofilePage {
-
+  loggedInUserDetails: any = {};
   _imageViewerCtrl: ImageViewerController;
   employeers: any = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams,imageViewerCtrl: ImageViewerController,
+  constructor(public navCtrl: NavController, public navParams: NavParams, imageViewerCtrl: ImageViewerController,
     public _dataContext: DataContext, private commonService: CommonServices, public alertCtrl: AlertController) {
     this._imageViewerCtrl = imageViewerCtrl;
-    this.getUnVerifiedEmployersForAdmin();
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad VerifycandidateprofilePage');
+    this.getLoggedInUserDetailsFromCache();
+  }
+  getLoggedInUserDetailsFromCache() {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+      .then((result) => {
+        if (result && result.userId) {
+          this.loggedInUserDetails = result;
+          this.getUnVerifiedEmployersForAdmin();
+        }
+        else {
+          this.navCtrl.setRoot("LoginPage");
+        }
+      });
   }
   presentImage(myImage) {
-  
+
     const imageViewer = this._imageViewerCtrl.create(myImage);
     imageViewer.present();
- 
+
     // setTimeout(() => imageViewer.dismiss(), 1000);
     // imageViewer.onDidDismiss(() => alert('Viewer dismissed'));
   }

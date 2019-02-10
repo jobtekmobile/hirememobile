@@ -54,7 +54,6 @@ export class FavoritejoboffersPage {
           this.navCtrl.setRoot("LoginPage");
         }
       });
-
   }
   //Get all active categories for search job
   getActiveCategories() {
