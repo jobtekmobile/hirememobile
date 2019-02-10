@@ -19,10 +19,11 @@ export class MyApp {
   employerpages: Array<{ title: string, component: any, imagepath: string }>;
   agencypages: Array<{ title: string, component: any, imagepath: string }>;
   adminpages: Array<{ title: string, component: any, imagepath: string }>;
-
+  userDetails: any = {};
   constructor(private commonService: CommonServices, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public events: Events) {
     this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
       .then((result) => {
+        this.userDetails = result;
         if (result && result.userId) {
           if (result.type == "Admin") {
             this.pages = this.adminpages;
@@ -35,7 +36,13 @@ export class MyApp {
           } else {
             this.pages = this.agencypages;
           }
-          this.rootPage = "DashboardPage";
+          if (result.type == "Admin") {
+            this.rootPage = "AdmindashboardPage";
+          }
+          else {
+            this.rootPage = "DashboardPage";
+          }
+         
         }
         else {
           this.rootPage = "LoginPage";

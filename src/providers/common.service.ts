@@ -28,6 +28,8 @@ export class CommonServices {
     private cache: CacheService,
   ) {
     this.apiServiceUrl = "http://localhost:60114/"; //PG Api
+
+    //this.apiServiceUrl = "http://40.89.160.98/";
     this.appTtitle = "";
     this._appVersion = "1.0.6";
 

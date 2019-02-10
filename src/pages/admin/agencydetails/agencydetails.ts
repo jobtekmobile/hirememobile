@@ -2,12 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DataContext } from '../../../providers/dataContext.service';
 import { CommonServices } from '../../../providers/common.service';
-/**
- * Generated class for the AgencydetailsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -26,7 +21,10 @@ export class AgencydetailsPage {
     this._dataContext.getAgencyDetails(this.agencyId)
       .subscribe(response => {
         this.agencyDetails = response;
-        
+        if (this.agencyDetails.CreatedDate != "" || this.agencyDetails.CreatedDate != null)
+          this.agencyDetails.CreatedDate = moment(this.agencyDetails.CreatedDate).format("DD MMM YYYY");
+          if (this.agencyDetails.ManagerDOB != "" || this.agencyDetails.ManagerDOB != null)
+          this.agencyDetails.ManagerDOB = moment(this.agencyDetails.ManagerDOB).format("DD MMM YYYY");
         // this.agencyDetails.forEach(element => {
         //   element.PublishedDate = moment(element.PublishedDate).format("DD MMM YYYY");
         // });

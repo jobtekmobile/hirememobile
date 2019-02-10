@@ -25,11 +25,11 @@ export class LoginPage {
   onLogin() {
     this._dataContext.LoginUser(this.login)
       .subscribe(response => {
-        this.onSetAuthToken({ userId: response.UserId, type: response.Role });
+        this.onSetAuthToken({ userId: response.UserId, type: response.Role,email:response.Email,userName:response.UserName });
         this.events.publish('user:loginsuccessfully', response.Role, Date.now());
       },
         error => {
-          this.commonService.onMessageHandler("Failed to update details. Please try again", 0);
+          this.commonService.onMessageHandler("Failed to login. Please try again", 0);
         });
 
   }
