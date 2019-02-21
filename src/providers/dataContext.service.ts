@@ -366,4 +366,15 @@ export class DataContext {
         .map((response: Response) => response.json())
         .catch(this._http.handleError);
     }
+
+    updateEmployerProfile = (profileId, profileObj): Observable<any> => {
+        return this._http.put(this.commonService.getApiControllerName("updateEmployerProfile").toString() + "/" + profileId + "/MyProfile/?employerId=" + profileId, profileObj)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    updateAgencyProfile = (profileId, profileObj): Observable<any> => {
+        return this._http.put(this.commonService.getApiControllerName("updateAgencyProfile").toString() + "/" + profileId + "/MyProfile/?agencyId=" + profileId, profileObj)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
 }

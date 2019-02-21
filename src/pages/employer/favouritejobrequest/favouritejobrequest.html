@@ -26,9 +26,9 @@
         <ion-card class="job-card-con" *ngFor="let item of myJobRequestListByCategoryId; let i = index">
           <ion-item class="">
             <ion-avatar item-start class="avatar-top">
-              <img class="img-size" *ngIf="item.Candidate.Gender == 1" [src]="item.ProfilePicUrl && item.ProfilePicUrl!=null?item.ProfilePicUrl:'assets/imgs/male.svg'"
+              <img class="img-size" *ngIf="item.Candidate.Gender == 1" [src]="item.ProfilePicUrl && item.ProfilePicUrl!=null?item.ProfilePicUrl:'assets/imgs/maledefault.svg'"
               />
-              <img class="img-size" *ngIf="item.Candidate.Gender == 2" [src]="item.ProfilePicUrl && item.ProfilePicUrl!=null?item.ProfilePicUrl:'assets/imgs/woman.svg'"
+              <img class="img-size" *ngIf="item.Candidate.Gender == 2" [src]="item.ProfilePicUrl && item.ProfilePicUrl!=null?item.ProfilePicUrl:'assets/imgs/femaledefault.svg'"
               />
               <img src="assets/imgs/verified.png" class="verified-img" *ngIf="item.ProfileVerified" alt="">
             </ion-avatar>

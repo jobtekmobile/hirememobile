@@ -66,6 +66,11 @@
           </ion-card>
         </ion-col>
       </ion-row>
+      <ion-row *ngIf="!isAvailable && (categories.length == 0 || selectedJobByCategoryId.length == 0)">
+          <ion-col col-12>
+            <p class="not-available">No result found!</p>
+          </ion-col>
+        </ion-row>
     </ion-grid>
   </div>
 </ion-content>

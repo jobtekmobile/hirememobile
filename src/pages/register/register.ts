@@ -5,6 +5,8 @@ import { DataContext } from '../../providers/dataContext.service';
 import * as $ from 'jquery';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import moment from 'moment';
+import { File } from '@ionic-native/file';
+import { ChangeDetectorRef } from '@angular/core';
 /**
  * Generated class for the RegisterPage page.
  *
@@ -16,7 +18,7 @@ import moment from 'moment';
 @Component({
   selector: 'page-register',
   templateUrl: 'register.html',
-  providers: [Camera]
+  providers: [Camera, File]
 })
 export class RegisterPage {
   @ViewChild('registerSlider') slider: Slides;
@@ -29,11 +31,11 @@ export class RegisterPage {
   securityQuestions: any = [];
   maxDate: string;
   images: any = [
-    { id: 0, image: "", file: "" },
-    { id: 1, image: "", file: "" },
-    { id: 2, image: "", file: "" },
+    { id: 0, image: "", file: "", fileName: "" },
+    { id: 1, image: "", file: "", fileName: "" },
+    { id: 2, image: "", file: "", fileName: "" },
   ];
-  constructor(public actionSheetCtrl: ActionSheetController, private camera: Camera, public navCtrl: NavController, public navParams: NavParams, public _dataContext: DataContext, private commonService: CommonServices) {
+  constructor(private cdr: ChangeDetectorRef,private file: File, public actionSheetCtrl: ActionSheetController, private camera: Camera, public navCtrl: NavController, public navParams: NavParams, public _dataContext: DataContext, private commonService: CommonServices) {
   }
 
   ionViewDidLoad() {
@@ -52,9 +54,9 @@ export class RegisterPage {
   }
   register() {
     if (this.validateFirstSlide() && this.validateSecondSlide()) {
-      this.registerObj.profile_pic_base64 = this.images[0].file.substr(this.images[0].file.indexOf(',') + 1);
-      this.registerObj.id_proof_base64 = this.images[0].file.substr(this.images[1].file.indexOf(',') + 1);
-      this.registerObj.id_proof_back_base64 = this.images[0].file.substr(this.images[2].file.indexOf(',') + 1);
+      this.registerObj.profile_pic_base64 = this.images[0].file.substr(this.images[0].file.indexOf(',') + 1, this.images[0].file.length);
+      this.registerObj.id_proof_base64 = this.images[0].file.substr(this.images[1].file.indexOf(',') + 1, this.images[1].file.length);
+      this.registerObj.id_proof_back_base64 = this.images[0].file.substr(this.images[2].file.indexOf(',') + 1, this.images[2].file.length);
       this._dataContext.RegisterUser(this.registerObj)
         .subscribe(response => {
           this.commonService.onMessageHandler("Successfully registered", 1);
@@ -95,10 +97,10 @@ export class RegisterPage {
   onSelectedCity() {
     this.getActiveDistricts();
   }
-    //validate only number
-    onlyNumber(event) {
-      return this.commonService.validateOnlyNumber(event);
-    }
+  //validate only number
+  onlyNumber(event) {
+    return this.commonService.validateOnlyNumber(event);
+  }
   getActiveDistricts() {
     this._dataContext.GetActiveDistricts(this.registerObj.CityId)
       .subscribe(responnse => {
@@ -253,6 +255,7 @@ export class RegisterPage {
                 element.file = reader.result;
               }
             });
+            this.cdr.detectChanges();
           }
           else {
             this.commonService.onMessageHandler("Sorry! you can upload only .png, .jpg, .jpeg files only.", 0);

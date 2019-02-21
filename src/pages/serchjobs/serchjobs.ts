@@ -30,7 +30,7 @@ export class SearchjobsPage {
   public showRightButton: boolean;
   isAvailable: boolean = true;
   selectedJobByCategoryId: any = [];
-  jobtitle:string;
+  jobtitle: string;
   constructor(
     public injector: Injector,
     public navCtrl: NavController,
@@ -43,7 +43,7 @@ export class SearchjobsPage {
   ionViewWillEnter() {
     this.getActiveCategories();
   }
-  
+
   //Get all active categories for search job
   getActiveCategories() {
     this._dataContext.GetActiveCategories()
@@ -51,8 +51,16 @@ export class SearchjobsPage {
         if (response.length > 0) {
           this.isAvailable = true;
           this.categories = response;
+          this.categories.forEach(element => {
+            element.IconImage = element.IconImage.substr(1, element.IconImage.length)
+            if (element.Jobs.length > 0) {
+              element.Jobs.forEach(element1 => {
+                element1.IconImage = element1.IconImage.substr(1, element1.IconImage.length)
+              });
+            }
+          });
           this.selectedCategory = this.categories[0];
-          this.filterDataBySelectedCategory(this.categories[0].JobCategoryId,this.categories[0].CategoryName);
+          this.filterDataBySelectedCategory(this.categories[0].JobCategoryId, this.categories[0].CategoryName);
         }
         else {
           this.isAvailable = true;
@@ -72,7 +80,7 @@ export class SearchjobsPage {
     this.showRightButton = this.categories.length > 3;
   }
 
-  public filterDataBySelectedCategory(categoryId: number,categoryName:string): void {
+  public filterDataBySelectedCategory(categoryId: number, categoryName: string): void {
     // Handle what to do when a category is selected
     this.isAvailable = true;
     this.jobtitle = categoryName;
@@ -84,6 +92,7 @@ export class SearchjobsPage {
     });
     if (this.selectedJobByCategoryId.length == 0)
       this.isAvailable = false;
+
   }
 
   // Method executed when the slides are changed
@@ -103,8 +112,8 @@ export class SearchjobsPage {
     this.slides.slidePrev();
   }
   //get selected job id and get all the published jobs.
-  gotoSelectedCategory(id,name) {
-    this.navCtrl.push("PublishedJob", { jobId: id,jobName:name });
+  gotoSelectedCategory(id, name) {
+    this.navCtrl.push("PublishedJob", { jobId: id, jobName: name });
   }
 
 }

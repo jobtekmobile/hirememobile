@@ -286,7 +286,20 @@ export class ManagemysettingPage {
 
 
   updateProfile() {
-    this.userDetails.ContactOption = [];
+    if (this.loggedInUserDetails.type == "Employee") {
+      this.updateEmployeeProfile();
+    } else if (this.loggedInUserDetails.type == "Employer") {
+      this.updateEmployerProfile();
+    } else if (this.loggedInUserDetails.type == "Agency") {
+      this.updateAgencyProfile();
+    }
+
+    
+  }
+
+
+updateEmployeeProfile(){
+  this.userDetails.ContactOption = [];
     if (this.isEmailSelected) {
       this.userDetails.ContactOption.push("Email");
     }
@@ -299,8 +312,11 @@ export class ManagemysettingPage {
     this._dataContext.updateProfile(this.loggedInUserDetails.userId, this.userDetails)
       .subscribe(response => {
 
-        console.log("-------");
-        console.log(response);
+        if (response.Status=="OK") {
+          this.commonService.onMessageHandler(response.Message, 1);
+        }else{
+          this.commonService.onMessageHandler(response.Message, 1);
+        }
         // if (response.length > 0) {
         //   // this.notificationList = response;
         //   // this.notificationList.forEach(element => {
@@ -313,10 +329,72 @@ export class ManagemysettingPage {
         error => {
           this.commonService.onMessageHandler("Failed to update details. Please try again", 0);
         });
-  }
+}
+
+updateEmployerProfile(){
+  this.userDetails.ContactOption = [];
+    if (this.isEmailSelected) {
+      this.userDetails.ContactOption.push("Email");
+    }
+    if (this.isPhoneSelected) {
+      this.userDetails.ContactOption.push("Phone");
+    }
 
 
 
+    this._dataContext.updateEmployerProfile(this.loggedInUserDetails.userId, this.userDetails)
+      .subscribe(response => {
 
+        if (response.Status=="OK") {
+          this.commonService.onMessageHandler(response.Message, 1);
+        }else{
+          this.commonService.onMessageHandler(response.Message, 1);
+        }
+        // if (response.length > 0) {
+        //   // this.notificationList = response;
+        //   // this.notificationList.forEach(element => {
+        //   //   element.CreatedDate = moment(element.CreatedDate).format("DD-MMM-YYYY");
+        //   //});
+        // }
+        // else
+        //   this.commonService.onMessageHandler("No notification found.", 0);
+      },
+        error => {
+          this.commonService.onMessageHandler("Failed to update details. Please try again", 0);
+        });
+}
+
+updateAgencyProfile(){
+  this.userDetails.ContactOption = [];
+    if (this.isEmailSelected) {
+      this.userDetails.ContactOption.push("Email");
+    }
+    if (this.isPhoneSelected) {
+      this.userDetails.ContactOption.push("Phone");
+    }
+
+
+
+    this._dataContext.updateAgencyProfile(this.loggedInUserDetails.userId, this.userDetails)
+      .subscribe(response => {
+
+        if (response.Status=="OK") {
+          this.commonService.onMessageHandler(response.Message, 1);
+        }else{
+          this.commonService.onMessageHandler(response.Message, 1);
+        }
+        // if (response.length > 0) {
+        //   // this.notificationList = response;
+        //   // this.notificationList.forEach(element => {
+        //   //   element.CreatedDate = moment(element.CreatedDate).format("DD-MMM-YYYY");
+        //   //});
+        // }
+        // else
+        //   this.commonService.onMessageHandler("No notification found.", 0);
+      },
+        error => {
+          this.commonService.onMessageHandler("Failed to update details. Please try again", 0);
+        });
+}
 
 }

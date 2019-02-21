@@ -12,8 +12,8 @@ export class JobOfferDetails {
   isAvailable: boolean = true;
   jobOfferId: number;
   publishedJobOfferDesc: any = null;
-  title :string;
-  userDetails:any={};
+  title: string;
+  userDetails: any = {};
   loggedInUserDetails: any = {};
   constructor(
     public navCtrl: NavController,
@@ -21,10 +21,10 @@ export class JobOfferDetails {
     public _dataContext: DataContext,
     private commonService: CommonServices,
     public alertCtrl: AlertController,
-    public events:Events
+    public events: Events
   ) {
     this.jobOfferId = this.navParam.get("jobOfferId");
-    
+
     this.userDetails = this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
   }
   ionViewDidEnter() {
@@ -33,15 +33,15 @@ export class JobOfferDetails {
   getLoggedInUserDetailsFromCache() {
     //this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));;
     this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
-    .then((result) => {
-      if (result && result.userId) {
-        this.loggedInUserDetails = result;
-        this.getJobOfferDescription();
-      }
-      else {
-        this.navCtrl.setRoot("LoginPage");
-      }
-    });
+      .then((result) => {
+        if (result && result.userId) {
+          this.loggedInUserDetails = result;
+          this.getJobOfferDescription();
+        }
+        else {
+          this.navCtrl.setRoot("LoginPage");
+        }
+      });
   }
   getJobOfferDescription() {
     this._dataContext.GetJobOfferDescription(this.jobOfferId)
@@ -50,7 +50,13 @@ export class JobOfferDetails {
           this.publishedJobOfferDesc = response;
           this.title = this.publishedJobOfferDesc.Job.JobName;
           //if (this.publishedJobOfferDesc.Employer)
-            this.publishedJobOfferDesc.Disponibility = moment(this.publishedJobOfferDesc.Disponibility).format("DD-MMM-YYYY");
+          this.publishedJobOfferDesc.Disponibility = moment(this.publishedJobOfferDesc.Disponibility).format("DD-MMM-YYYY");
+          this.publishedJobOfferDesc.JobOfferJobTasks.forEach(element => {
+            element.JobTask.IconImage = element.JobTask.IconImage.substr(1, element.JobTask.IconImage.length)
+            element.JobTask.SubTasks.forEach(element1 => {
+              element1.IconImage = element1.IconImage.substr(1, element1.IconImage.length)
+            });
+          });
         }
         else
           this.commonService.onMessageHandler("No job offer details available.", 0);
@@ -65,9 +71,9 @@ export class JobOfferDetails {
       .subscribe(response => {
         if (response.Status == "OK") {
           this.commonService.onMessageHandler(response.Message, 1);
-         // this.getUnverifiedJobOffersForAdmin();
-         this.events.publish('jobofferdetailpage',Date());
-         this.navCtrl.pop();
+          // this.getUnverifiedJobOffersForAdmin();
+          this.events.publish('jobofferdetailpage', Date());
+          this.navCtrl.pop();
         }
       },
         error => {

@@ -29,7 +29,8 @@ export class JobCategory {
   public showLeftButton: boolean;
   public showRightButton: boolean;
   selectedJobByCategoryId: any = [];
-  jobtitle:string;
+  isAvailable: boolean = true;
+  jobtitle: string;
   constructor(
     public injector: Injector,
     public navCtrl: NavController,
@@ -44,8 +45,16 @@ export class JobCategory {
     if (this.categories.length == 0)
       this.getActiveCategories();
     else {
+      this.categories.forEach(element => {
+        element.IconImage = element.IconImage.substr(1, element.IconImage.length)
+        if (element.Jobs.length > 0) {
+          element.Jobs.forEach(element1 => {
+            element1.IconImage = element1.IconImage.substr(1, element1.IconImage.length)
+          });
+        }
+      });
       this.selectedCategory = this.categories[0];
-      this.filterDataBySelectedCategory(this.categories[0].JobCategoryId,this.categories[0].CategoryName);
+      this.filterDataBySelectedCategory(this.categories[0].JobCategoryId, this.categories[0].CategoryName);
     }
   }
   //Get all active categories for search job
@@ -53,12 +62,29 @@ export class JobCategory {
     this._dataContext.GetActiveCategories()
       .subscribe(response => {
         if (response.length > 0) {
+          this.isAvailable = true;
           this.categories = response;
+          this.categories.forEach(element => {
+            // element.IconImage = element.IconImage.substr(1, element.IconImage.length)
+            // if (element.Jobs.length > 0) {
+            //   element.Jobs.forEach(element1 => {
+            //     element1.IconImage = element1.IconImage.substr(1, element1.IconImage.length)
+            //   });
+            // }
+            element.IconImage = element.IconImage.substr(1, element.IconImage.length)
+            if (element.Jobs.length > 0) {
+              element.Jobs.forEach(element1 => {
+                element1.IconImage = element1.IconImage.substr(1, element1.IconImage.length)
+              });
+            }
+          });
           this.selectedCategory = this.categories[0];
-          this.filterDataBySelectedCategory(this.categories[0].JobCategoryId,this.categories[0].CategoryName);
+          this.filterDataBySelectedCategory(this.categories[0].JobCategoryId, this.categories[0].CategoryName);
         }
-        else
+        else {
+          this.isAvailable = false;
           this.commonService.onMessageHandler("No category found.", 0);
+        }
       },
         error => {
           this.commonService.onMessageHandler("Failed to retrieve categories. Please try again", 0);
@@ -73,8 +99,9 @@ export class JobCategory {
     this.showRightButton = this.categories.length > 3;
   }
 
-  public filterDataBySelectedCategory(categoryId: number,categoryName:string): void {
+  public filterDataBySelectedCategory(categoryId: number, categoryName: string): void {
     this.jobtitle = categoryName;
+    this.isAvailable = true;
     // Handle what to do when a category is selected
     let pageNo = categoryId - 1;
     this.slides.slideTo(pageNo, 500);
@@ -82,6 +109,8 @@ export class JobCategory {
       if (item.JobCategoryId == categoryId)
         this.selectedJobByCategoryId = item.Jobs;
     });
+    if (this.selectedJobByCategoryId.length == 0)
+      this.isAvailable = false;
   }
 
   // Method executed when the slides are changed

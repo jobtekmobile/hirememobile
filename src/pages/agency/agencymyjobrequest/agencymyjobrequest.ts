@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Slides, ModalController, AlertController } from 'ionic-angular';
 import { CommonServices } from '../../../providers/common.service';
 import { DataContext } from '../../../providers/dataContext.service';
 import { ImageViewerController } from 'ionic-img-viewer';
@@ -28,8 +28,9 @@ export class AgencymyjobrequestPage {
   public showLeftButton: boolean;
   public showRightButton: boolean;
   selectedJobByCategoryId: Array<any> = [];
+  public modalCtrl: ModalController
   loggedInUserDetails:any={};
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public alerCtrl: AlertController,public navCtrl: NavController, public navParams: NavParams,
     public _dataContext: DataContext, private commonService: CommonServices, imageViewerCtrl: ImageViewerController) {
     this._imageViewerCtrl = imageViewerCtrl;
   }
@@ -71,7 +72,7 @@ export class AgencymyjobrequestPage {
     this.slides.slideTo(pageNo, 500);
     this.jobRequests = [];
     this.allJobRequestList.filter(item => {
-      if (item.Job.JobCategoryId == categoryId)
+      if (item.JobCategoryId == categoryId)
         this.jobRequests.push(item);
     });
 
@@ -128,5 +129,32 @@ export class AgencymyjobrequestPage {
   }
   gotoDetails(item) {
     this.navCtrl.push("JobRequestDescDetails", { jobRequestId: item.JobRequestId });
+  }
+  gotoCreate() {
+    this.navCtrl.push("JobCategory", { category: this.categories });
+  }
+  deleteSelectedJobRequests(id, index) {
+    let method = this.alerCtrl.create({
+      title: "Please Confirm!",
+      message: "Do you want to delete ?",
+      cssClass: 'alert-header-back-style',
+      buttons: [
+        {
+          text: 'CANCEL',
+          cssClass: 'cancel-btn-style',
+          handler: () => {
+            // return false;
+          }
+        },
+        {
+          text: "DELETE",
+          cssClass: 'ok-btn-style',
+          handler: () => {
+            this.commonService.onMessageHandler("API not implemented",1)
+          }
+        }
+      ]
+    });
+    method.present();
   }
 }

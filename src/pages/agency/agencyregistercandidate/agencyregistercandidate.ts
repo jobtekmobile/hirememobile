@@ -4,6 +4,8 @@ import { CommonServices } from '../../../providers/common.service';
 import { DataContext } from '../../../providers/dataContext.service';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import moment from 'moment';
+import { File } from '@ionic-native/file';
+import { ChangeDetectorRef } from '@angular/core';
 /**
  * Generated class for the AgencyregistercandidatePage page.
  *
@@ -15,7 +17,7 @@ import moment from 'moment';
 @Component({
   selector: 'page-agencyregistercandidate',
   templateUrl: 'agencyregistercandidate.html',
-  providers: [Camera]
+  providers: [Camera, File]
 })
 export class AgencyregistercandidatePage {
   @ViewChild('registercandidate') slider: Slides;
@@ -33,7 +35,7 @@ export class AgencyregistercandidatePage {
     { id: 1, image: "", file: "" },
     { id: 2, image: "", file: "" },
   ];
-  constructor(public actionSheetCtrl: ActionSheetController, private camera: Camera, public navCtrl: NavController, public navParams: NavParams, public _dataContext: DataContext, private commonService: CommonServices) {
+  constructor(private cdr: ChangeDetectorRef,private file: File, public actionSheetCtrl: ActionSheetController, private camera: Camera, public navCtrl: NavController, public navParams: NavParams, public _dataContext: DataContext, private commonService: CommonServices) {
   }
 
   ionViewDidLoad() {
@@ -63,9 +65,9 @@ export class AgencyregistercandidatePage {
   }
   onRegister() {
     if (this.validateFirstSlide() && this.validateSecondSlide()) {
-      this.registerObj.profile_pic_base64 = this.images[0].file.substr(this.images[0].file.indexOf(',') + 1);
-      this.registerObj.id_proof_base64 = this.images[0].file.substr(this.images[1].file.indexOf(',') + 1);
-      this.registerObj.id_proof1_base64 = this.images[0].file.substr(this.images[2].file.indexOf(',') + 1);
+      this.registerObj.profile_pic_base64 = this.images[0].file.substr(this.images[0].file.indexOf(',') + 1, this.images[0].file.length);
+      this.registerObj.id_proof_base64 = this.images[0].file.substr(this.images[1].file.indexOf(',') + 1, this.images[1].file.length);
+      this.registerObj.id_proof1_base64 = this.images[0].file.substr(this.images[2].file.indexOf(',') + 1, this.images[2].file.length);
       this._dataContext.RegisterCandidateByAgency(this.userDetails.userId, this.registerObj)
         .subscribe(response => {
           if (response.Status == "OK") {
@@ -248,6 +250,7 @@ export class AgencyregistercandidatePage {
                 element.file = reader.result;
               }
             });
+            this.cdr.detectChanges();
           }
           else {
             this.commonService.onMessageHandler("Sorry! you can upload only .png, .jpg, .jpeg files only.", 0);

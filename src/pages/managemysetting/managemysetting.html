@@ -79,14 +79,14 @@
 
     </ion-item>
     <ion-row no-padding class="action-con">
-      <ion-col class="action-con-image">
+      <ion-col class="action-con-image margin-auto">
         <img src="data:image/png;base64,{{userDetails.id_proof}}" *ngIf="userDetails.id_proof != '' && userDetails.id_proof != null" #myImage1 (click)="presentImage(myImage1)" class="action-con-image-size">
         <img src="assets/imgs/noidcard.jpg" *ngIf="userDetails.id_proof == '' || userDetails.id_proof == null" class="action-con-image-size">
                       
 
       </ion-col>
 
-      <ion-col text-right class="action-con-image">
+      <ion-col text-right class="action-con-image margin-auto">
         <img src="data:image/png;base64,{{userDetails.id_proof}}" *ngIf="userDetails.id_proof != '' && userDetails.id_proof != null" #myImage2 (click)="presentImage(myImage2)" class="action-con-image-size">
         <img src="assets/imgs/noidcard.jpg" *ngIf="userDetails.id_proof == '' || userDetails.id_proof == null" class="action-con-image-size">
                       

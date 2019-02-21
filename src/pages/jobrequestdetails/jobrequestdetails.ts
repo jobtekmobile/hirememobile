@@ -13,15 +13,15 @@ export class JobRequestDescDetails {
   isAvailable: boolean = true;
   jobRequestId: number;
   publishedJobRequestDesc: any = null;
-  title :string;
-  userDetails:any={};
+  title: string;
+  userDetails: any = {};
   constructor(
     public navCtrl: NavController,
     public navParam: NavParams,
     public _dataContext: DataContext,
     private commonService: CommonServices,
     public alertCtrl: AlertController,
-    public events:Events
+    public events: Events
   ) {
     this.jobRequestId = this.navParam.get("jobRequestId");
     this.userDetails = this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
@@ -32,15 +32,15 @@ export class JobRequestDescDetails {
   getLoggedInUserDetailsFromCache() {
     //this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));;
     this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
-    .then((result) => {
-      if (result && result.userId) {
-        this.userDetails = result;
-        this.getJobRequestDescription();
-      }
-      else {
-        this.navCtrl.setRoot("LoginPage");
-      }
-    });
+      .then((result) => {
+        if (result && result.userId) {
+          this.userDetails = result;
+          this.getJobRequestDescription();
+        }
+        else {
+          this.navCtrl.setRoot("LoginPage");
+        }
+      });
   }
   getJobRequestDescription() {
     this._dataContext.GetJobRequestDescription(this.jobRequestId)
@@ -50,6 +50,13 @@ export class JobRequestDescDetails {
           this.title = this.publishedJobRequestDesc.Job.JobName;
           if (this.publishedJobRequestDesc.Candidate)
             this.publishedJobRequestDesc.Candidate.Disponibility = moment(this.publishedJobRequestDesc.Candidate.Disponibility).format("DD-MMM-YYYY");
+
+          this.publishedJobRequestDesc.JobRequestJobTasks.forEach(element => {
+            element.JobTask.IconImage = element.JobTask.IconImage.substr(1, element.JobTask.IconImage.length)
+            element.JobTask.SubTasks.forEach(element1 => {
+              element1.IconImage = element1.IconImage.substr(1, element1.IconImage.length)
+            });
+          });
         }
         else
           this.commonService.onMessageHandler("No job request details available.", 0);
@@ -63,16 +70,16 @@ export class JobRequestDescDetails {
       .subscribe(response => {
         if (response.Status == "OK") {
           this.commonService.onMessageHandler(response.Message, 1);
-         // this.getUnverifiedJobRequestsForAdmin();
-         this.events.publish('reloadPage1',Date());
-         this.navCtrl.pop();
+          // this.getUnverifiedJobRequestsForAdmin();
+          this.events.publish('reloadPage1', Date());
+          this.navCtrl.pop();
         }
       },
         error => {
           this.commonService.onMessageHandler("Failed to verify job request. Please try again", 0);
         });
   }
-  Verify(){
+  Verify() {
     const confirm = this.alertCtrl.create({
       title: 'Verify Job Request?',
       message: 'Do you want to verify this job request?',

@@ -108,6 +108,10 @@ export class CommonServices {
     this._apiList["getAgencyProfileDetails"] = { controller: "Agencies", method: "MyProfile", api: "api/Agencies" };
     this._apiList["getAgencyDetails"] = { controller: "jobtekapi", method: "GetAgencyDetails", api: "api/jobtekapi" };
     
+    this._apiList["updateEmployerProfile"] = { controller: " Employers", method: "MyProfile", api: "api/Employers" };
+    this._apiList["updateAgencyProfile"] = { controller: " Agencies", method: "MyProfile", api: "api/Agencies" };
+
+    
   }
   //Clear all cache
   clearAllCache() {

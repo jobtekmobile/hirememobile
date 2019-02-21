@@ -31,10 +31,10 @@
               <ion-card class="job-card-con" *ngFor="let item of joboffers">
                 <ion-item class="">
                   <ion-avatar item-start class="avatar-top">
-                    <img class="img-size" *ngIf="item.Employer.ProfilePicUrl == '' && item.Employer.Gender == 1" src="assets/imgs/maledefault.svg" />
-                    <img class="img-size" *ngIf="item.Employer.ProfilePicUrl == '' && item.Employer.Gender == 2" src="assets/imgs/femaledefault.svg" />
-                    <img class="img-size" *ngIf="item.Employer.ProfilePicUrl != ''" src="data:image/png;base64,{{item.Employer.ProfilePicUrl}}" />
-
+                      <img class="img-size" *ngIf="item.Gender == 1" [src]="item.ProfilePicUrl && item.ProfilePicUrl!=null?item.ProfilePicUrl:'assets/imgs/maledefault.svg'"
+                      />
+                      <img class="img-size" *ngIf="item.Gender == 2" [src]="item.ProfilePicUrl && item.ProfilePicUrl!=null?item.ProfilePicUrl:'assets/imgs/femaledefault.svg'"
+                      />
                     <img src="assets/imgs/verified.png" class="verified-img" *ngIf="item.VerifiedByAdmin" alt="">
                 
                   </ion-avatar>
@@ -102,13 +102,13 @@
                   </div>
                 </ion-item>
                 <ion-row no-padding class="action-con">
-                  <ion-col class="action-con-image">
+                  <ion-col class="action-con-image margin-auto">
                     <img src="data:image/png;base64,{{item.Employer.IdProofDoc}}" *ngIf="item.Employer.IdProofDoc != '' && item.Employer.IdProofDoc != null" #idcardfront (click)="presentImage(idcardfront)" class="action-con-image-size">
                     <img src="assets/imgs/noidcard.jpg" *ngIf="item.Employer.IdProofDoc == '' || item.Employer.IdProofDoc == null" class="action-con-image-size">
                     
                   </ion-col>
                  
-                  <ion-col text-right class="action-con-image">
+                  <ion-col text-right class="action-con-image margin-auto">
                     <img src="data:image/png;base64,{{item.Employer.IdProofDoc1}}" *ngIf="item.Employer.IdProofDoc1 != '' && item.Employer.IdProofDoc1 != null" #idcardback (click)="presentImage(idcardback)" class="action-con-image-size">
                     <img src="assets/imgs/noidcard.jpg" *ngIf="item.Employer.IdProofDoc1 == '' || item.Employer.IdProofDoc1 == null" class="action-con-image-size">
                   </ion-col>
