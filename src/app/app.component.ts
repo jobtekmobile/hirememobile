@@ -12,7 +12,8 @@ import { CommonServices } from '../providers/common.service';
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-  rootPage: any="AppStartUp";
+  language: any = "en";
+  rootPage: any = "AppStartUp";
   pages: Array<{ title: string, component: any, imagepath: string }>;
   employeepages: Array<{ title: string, component: any, imagepath: string }>;
   employerpages: Array<{ title: string, component: any, imagepath: string }>;
@@ -22,38 +23,38 @@ export class MyApp {
   constructor(private commonService: CommonServices, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public events: Events) {
     // used for an example of ngFor and navigation
     this.employeepages = [
-      { title: 'Dashboard', component: "DashboardPage", imagepath: "assets/imgs/menu/dashboard.png" },
-      { title: 'Search Jobs', component: "SearchjobsPage", imagepath: "assets/imgs/menu/search-job.png" },
-      { title: 'Manage My Job Requests', component: "JobrequestsPage", imagepath: "assets/imgs/menu/my-job-requests.png" },
-      { title: 'Manage My Favorites', component: "FavoritejoboffersPage", imagepath: "assets/imgs/menu/favorites.png" },
-      { title: 'Message & Notifications', component: "NotificationPage", imagepath: "assets/imgs/menu/messages-notifications.png" },
-      { title: 'Manage My Settings', component: "ManagemysettingPage", imagepath: "assets/imgs/menu/manage-setting.png" }
+      { title: 'Tableau de bord', component: "DashboardPage", imagepath: "assets/imgs/menu/dashboard.png" },
+      { title: 'Recherche offre/demande', component: "SearchjobsPage", imagepath: "assets/imgs/menu/search-job.png" },
+      { title: "Mes demandes d'emploi", component: "JobrequestsPage", imagepath: "assets/imgs/menu/my-job-requests.png" },
+      { title: 'Gérer mes favoris', component: "FavoritejoboffersPage", imagepath: "assets/imgs/menu/favorites.png" },
+      { title: 'Messages et notifications', component: "NotificationPage", imagepath: "assets/imgs/menu/messages-notifications.png" },
+      { title: 'Gérer mes réglages ', component: "ManagemysettingPage", imagepath: "assets/imgs/menu/manage-setting.png" }
     ];
     this.employerpages = [
-      { title: 'Dashboard', component: "DashboardPage", imagepath: "assets/imgs/menu/dashboard.png" },
-      { title: 'Search Jobs', component: "SearchjobsPage", imagepath: "assets/imgs/menu/search-job.png" },
-      { title: 'My Job Offer', component: "EployerJobOffer", imagepath: "assets/imgs/menu/my-job-requests.png" },
-      { title: 'Manage My Favorites', component: "EmployerFavouriteJobRequest", imagepath: "assets/imgs/menu/favorites.png" },
-      { title: 'Message & Notifications', component: "NotificationPage", imagepath: "assets/imgs/menu/messages-notifications.png" },
-      { title: 'Manage My Settings', component: "ManagemysettingPage", imagepath: "assets/imgs/menu/manage-setting.png" }
+      { title: 'Tableau de bord', component: "DashboardPage", imagepath: "assets/imgs/menu/dashboard.png" },
+      { title: 'Recherche offre/demande', component: "SearchjobsPage", imagepath: "assets/imgs/menu/search-job.png" },
+      { title: "Mes offres d'emploi" , component: "EployerJobOffer", imagepath: "assets/imgs/menu/my-job-requests.png" },
+      { title: 'Gérer mes favoris', component: "EmployerFavouriteJobRequest", imagepath: "assets/imgs/menu/favorites.png" },
+      { title: 'Messages et notifications', component: "NotificationPage", imagepath: "assets/imgs/menu/messages-notifications.png" },
+      { title: 'Gérer mes réglages ', component: "ManagemysettingPage", imagepath: "assets/imgs/menu/manage-setting.png" }
     ];
     this.agencypages = [
-      { title: 'Dashboard', component: "DashboardPage", imagepath: "assets/imgs/menu/dashboard.png" },
-      { title: 'Search Jobs', component: "SearchjobsPage", imagepath: "assets/imgs/menu/search-job.png" },
-      { title: 'Register Candidate', component: "AgencyregistercandidatePage", imagepath: "assets/imgs/menu/my-job-requests.png" },
-      { title: 'Verify Candidate', component: "AgencyverifycandidatePage", imagepath: "assets/imgs/menu/check.png" },
-      { title: 'My Job Request', component: "AgencymyjobrequestPage", imagepath: "assets/imgs/menu/my-job-requests.png" },
-      { title: 'Message & Notifications', component: "NotificationPage", imagepath: "assets/imgs/menu/messages-notifications.png" },
-      { title: 'Manage My Settings', component: "ManagemysettingPage", imagepath: "assets/imgs/menu/manage-setting.png" }
+      { title: 'Tableau de bord', component: "DashboardPage", imagepath: "assets/imgs/menu/dashboard.png" },
+      { title: 'Recherche offre/demande', component: "SearchjobsPage", imagepath: "assets/imgs/menu/search-job.png" },
+      { title: 'Inscrivez-vous candidat', component: "AgencyregistercandidatePage", imagepath: "assets/imgs/menu/my-job-requests.png" },
+      { title: 'Vérifier le candidat', component: "AgencyverifycandidatePage", imagepath: "assets/imgs/menu/check.png" },
+      { title: "Mes demandes d'emploi", component: "AgencymyjobrequestPage", imagepath: "assets/imgs/menu/my-job-requests.png" },
+      { title: 'Messages et notifications', component: "NotificationPage", imagepath: "assets/imgs/menu/messages-notifications.png" },
+      { title: 'Gérer mes réglages ', component: "ManagemysettingPage", imagepath: "assets/imgs/menu/manage-setting.png" }
     ];
     this.adminpages = [
-      { title: 'Dashboard', component: "AdmindashboardPage", imagepath: "assets/imgs/menu/dashboard.png" },
-      { title: 'Verify Agency', component: "VerifyagencyprofilePage", imagepath: "assets/imgs/menu/check.png" },
-      { title: 'Verify Candidate', component: "VerifycandidateprofilePage", imagepath: "assets/imgs/menu/check.png" },
-      { title: 'Verify Employer', component: "VerifyemployerprofilePage", imagepath: "assets/imgs/menu/check.png" },
-      { title: 'Verify Job Request', component: "VerifyjobrequestprofilePage", imagepath: "assets/imgs/menu/check.png" },
-      { title: 'Verify Job Offer', component: "VerifyjobofferprofilePage", imagepath: "assets/imgs/menu/check.png" },
-      { title: 'Export', component: "ExportPage", imagepath: "assets/imgs/menu/export.png" }
+      { title: 'Tableau de bord', component: "AdmindashboardPage", imagepath: "assets/imgs/menu/dashboard.png" },
+      { title: 'Agence de vérification', component: "VerifyagencyprofilePage", imagepath: "assets/imgs/menu/check.png" },
+      { title: 'Vérifier le candidat', component: "VerifycandidateprofilePage", imagepath: "assets/imgs/menu/check.png" },
+      { title: "Vérifier l'employeur", component: "VerifyemployerprofilePage", imagepath: "assets/imgs/menu/check.png" },
+      { title: 'Vérifier la demande de travail', component: "VerifyjobrequestprofilePage", imagepath: "assets/imgs/menu/check.png" },
+      { title: "Vérifier l'offre d'emploi", component: "VerifyjobofferprofilePage", imagepath: "assets/imgs/menu/check.png" },
+      { title: 'Exportation', component: "ExportPage", imagepath: "assets/imgs/menu/export.png" }
     ];
     this.events.subscribe('user:loginsuccessfully', (role, time) => {
       this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
@@ -107,6 +108,20 @@ export class MyApp {
           this.rootPage = "LoginPage";
         }
         this.initializeApp();
+        //var selectFieldValue = document.querySelector("#google_translate_element select").value;
+        //alert();
+        // this.language = "en";//document.getElementById("language").value;
+        // let selectField: any = document.querySelector("#google_translate_element select");
+        // for (var i = 0; i < selectField.children.length; i++) {
+        //   let option: any = selectField.children[i];
+        //   // find desired langauge and change the former language of the hidden selection-field
+        //   if (option.value == this.language) {
+        //     selectField.selectedIndex = i;
+        //     // trigger change event afterwards to make google-lib translate this side
+        //     selectField.dispatchEvent(new Event('change'));
+        //     break;
+        //   }
+        // }
       });
   }
 
@@ -114,7 +129,7 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
+      this.statusBar.backgroundColorByHexString("#fe003f");
       this.splashScreen.hide();
     });
   }
@@ -127,6 +142,35 @@ export class MyApp {
   logout() {
     this.commonService.clearAllCache();
     this.nav.setRoot("LoginPage");
+
+  }
+  ChangeToFrench() {
+    // this.language = "fr";//document.getElementById("language").value;
+    // let selectField: any = document.querySelector("#google_translate_element select");
+    // for (var i = 0; i < selectField.children.length; i++) {
+    //   let option: any = selectField.children[i];
+    //   // find desired langauge and change the former language of the hidden selection-field
+    //   if (option.value == this.language) {
+    //     selectField.selectedIndex = i;
+    //     // trigger change event afterwards to make google-lib translate this side
+    //     selectField.dispatchEvent(new Event('change'));
+    //     break;
+    //   }
+    // }
+  }
+  ChangeToEnglish() {
+    // this.language = "en";//document.getElementById("language").value;
+    // let selectField: any = document.querySelector("#google_translate_element select");
+    // for (var i = 0; i < selectField.children.length; i++) {
+    //   let option: any = selectField.children[i];
+    //   // find desired langauge and change the former language of the hidden selection-field
+    //   if (option.value == this.language) {
+    //     selectField.selectedIndex = i;
+    //     // trigger change event afterwards to make google-lib translate this side
+    //     selectField.dispatchEvent(new Event('change'));
+    //     break;
+    //   }
+    // }
   }
   getLoggedInUserDetails(): any {
     this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))

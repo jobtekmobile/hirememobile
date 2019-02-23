@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the ChangepasswordPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { DataContext } from '../../providers/dataContext.service';
+import { CommonServices } from '../../providers/common.service';
 
 @IonicPage()
 @Component({
@@ -14,12 +9,94 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'changepassword.html',
 })
 export class ChangepasswordPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  passwordObj: any = {
+   // Email: "",
+   OldPassword: "",
+    NewPassword: "",
+    ConfirmPassword: "",
+   // Code: "1234"
+  };
+  loggedInUserDetails: any = {};
+  constructor(public navCtrl: NavController, public navParams: NavParams, public _dataContext: DataContext, private commonService: CommonServices) {
+    this.getLoggedInUserDetailsFromCache();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChangepasswordPage');
   }
+  getLoggedInUserDetailsFromCache() {
+    //this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));;
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+      .then((result) => {
+        if (result && result.userId) {
+          this.loggedInUserDetails = result;
+          //this.getProfileDetails();
+        }
+        else {
+          this.navCtrl.setRoot("LoginPage");
+        }
+      });
+  }
+  resetPassword() {
 
+    if (this.loggedInUserDetails.type == "Employee") {
+      this.updateEmployeePassword();
+    } else if (this.loggedInUserDetails.type == "Employer") {
+      this.updateEmployerPassword();
+    } else if (this.loggedInUserDetails.type == "Agency") {
+      this.updateAgencyPassword();
+    }
+
+  }
+  updateEmployeePassword(){
+    if (this.passwordObj.NewPassword == this.passwordObj.ConfirmPassword) {
+      this._dataContext.updateEmployeePassword(this.loggedInUserDetails.userId,this.passwordObj)
+        .subscribe(response => {
+          if (response.Status == "OK") {
+            this.commonService.onMessageHandler(response.Message, 1);
+          } else {
+            this.commonService.onMessageHandler(response.Message, 0);
+          }
+        },
+          error => {
+            this.commonService.onMessageHandler("Failed to reset password. Please try again", 0);
+          });
+    } else {
+      this.commonService.onMessageHandler("Password and confirm password didnot match", 0);
+    }
+  }
+  updateEmployerPassword(){
+    if (this.passwordObj.NewPassword == this.passwordObj.ConfirmPassword) {
+      this._dataContext.updateEmployerPassword(this.loggedInUserDetails.userId,this.passwordObj)
+        .subscribe(response => {
+          if (response.Status == "OK") {
+            this.commonService.onMessageHandler(response.Message, 1);
+          } else {
+            this.commonService.onMessageHandler(response.Message, 0);
+          }
+        },
+          error => {
+            this.commonService.onMessageHandler("Failed to reset password. Please try again", 0);
+          });
+    } else {
+      this.commonService.onMessageHandler("Password and confirm password didnot match", 0);
+    }
+  }
+  updateAgencyPassword(){
+    if (this.passwordObj.NewPassword == this.passwordObj.ConfirmPassword) {
+      this._dataContext.updateAgencyPassword(this.loggedInUserDetails.userId,this.passwordObj)
+        .subscribe(response => {
+          if (response.Status == "OK") {
+            this.commonService.onMessageHandler(response.Message, 1);
+          } else {
+            this.commonService.onMessageHandler(response.Message, 0);
+          }
+        },
+          error => {
+            this.commonService.onMessageHandler("Failed to reset password. Please try again", 0);
+          });
+    } else {
+      this.commonService.onMessageHandler("Password and confirm password didnot match", 0);
+    }
+  }
 }

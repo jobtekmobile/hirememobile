@@ -21,8 +21,7 @@
                 <span
                   *ngIf="publishedJobRequestDesc.Candidate && publishedJobRequestDesc.Candidate.FirstName && publishedJobRequestDesc.Candidate.FirstName !=''">{{publishedJobRequestDesc.Candidate.FirstName}}
                 </span>
-                <span
-                  *ngIf="publishedJobRequestDesc.Candidate && publishedJobRequestDesc.Candidate.LastName && publishedJobRequestDesc.Candidate.LastName !=''">{{publishedJobRequestDesc.Candidate.LastName}}</span>
+                <span *ngIf="userDetails.type == 'Admin'">{{publishedJobRequestDesc.Candidate.LastName}}</span>
               </span>
               <!-- <span class="req-type-color">
                 {{item.RequestType}}

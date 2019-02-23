@@ -27,9 +27,9 @@ export class CommonServices {
     public alerCtrl: AlertController,
     private cache: CacheService,
   ) {
-    this.apiServiceUrl = "http://localhost:60114/"; //PG Api
+    //this.apiServiceUrl = "http://localhost:60114/"; //PG Api
 
-   // this.apiServiceUrl = "http://40.89.160.98/";
+    this.apiServiceUrl = "http://40.89.160.98/";
     this.appTtitle = "";
     this._appVersion = "1.0.6";
 
@@ -111,7 +111,13 @@ export class CommonServices {
     this._apiList["updateEmployerProfile"] = { controller: " Employers", method: "MyProfile", api: "api/Employers" };
     this._apiList["updateAgencyProfile"] = { controller: " Agencies", method: "MyProfile", api: "api/Agencies" };
 
-    
+    this._apiList["resetPassword"] = { controller: " Accounts", method: "PasswordReset", api: "api/Accounts" };
+    this._apiList["forgotPassword"] = { controller: " Accounts", method: "ForgotPassword", api: "api/Accounts" };
+
+    this._apiList["updateEmployeePassword"] = { controller: " Candidates", method: "ChangePassword", api: "api/Candidates" };
+    this._apiList["updateEmployerPassword"] = { controller: " Employers", method: "ChangePassword", api: "api/Employers" };
+    this._apiList["updateAgencyPassword"] = { controller: " Agencies", method: "ChangePassword", api: "api/Agencies" };
+
   }
   //Clear all cache
   clearAllCache() {
