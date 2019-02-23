@@ -19,7 +19,7 @@
               <h4 class="para-overflow-hidden margin-bottom-5">
                 <span class="margin-right-10 font-weight-500 font-size-16 ">
                   <span *ngIf="publishedJobOfferDesc.Employer && publishedJobOfferDesc.Employer.FirstName && publishedJobOfferDesc.Employer.FirstName !=''">{{publishedJobOfferDesc.Employer.FirstName}} </span>
-                  <span *ngIf="publishedJobOfferDesc.Employer && publishedJobOfferDesc.Employer.LastName && publishedJobOfferDesc.Employer.LastName !=''">{{publishedJobOfferDesc.Employer.LastName}}</span>
+                  <span *ngIf="loggedInUserDetails.type == 'Admin'">{{publishedJobOfferDesc.Employer.LastName}}</span>
                 </span>
                 <!-- <span class="req-type-color">
                   {{item.RequestType}}

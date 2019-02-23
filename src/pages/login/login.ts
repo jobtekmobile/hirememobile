@@ -45,4 +45,7 @@ export class LoginPage {
   gotoRegister() {
     this.navCtrl.setRoot("RegisterPage");
   }
+  gotoForgotPassword(){
+    this.navCtrl.setRoot("ForgotpasswordPage");
+  }
 }

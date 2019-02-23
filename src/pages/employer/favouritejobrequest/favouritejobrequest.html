@@ -38,7 +38,7 @@
                     <img src="assets/imgs/woman.svg" *ngIf="item.Candidate.Gender == 2" class="card-name-geneder-icon">
                     <img src="assets/imgs/male.svg" *ngIf="item.Candidate.Gender == 1" class="card-name-geneder-icon">
                   <span *ngIf="item.Candidate.FirstName && item.Candidate.FirstName !=''">{{item.Candidate.FirstName }} </span>
-                  <span *ngIf="item.Candidate.LastName && item.Candidate.LastName !=''">{{item.Candidate.LastName }}</span>
+                  <!-- <span *ngIf="item.Candidate.LastName && item.Candidate.LastName !=''">{{item.Candidate.LastName }}</span> -->
                 </span>
                 <span class="req-type-color">
                   <span *ngIf="item.Candidate.StaffType && item.Candidate.StaffType == 2">(Agency)</span>

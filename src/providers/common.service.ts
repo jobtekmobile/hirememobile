@@ -118,6 +118,12 @@ export class CommonServices {
     this._apiList["updateAgencyIdPic"] = { controller: " Agencies", method: "UpdateIdCard", api: "api/Agencies" };
     this._apiList["updateCandidateIdPic"] = { controller: " Candidates", method: "UpdateIdCard", api: "api/Candidates" };
     this._apiList["updateEmployeeIdPic"] = { controller: " Employers", method: "UpdateIdCard", api: "api/Employers" };
+    this._apiList["resetPassword"] = { controller: " Accounts", method: "PasswordReset", api: "api/Accounts" };
+    this._apiList["forgotPassword"] = { controller: " Accounts", method: "ForgotPassword", api: "api/Accounts" };
+
+    this._apiList["updateEmployeePassword"] = { controller: " Candidates", method: "ChangePassword", api: "api/Candidates" };
+    this._apiList["updateEmployerPassword"] = { controller: " Employers", method: "ChangePassword", api: "api/Employers" };
+    this._apiList["updateAgencyPassword"] = { controller: " Agencies", method: "ChangePassword", api: "api/Agencies" };
 
   }
   //Clear all cache

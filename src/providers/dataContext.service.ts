@@ -407,4 +407,30 @@ export class DataContext {
                 .catch(this._http.handleError);
         }
     }
+    ResetPassword= (passwordObj: any): Observable<any> => {
+        return this._http.post(this.commonService.getApiControllerName("resetPassword").toString()+ "/PasswordReset", passwordObj)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    ForgotPassword= (passwordObj: any): Observable<any> => {
+        return this._http.post(this.commonService.getApiControllerName("forgotPassword").toString()+ "/ForgotPassword", passwordObj)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+
+    updateEmployeePassword = (UserId, passwordObj): Observable<any> => {
+        return this._http.put(this.commonService.getApiControllerName("updateEmployeePassword").toString() + "/" + UserId + "/PasswordUpdate/?candidateId=" + UserId, passwordObj)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    updateEmployerPassword = (UserId, passwordObj): Observable<any> => {
+        return this._http.put(this.commonService.getApiControllerName("updateEmployerPassword").toString() + "/" + UserId + "/PasswordUpdate/?employerId=" + UserId, passwordObj)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    updateAgencyPassword = (UserId, passwordObj): Observable<any> => {
+        return this._http.put(this.commonService.getApiControllerName("updateAgencyPassword").toString() + "/" + UserId + "/PasswordUpdate/?agencyId=" + UserId, passwordObj)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
 }

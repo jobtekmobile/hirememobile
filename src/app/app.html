@@ -1,3 +1,15 @@
+
+<style>
+  .goog-te-banner-frame.skiptranslate {
+              display: none !important;
+          }
+          body {
+              top:0px !important;
+          }
+          #google_translate_element{
+            display: none;
+          }
+  </style>
 <ion-menu [content]="content">
   <ion-content class="menu-content">
     <div class="menu-img-con">
@@ -5,13 +17,20 @@
       <p class="menu-img-text">{{userDetails.userName}}</p>
       <!-- <p class="menu-img-text">{{userDetails.email}}</p> -->
     </div>
+    <!-- <div id="google_translate_element"></div> -->
     <ion-list class="jobtek-menu-list">
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         <img class="jobtek-menu-img" [src]="p.imagepath"><p class="jobtek-menu-text">&nbsp;&nbsp;{{p.title}}</p>
       </button>
       <button menuClose ion-item  (click)="logout()">
-          <img class="jobtek-menu-img" src="assets/imgs/menu/logout.png"><p class="jobtek-menu-text">&nbsp;&nbsp;Logout</p>
+          <img class="jobtek-menu-img" src="assets/imgs/menu/logout.png"><p class="jobtek-menu-text">&nbsp;&nbsp;Déconnexion</p>
         </button>
+        <!-- <button menuClose ion-item  (click)="ChangeToEnglish()" *ngIf="language != 'en'">
+          <img class="jobtek-menu-img" src="assets/imgs/menu/logout.png"><p class="jobtek-menu-text">&nbsp;&nbsp;Language Change To English</p>
+        </button>
+        <button menuClose ion-item  (click)="ChangeToFrench()" *ngIf="language == 'en'">
+          <img class="jobtek-menu-img" src="assets/imgs/menu/logout.png"><p class="jobtek-menu-text">&nbsp;&nbsp;Language Change To French</p>
+        </button> -->
     </ion-list>
   </ion-content>
 
