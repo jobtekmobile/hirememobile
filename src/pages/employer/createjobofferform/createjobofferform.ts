@@ -155,6 +155,7 @@ export class CreateJobOfferForm {
             this.jobCriteria.Gender = 2;
             this.jobCriteria.StaffType = 0;
             this.jobCriteria.SalaryType = 1;
+            this.navCtrl.setRoot("EployerJobOffer");
           }
           else
             this.commonService.onMessageHandler("Failed to save.", 0);

@@ -55,7 +55,7 @@
         </ion-item>
         <ion-item class="border-bottom-1 margin-top--10"
           *ngIf="publishedJobRequestDesc.JobRequestDescription && publishedJobRequestDesc.JobRequestDescription!=''">
-          <p>
+          <p class="block-with-text">
             <span class="sub-header-title">Description: </span>
             <span class="font-size-13 white-space-initial">{{publishedJobRequestDesc.JobRequestDescription}}</span>
           </p>
@@ -154,25 +154,65 @@
             </span>
           </p>
         </ion-item>
-        <ion-row class="" *ngIf="publishedJobRequestDesc.JobRequestJobTasks.length > 0">
-          <ion-col col-12>
-            <p>
-              Canditate Skills
-            </p>
-          </ion-col>
-
-          <ion-col col-12 *ngFor="let skill of publishedJobRequestDesc.JobRequestJobTasks">
-            <div *ngIf="skill.JobTask" class="skill-task">
-              <span class="font-size-13">
-                <img [src]="skill.JobTask.IconImage" class="item-img" /> {{skill.JobTask.JobTaskName}}</span>
-              <div *ngFor="let subTask of skill.JobTask.SubTasks" class="sub-skill-task">
-                <span class="font-size-13">
-                  <img [src]="subTask.IconImage" class="item-img" /> {{subTask.JobTaskName}}
-                </span>
+        <ion-row class="padding-left-15" *ngIf="jobTasks.length > 0">
+            <ion-col col-12>
+              <ion-col col-12>
+                <p>
+                  Canditate Skills
+                </p>
+              </ion-col>
+              <div class="categories">
+                <!-- <div *ngFor="let skill of (publishedJobOfferDesc.JobOfferJobTasks | jobTaskPipe)">
+                  <div *ngIf="skill.JobTask">
+                    <span class="font-size-13">
+                      <img [src]="skill.JobTask.IconImage" class="item-img" /> {{skill.JobTask.JobTaskName}}</span>
+                  </div>
+                  <ul>
+                    <ng-template #recursiveList let-list>
+                      <li *ngFor="let subTask of list">
+                        <div>
+                          <span class="font-size-13">
+                            <img [src]="subTask.IconImage" class="item-img" /> {{subTask.JobTaskName}}
+                          </span>
+                        </div>
+                        <ul *ngIf="subTask.SubTasks?.length > 0">
+                          <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: subTask.SubTasks }">
+                          </ng-container>
+                        </ul>
+                      </li>
+                    </ng-template>
+                    <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: skill.SubTasks }"></ng-container>
+                  </ul>
+                </div> -->
+                <ion-row class="padding-left-15" *ngIf="jobTasks.length > 0">
+                    <ion-col col-12>
+                      <div class="categories">
+                        <div *ngFor="let job of (jobTasks | jobTaskPipe)">
+                          <ion-checkbox [checked]="checkIfExists(job)" item-left class="margin-right-15" name="job_task_{{job.JobTaskId}}" disabled="disabled" [(ngModel)]="job.Selected">
+                          </ion-checkbox>
+                          <span>{{job.JobTaskName}}</span>
+                          <ul>
+                            <ng-template #recursiveList let-list>
+                              <li *ngFor="let subTask of list">
+                                <div>
+                                  <ion-checkbox item-left class="margin-right-15" [checked]="checkIfExists(subTask)" disabled="disabled" name="job_task_{{subTask.JobTaskId}}" [(ngModel)]="subTask.Selected">
+                                  </ion-checkbox>
+                                  <span>{{subTask.JobTaskName}}</span>
+                                </div>
+                                <ul *ngIf="subTask.SubTasks?.length > 0">
+                                  <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: subTask.SubTasks }"></ng-container>
+                                </ul>
+                              </li>
+                            </ng-template>
+                            <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: job.SubTasks }"></ng-container>
+                          </ul>
+                        </div>
+                      </div>
+                    </ion-col>
+                  </ion-row>
               </div>
-            </div>
-          </ion-col>
-        </ion-row>
+            </ion-col>
+          </ion-row>
         <ion-item class="border-bottom-1"
           *ngIf="publishedJobRequestDesc.JobRequestNotes && publishedJobRequestDesc.JobRequestNotes!=''">
           <p>

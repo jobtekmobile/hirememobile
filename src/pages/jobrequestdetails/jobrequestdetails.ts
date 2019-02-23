@@ -15,6 +15,7 @@ export class JobRequestDescDetails {
   publishedJobRequestDesc: any = null;
   title: string;
   userDetails: any = {};
+  jobTasks:any=[];
   constructor(
     public navCtrl: NavController,
     public navParam: NavParams,
@@ -57,6 +58,7 @@ export class JobRequestDescDetails {
               element1.IconImage = element1.IconImage.substr(1, element1.IconImage.length)
             });
           });
+          this.jobTasks = this.publishedJobRequestDesc.Job.JobTasks;
         }
         else
           this.commonService.onMessageHandler("No job request details available.", 0);
@@ -99,5 +101,12 @@ export class JobRequestDescDetails {
       ]
     });
     confirm.present();
+  }
+  checkIfExists(job) {
+    var arr = this.publishedJobRequestDesc.JobRequestJobTasks.map(t => {return t.JobTaskId});
+    if(this.publishedJobRequestDesc.JobRequestJobTasks.map(t => {return t.JobTaskId}).indexOf(job.JobTaskId) !== -1){
+        job.Selected = true;
+    };
+    return true;
   }
 }

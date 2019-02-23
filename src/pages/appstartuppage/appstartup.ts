@@ -28,7 +28,7 @@ export class AppStartUp {
                     if (result.type == "Admin") {
                         this.navCtrl.setRoot("AdmindashboardPage");
                     }
-                    else if (result.type == "Candidate") {
+                    else if (result.type == "Employee") {
                         this.navCtrl.setRoot("DashboardPage");
                     }
                     else if (result.type == "Employer") {

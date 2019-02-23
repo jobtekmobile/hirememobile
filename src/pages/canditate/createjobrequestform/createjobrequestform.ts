@@ -187,6 +187,7 @@ export class CreateJobRequestForm {
             this.createJobRequest.Gender = 2;
             this.createJobRequest.StaffType = 0;
             this.createJobRequest.SalaryType = 1;
+            this.navCtrl.setRoot("JobrequestsPage");
           }
           else
             this.commonService.onMessageHandler("Failed to save.", 0);

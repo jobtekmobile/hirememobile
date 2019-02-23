@@ -14,6 +14,7 @@ export class JobOfferDetails {
   publishedJobOfferDesc: any = null;
   title: string;
   userDetails: any = {};
+  jobTasks: any = [];
   loggedInUserDetails: any = {};
   constructor(
     public navCtrl: NavController,
@@ -57,6 +58,7 @@ export class JobOfferDetails {
               element1.IconImage = element1.IconImage.substr(1, element1.IconImage.length)
             });
           });
+          this.jobTasks = this.publishedJobOfferDesc.Job.JobTasks;
         }
         else
           this.commonService.onMessageHandler("No job offer details available.", 0);
@@ -64,6 +66,14 @@ export class JobOfferDetails {
         error => {
           this.commonService.onMessageHandler("Failed to retrieve job offer details. Please try again", 0);
         });
+  }
+
+  checkIfExists(job) {
+    var arr = this.publishedJobOfferDesc.JobOfferJobTasks.map(t => {return t.JobTaskId});
+    if(this.publishedJobOfferDesc.JobOfferJobTasks.map(t => {return t.JobTaskId}).indexOf(job.JobTaskId) !== -1){
+        job.Selected = true;
+    };
+    return true;
   }
 
   validateJobOffer() {
