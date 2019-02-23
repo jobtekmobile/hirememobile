@@ -31,6 +31,7 @@ export class JobCategory {
   selectedJobByCategoryId: any = [];
   isAvailable: boolean = true;
   jobtitle: string;
+  fromPage: string;
   constructor(
     public injector: Injector,
     public navCtrl: NavController,
@@ -40,6 +41,7 @@ export class JobCategory {
     public navParam: NavParams,
   ) {
     this.categories = this.navParam.get("category");
+    this.fromPage = this.navParam.get("fromPage");
   }
   ionViewWillEnter() {
     if (this.categories.length == 0)
@@ -131,7 +133,10 @@ export class JobCategory {
   }
   //get selected job id and get all the published jobs.
   gotoSelectedCategory(id) {
-    this.navCtrl.push("CreateJobRequestForm", { jobId: id });
+    if (this.fromPage == "jobRequest")
+      this.navCtrl.push("CreateJobRequestForm", { jobId: id });
+    else
+      this.navCtrl.push("CreateJobOfferForm", { jobId: id });
   }
 
 }

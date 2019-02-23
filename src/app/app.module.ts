@@ -18,7 +18,7 @@ import { CacheModule } from 'ionic-cache';
 import { HttpService } from '../providers/http.service';
 @NgModule({
   declarations: [
-    MyApp,
+    MyApp
     //HomePage,
     //ListPage
   ],

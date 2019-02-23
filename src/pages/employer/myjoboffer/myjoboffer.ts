@@ -49,6 +49,9 @@ export class EployerJobOffer {
   gotoDetails(item) {
     this.navCtrl.push("JobOfferDetails", { jobOfferId: item.JobofferId });
   }
+  gotoCreateJobOffer(){
+    this.navCtrl.push("JobCategory", { category: this.categories,fromPage:"jobResponse" });
+  }
   getActiveCategories() {
     this._dataContext.GetActiveCategories()
       .subscribe(response => {

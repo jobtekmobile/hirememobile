@@ -84,7 +84,7 @@ export class DataContext {
     }
     //Create New job response
     CreateNewJobResponse = (userData: any): Observable<any> => {
-        return this._http.post(this.commonService.getApiControllerName("createNewJobResponse").toString() + "/" + userData.CandidateId + "/JobRequests", userData)
+        return this._http.post(this.commonService.getApiControllerName("createNewJobResponse").toString() + "/" + userData.CandidateId + "/JobOffers", userData)
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
@@ -320,22 +320,22 @@ export class DataContext {
             .catch(this._http.handleError);
     }
     //{employerId}/JobRequests/{jobRequestId}/JobRequestNotes"
-    GetNotesforJobRequest = (employerId: number,jobequestId:number): Observable<any> => {
-        return this._http.get(this.commonService.getApiControllerName("getNoteForEmployer").toString() + "/" + employerId + "/JobRequests/"+jobequestId+"/JobRequestNotes")
+    GetNotesforJobRequest = (employerId: number, jobequestId: number): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("getNoteForEmployer").toString() + "/" + employerId + "/JobRequests/" + jobequestId + "/JobRequestNotes")
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
-    SaveNotesforJobRequest= (craeteNoteObj:any,employerId: number,jobequestId:number): Observable<any> => {
-        return this._http.post(this.commonService.getApiControllerName("saveNotesforJobRequest").toString() + "/"+employerId+"/JobRequests/" + jobequestId +"/JobRequestNotes", craeteNoteObj)
+    SaveNotesforJobRequest = (craeteNoteObj: any, employerId: number, jobequestId: number): Observable<any> => {
+        return this._http.post(this.commonService.getApiControllerName("saveNotesforJobRequest").toString() + "/" + employerId + "/JobRequests/" + jobequestId + "/JobRequestNotes", craeteNoteObj)
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
-    GetAgencyNotificationDetails= (agencyId: number): Observable<any> => {
+    GetAgencyNotificationDetails = (agencyId: number): Observable<any> => {
         return this._http.get(this.commonService.getApiControllerName("getAgencyNotificationDetails").toString() + "/" + agencyId + "/Notifications")
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
-    GetAgencyProfileDetails= (agencyId: number): Observable<any> => {
+    GetAgencyProfileDetails = (agencyId: number): Observable<any> => {
         return this._http.get(this.commonService.getApiControllerName("getAgencyProfileDetails").toString() + "/" + agencyId + "/MyProfile")
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
@@ -361,10 +361,10 @@ export class DataContext {
 
 
 
-    getAgencyDetails(agencyId: number){
-        return this._http.get(this.commonService.getApiControllerName("getAgencyDetails").toString() + "/Agencies/" + agencyId )
-        .map((response: Response) => response.json())
-        .catch(this._http.handleError);
+    getAgencyDetails(agencyId: number) {
+        return this._http.get(this.commonService.getApiControllerName("getAgencyDetails").toString() + "/Agencies/" + agencyId)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
     }
 
     updateEmployerProfile = (profileId, profileObj): Observable<any> => {
@@ -376,5 +376,35 @@ export class DataContext {
         return this._http.put(this.commonService.getApiControllerName("updateAgencyProfile").toString() + "/" + profileId + "/MyProfile/?agencyId=" + profileId, profileObj)
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
+    }
+    UpdateProfilePicUpload = (userId, profilePicObj, type): Observable<any> => {
+        if (type == "Agency") {
+            return this._http.put(this.commonService.getApiControllerName("updateAgencyProfilePic").toString() + "/" + userId + "/ProfilePicture", profilePicObj)
+                .map((response: Response) => response.json())
+                .catch(this._http.handleError);
+        } else if (type == "Employee") {
+            return this._http.put(this.commonService.getApiControllerName("updateCanditateProfilePic").toString() + "/" + userId + "/ProfilePicture", profilePicObj)
+                .map((response: Response) => response.json())
+                .catch(this._http.handleError);
+        } else if (type == "Employer") {
+            return this._http.put(this.commonService.getApiControllerName("updateEmployeeProfilePic").toString() + "/" + userId + "/ProfilePicture", profilePicObj)
+                .map((response: Response) => response.json())
+                .catch(this._http.handleError);
+        }
+    }
+    UpdateIdPicUpload = (userId, idPicObj, type): Observable<any> => {
+        if (type == "Agency") {
+            return this._http.put(this.commonService.getApiControllerName("updateAgencyIdPic").toString() + "/" + userId + "/IdProofDocs", idPicObj)
+                .map((response: Response) => response.json())
+                .catch(this._http.handleError);
+        } else if (type == "Employee") {
+            return this._http.put(this.commonService.getApiControllerName("updateCandidateIdPic").toString() + "/" + userId + "/IdProofDocs", idPicObj)
+                .map((response: Response) => response.json())
+                .catch(this._http.handleError);
+        } else if (type == "Employer") {
+            return this._http.put(this.commonService.getApiControllerName("updateEmployeeIdPic").toString() + "/" + userId + "/IdProofDocs", idPicObj)
+                .map((response: Response) => response.json())
+                .catch(this._http.handleError);
+        }
     }
 }

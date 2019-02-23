@@ -27,9 +27,9 @@ export class CommonServices {
     public alerCtrl: AlertController,
     private cache: CacheService,
   ) {
-    this.apiServiceUrl = "http://localhost:60114/"; //PG Api
+    this.apiServiceUrl = "http://localhost:60114/"; //Local Api
 
-   // this.apiServiceUrl = "http://40.89.160.98/";
+    //  this.apiServiceUrl = "http://40.89.160.98/";
     this.appTtitle = "";
     this._appVersion = "1.0.6";
 
@@ -46,7 +46,7 @@ export class CommonServices {
     this._apiList["getMyFavouriteOffers"] = { controller: "Candidates", method: "MyFavouriteJobOffers", api: "api/Candidates" };
     this._apiList["createNewJobRequest"] = { controller: "Candidates", method: "CreateJobRequest", api: "api/Candidates" };
     this._apiList["createNewJobResponse"] = { controller: "Candidates", method: "CreateJobResponse", api: "api/Candidates" };
-    this._apiList["createNewJobResponse"] = { controller: "Candidates", method: "CreateJobResponse", api: "api/Candidates" };
+    this._apiList["createNewJobResponse"] = { controller: "Employers", method: "CreateJobOffer", api: "api/Employers" };
     this._apiList["getJobTasks"] = { controller: "JobTekApi", method: "GetJobTasks", api: "api/JobTekApi/GetJobTasks" };
     this._apiList["getMySavedJobRequest"] = { controller: "Candidates", method: "MyJobRequests", api: "api/Candidates" };
     this._apiList["getActiveCities"] = { controller: "JobTekApi", method: "GetCities", api: "api/JobTekApi/GetCities" };
@@ -89,8 +89,8 @@ export class CommonServices {
     this._apiList["getSearchPublishedJobResponse"] = { controller: "JobOffers", method: "SearchJobOffers", api: "api/JobOffers" };
     this._apiList["getSecurityQuestions"] = { controller: "Accounts", method: "SecurityQuestions", api: "api/Accounts/SecurityQuestions" };
 
-    
-    
+
+
     /////////////////////////////////////////////////////////////////
     this._apiList["loginUser"] = { controller: "Accounts", method: "Login", api: "api/Accounts" };
     this._apiList["registerUser"] = { controller: "Accounts", method: "Register", api: "api/Accounts/Register" };
@@ -107,11 +107,18 @@ export class CommonServices {
     this._apiList["getAgencyNotificationDetails"] = { controller: "Agencies", method: "Notifications", api: "api/Agencies" };
     this._apiList["getAgencyProfileDetails"] = { controller: "Agencies", method: "MyProfile", api: "api/Agencies" };
     this._apiList["getAgencyDetails"] = { controller: "jobtekapi", method: "GetAgencyDetails", api: "api/jobtekapi" };
-    
+
     this._apiList["updateEmployerProfile"] = { controller: " Employers", method: "MyProfile", api: "api/Employers" };
     this._apiList["updateAgencyProfile"] = { controller: " Agencies", method: "MyProfile", api: "api/Agencies" };
 
-    
+    this._apiList["updateAgencyProfilePic"] = { controller: " Agencies", method: "UpdateProfilePic", api: "api/Agencies" };
+    this._apiList["updateCanditateProfilePic"] = { controller: " Candidates", method: "UpdateProfilePic", api: "api/Candidates" };
+    this._apiList["updateEmployeeProfilePic"] = { controller: " Employers", method: "UpdateProfilePic", api: "api/Employers" };
+
+    this._apiList["updateAgencyIdPic"] = { controller: " Agencies", method: "UpdateIdCard", api: "api/Agencies" };
+    this._apiList["updateCandidateIdPic"] = { controller: " Candidates", method: "UpdateIdCard", api: "api/Candidates" };
+    this._apiList["updateEmployeeIdPic"] = { controller: " Employers", method: "UpdateIdCard", api: "api/Employers" };
+
   }
   //Clear all cache
   clearAllCache() {

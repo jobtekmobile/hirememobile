@@ -50,7 +50,7 @@ export class FilterPage {
     public navParams: NavParams,
     private commonService: CommonServices,
   ) {
-   // this.getActiveJobTasks();
+    this.getActiveJobTasks();
     this.getMinAge();
     this.getMaxAge();
     this.getexperiences();
@@ -216,5 +216,12 @@ export class FilterPage {
 }
 
 
+import { Pipe, PipeTransform } from '@angular/core';
+@Pipe({ name: 'jobTaskPipe' })
+export class JobTaskPipe1 implements PipeTransform {
+  transform(elements: any[]) {
+    return elements.filter(hero => !hero.ParentJobTaskId);
+  }
+}
 
 

@@ -141,12 +141,16 @@
       </div>
     </ion-col>
   </ion-row>
-  <ion-row>
-
-    <ion-col col-12 text-center *ngIf="employeeJobOffers.length == 0 && !isAvailable">
+  <ion-row *ngIf="!isAvailable && employeeJobOffers.length == 0">
+    <ion-col col-12 text-center>
       <img src="assets/imgs/no-record-found.png">
     </ion-col>
   </ion-row>
 
+  <ion-fab right bottom class="jobtek-fab-btn">
+    <button ion-fab mini color="danger" (click)="gotoCreateJobOffer()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 
 </ion-content>

@@ -138,7 +138,7 @@ export class JobrequestsPage {
     this.slides.slidePrev();
   }
   gotoCreate() {
-    this.navCtrl.push("JobCategory", { category: this.categories });
+    this.navCtrl.push("JobCategory", { category: this.categories,fromPage:"jobRequest" });
   }
   gotoDetails() {
     // this.navCtrl.push("JobRequestDescDetails",{jobRequestId:});

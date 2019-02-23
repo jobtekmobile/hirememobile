@@ -66,8 +66,8 @@ export class AgencyregistercandidatePage {
   onRegister() {
     if (this.validateFirstSlide() && this.validateSecondSlide()) {
       this.registerObj.profile_pic_base64 = this.images[0].file.substr(this.images[0].file.indexOf(',') + 1, this.images[0].file.length);
-      this.registerObj.id_proof_base64 = this.images[0].file.substr(this.images[1].file.indexOf(',') + 1, this.images[1].file.length);
-      this.registerObj.id_proof1_base64 = this.images[0].file.substr(this.images[2].file.indexOf(',') + 1, this.images[2].file.length);
+      this.registerObj.id_proof_base64 = this.images[1].file.substr(this.images[1].file.indexOf(',') + 1, this.images[1].file.length);
+      this.registerObj.id_proof1_base64 = this.images[2].file.substr(this.images[2].file.indexOf(',') + 1, this.images[2].file.length);
       this._dataContext.RegisterCandidateByAgency(this.userDetails.userId, this.registerObj)
         .subscribe(response => {
           if (response.Status == "OK") {

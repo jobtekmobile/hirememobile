@@ -12,7 +12,7 @@ import { CommonServices } from '../providers/common.service';
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-  rootPage: any="AppStartUp";
+  rootPage: any="AppStartUp";   
   pages: Array<{ title: string, component: any, imagepath: string }>;
   employeepages: Array<{ title: string, component: any, imagepath: string }>;
   employerpages: Array<{ title: string, component: any, imagepath: string }>;
