@@ -65,7 +65,7 @@ export class MyApp {
               this.pages = this.adminpages;
               // this.rootPage = "AdmindashboardPage";
             }
-            else if (result.type == "Candidate") {
+            else if (result.type == "Employee") {
               this.pages = this.employeepages;
               // this.rootPage = "DashboardPage";
             }
@@ -181,7 +181,7 @@ export class MyApp {
             this.pages = this.adminpages;
             // this.rootPage = "AdmindashboardPage";
           }
-          else if (result.type == "Candidate") {
+          else if (result.type == "Employee") {
             this.pages = this.employeepages;
             // this.rootPage = "DashboardPage";
           }
