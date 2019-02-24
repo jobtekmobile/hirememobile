@@ -17,7 +17,7 @@
 <ion-content padding>
   <ion-card class="job-card-con">
     <ion-item class="">
-      <ion-avatar item-start class="avatar-top" (click)="uploadProfilePic(0)">
+      <ion-avatar item-start class="avatar-top" (click)="uploadImage(0)">
         <img class="img-size" #myImage (click)="presentImage(myImage)" *ngIf="userDetails.profile_pic != '' && userDetails.profile_pic != null"
           src="data:image/png;base64,{{userDetails.profile_pic}}" />
         <img class="img-size" *ngIf="userDetails.profile_pic == '' || userDetails.profile_pic == null" src="assets/imgs/maledefault.svg"
@@ -76,13 +76,13 @@
 
     </ion-item>
     <ion-row no-padding class="action-con">
-      <ion-col class="action-con-image margin-auto" (click)="uploadIdProof(1)">
+      <ion-col class="action-con-image margin-auto" (click)="uploadImage(1)">
         <img src="data:image/png;base64,{{userDetails.id_proof}}" *ngIf="userDetails.id_proof != '' && userDetails.id_proof != null"
           #myImage1 class="action-con-image-size">
         <img src="assets/imgs/noidcard.jpg" *ngIf="userDetails.id_proof == '' || userDetails.id_proof == null" class="action-con-image-size">
       </ion-col>
 
-      <ion-col text-right class="action-con-image margin-auto" (click)="uploadIdProof(2)">
+      <ion-col text-right class="action-con-image margin-auto" (click)="uploadImage(2)">
         <img src="data:image/png;base64,{{userDetails.id_proof1}}" *ngIf="userDetails.id_proof1 != '' && userDetails.id_proof1 != null"
           #myImage2 class="action-con-image-size">
         <img src="assets/imgs/noidcard.jpg" *ngIf="userDetails.id_proof1 == '' || userDetails.id_proof1 == null" class="action-con-image-size">
