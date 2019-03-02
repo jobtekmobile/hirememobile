@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>JOB REQUEST FORM</ion-title>
+    <ion-title>JOB request form</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -53,7 +53,7 @@
       <ion-row>
         <ion-col col-12>
           <p class="form-header">
-            What salary do you propose for the candidate ?
+            What salary are you expected?
           </p>
         </ion-col>
         <ion-col col-12>
@@ -93,7 +93,7 @@
         <ion-col col-12>
           <ion-item class="margin-bottom-5">
             <ion-label class="margin-top-0 font-size-14">
-              <span>Canditate must know how to read ?</span>
+              <span>Do you know how to read ?</span>
               <span>
                 <img src="assets/imgs/createJobReq/study.svg" class="img-sub-size margin-left-10" style="width:25px">
               </span>
@@ -104,7 +104,7 @@
           </ion-item>
           <ion-item class="margin-bottom-5">
             <ion-label class="margin-top-0 font-size-14">
-              <span>Candidate must know how to write ?</span>
+              <span>Do you know how to write ?</span>
               <span>
                 <img src="assets/imgs/createJobReq/write-letter.svg" class="img-sub-size margin-left-10" style="width:25px">
               </span>
@@ -141,18 +141,7 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col col-12>
-          <p class="form-header">
-            Additional Description
-          </p>
-        </ion-col>
-        <ion-col col-12>
-          <ion-item>
-            <ion-textarea placeholder="Comment" [(ngModel)]="createJobRequest.AdditionalDescription"></ion-textarea>
-          </ion-item>
-        </ion-col>
-      </ion-row>
+      
       <!-- <ion-row *ngIf="jobTasks.length > 0">
         <ion-col col-12 *ngFor="let job of jobTasks; let i = index">
           <ion-checkbox item-left class="margin-right-15" [(ngModel)]="job.Selected">
@@ -174,22 +163,30 @@
           </div>
         </ion-col>
       </ion-row> -->
-      <ion-row class="padding-left-15" *ngIf="jobTasks.length > 0">
+      <ion-row class="" *ngIf="jobTasks.length > 0">
+          <ion-col col-12>
+              <p class="form-header">
+                Skills
+              </p>
+            </ion-col>
         <ion-col col-12>
           <div class="categories">
             <div *ngFor="let job of (jobTasks | jobTaskPipe)">
               <ion-checkbox item-left class="margin-right-15" name="job_task_{{job.JobTaskId}}" [(ngModel)]="job.Selected">
               </ion-checkbox>
               <span>{{job.JobTaskName}}</span>
-              <ul>
+              <ion-input  type="text" style="border-bottom: 1px solid rgb(208, 208, 208);" placeholder="Description" spellcheck="false" autocapitalize="off" [(ngModel)]="job.Note">
+            </ion-input>
+              <ul style="padding-left: 10px;">
                 <ng-template #recursiveList let-list>
                   <li *ngFor="let subTask of list">
                     <div>
                       <ion-checkbox item-left class="margin-right-15" name="job_task_{{subTask.JobTaskId}}" [(ngModel)]="subTask.Selected">
                       </ion-checkbox>
                       <span>{{subTask.JobTaskName}}</span>
+                      <ion-input style="border-bottom: 1px solid rgb(208, 208, 208);"  type="text" [(ngModel)]="subTask.Note" placeholder="Description" spellcheck="false" autocapitalize="off"></ion-input>
                     </div>
-                    <ul *ngIf="subTask.SubTasks?.length > 0">
+                    <ul *ngIf="subTask.SubTasks?.length > 0" style="padding-left: 10px;">
                       <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: subTask.SubTasks }"></ng-container>
                     </ul>
                   </li>
@@ -202,10 +199,23 @@
       </ion-row>
       <ion-row>
         <ion-col col-12>
+          <p class="form-header">
+            Additional Description
+          </p>
+        </ion-col>
+        <ion-col col-12>
+          <ion-item>
+            <ion-textarea placeholder="Comment" [(ngModel)]="createJobRequest.AdditionalDescription"></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
           <ion-row>
             <ion-col col-3 *ngFor="let item of images" class="margin-auto">
-              <img class="img-size" [src]="item.file && item.file!=''? item.file:'assets/imgs/no-record-found.png'" (click)="uploadImage(item)"
+              <img class="img-size" [src]="item.file && item.file!=''? item.file:'assets/imgs/upload.png'" (click)="uploadImage(item)"
               />
+              <p style="margin: 0;text-align: center;font-size: 12px;color: #f65f6e;">Upload</p>
             </ion-col>
           </ion-row>
         </ion-col>

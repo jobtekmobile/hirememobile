@@ -149,7 +149,8 @@ export class PublishedJob {
     } else {
       index = 1;
     }
-    let filterModal = this.modalCtrl.create("FilterPage", { activeTab: index });
+  
+    let filterModal = this.modalCtrl.create("FilterPage", { activeTab: index,Job:this.searchFilterData.Job,JobName:this.title });
     filterModal.onDidDismiss(item => {
       if (item) {
         this.isAvailable = true;

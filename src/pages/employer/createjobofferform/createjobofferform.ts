@@ -83,10 +83,25 @@ export class CreateJobOfferForm {
 
   //Get logged in user details from cache.
   getLoggedInUserDetailsFromCache() {
-    this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));
-    this.jobCriteria.CandidateId = this.loggedInUserDetails.userId;
-    this.getActiveCities();
-    this.getActiveJobTasks();
+    // this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));
+    // this.jobCriteria.CandidateId = this.loggedInUserDetails.userId;
+    // this.getActiveCities();
+    // this.getActiveJobTasks();
+
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+    .then((result) => {
+      if (result && result.userId) {
+        this.loggedInUserDetails = result;
+
+        this.jobCriteria.CandidateId = this.loggedInUserDetails.userId;
+        this.getActiveCities();
+        this.getActiveJobTasks();
+        
+      }
+      else {
+        this.navCtrl.setRoot("LoginPage");
+      }
+    });
   }
   getActiveJobTasks() {
     this._dataContext.GetJobTasks(this.jobCriteria.JobId)

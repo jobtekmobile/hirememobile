@@ -107,10 +107,22 @@ export class CreateJobRequestForm {
 
   //Get logged in user details from cache.
   getLoggedInUserDetailsFromCache() {
-    this.loggedInUserDetails = JSON.parse(localStorage.getItem("loggedInUserCredential"));
-    this.createJobRequest.CandidateId = this.loggedInUserDetails.userId;
-    this.getActiveCities();
-    this.getActiveJobTasks();
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+      .then((result) => {
+        if (result && result.userId) {
+          this.loggedInUserDetails = result;
+
+          this.createJobRequest.CandidateId = this.loggedInUserDetails.userId;
+          this.getActiveCities();
+          this.getActiveJobTasks();
+          
+        }
+        else {
+          this.navCtrl.setRoot("LoginPage");
+        }
+      });
+
+
   }
   getActiveJobTasks() {
     this._dataContext.GetJobTasks(this.createJobRequest.JobId)

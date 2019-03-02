@@ -42,6 +42,7 @@ export class FilterPage {
   experiences: any = [];
   activeTab: number = 0;
   jobTasks: any = [];
+  title:any="";
   constructor(
     public platform: Platform,
     public navParam: NavParams,
@@ -50,6 +51,8 @@ export class FilterPage {
     public navParams: NavParams,
     private commonService: CommonServices,
   ) {
+    this.specificCrieteria.Job = this.navParam.get("Job");
+    this.title = this.navParam.get("JobName");
     this.getActiveJobTasks();
     this.getMinAge();
     this.getMaxAge();

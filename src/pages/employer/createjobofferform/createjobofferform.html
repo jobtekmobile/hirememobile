@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>JOB OFFER FORM</ion-title>
+    <ion-title>JOB Offer form</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -221,19 +221,13 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col col-12>
-          <p class="form-header">
-            Additional Description
-          </p>
-        </ion-col>
-        <ion-col col-12>
-          <ion-item>
-            <ion-textarea placeholder="Comment" [(ngModel)]="jobCriteria.AdditionalDescription"></ion-textarea>
-          </ion-item>
-        </ion-col>
-      </ion-row>
+     
       <ion-row class="padding-left-15" *ngIf="jobTasks.length > 0">
+          <ion-col col-12>
+              <p class="form-header">
+                Skills
+              </p>
+            </ion-col>
         <ion-col col-12>
           <div class="categories">
             <div *ngFor="let job of (jobTasks | jobTaskPipe)">
@@ -259,6 +253,18 @@
           </div>
         </ion-col>
       </ion-row>
+      <ion-row>
+          <ion-col col-12>
+            <p class="form-header">
+              Additional Description
+            </p>
+          </ion-col>
+          <ion-col col-12>
+            <ion-item>
+              <ion-textarea placeholder="Comment" [(ngModel)]="jobCriteria.AdditionalDescription"></ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
       <ion-row>
         <ion-col col-12>
           <button class="btn" type="button" (click)="onCreateJobResponse()" class="submit-btn">Submit</button>
