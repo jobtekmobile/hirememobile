@@ -61,7 +61,7 @@ export class CommonServices {
     ///////////////////////////////Agency////////////////////////////
     this._apiList["getMyCandidates"] = { controller: " Agencies", method: "MyCandidates", api: "api/Agencies" };
     this._apiList["getMyJobRequestsForAgency"] = { controller: " Agencies", method: "MyJobRequests", api: "api/Agencies" };
-
+    this._apiList["createNewJobRequestForAgency"] = { controller: "Agencies", method: "CreateJobRequest", api: "api/Agencies" };
 
     /////////////////////////////////////////////////////////////////
 

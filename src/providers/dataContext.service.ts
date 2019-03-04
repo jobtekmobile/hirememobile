@@ -407,13 +407,13 @@ export class DataContext {
                 .catch(this._http.handleError);
         }
     }
-    ResetPassword= (passwordObj: any): Observable<any> => {
-        return this._http.post(this.commonService.getApiControllerName("resetPassword").toString()+ "/PasswordReset", passwordObj)
+    ResetPassword = (passwordObj: any): Observable<any> => {
+        return this._http.post(this.commonService.getApiControllerName("resetPassword").toString() + "/PasswordReset", passwordObj)
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
-    ForgotPassword= (passwordObj: any): Observable<any> => {
-        return this._http.post(this.commonService.getApiControllerName("forgotPassword").toString()+ "/ForgotPassword", passwordObj)
+    ForgotPassword = (passwordObj: any): Observable<any> => {
+        return this._http.post(this.commonService.getApiControllerName("forgotPassword").toString() + "/ForgotPassword", passwordObj)
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
@@ -430,6 +430,12 @@ export class DataContext {
     }
     updateAgencyPassword = (UserId, passwordObj): Observable<any> => {
         return this._http.put(this.commonService.getApiControllerName("updateAgencyPassword").toString() + "/" + UserId + "/PasswordUpdate/?agencyId=" + UserId, passwordObj)
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
+    //Create New job request for agency
+    CreateNewJobRequestForAgency = (userData: any): Observable<any> => {
+        return this._http.post(this.commonService.getApiControllerName("createNewJobRequestForAgency").toString() + "/" + userData.CandidateId + "/JobRequests", userData)
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }

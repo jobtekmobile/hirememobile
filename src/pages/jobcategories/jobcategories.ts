@@ -135,6 +135,8 @@ export class JobCategory {
   gotoSelectedCategory(id) {
     if (this.fromPage == "jobRequest")
       this.navCtrl.push("CreateJobRequestForm", { jobId: id });
+    else if (this.fromPage == "agencyJobRequest")
+      this.navCtrl.push("CreateAgencyJobRequestForm", { jobId: id });
     else
       this.navCtrl.push("CreateJobOfferForm", { jobId: id });
   }

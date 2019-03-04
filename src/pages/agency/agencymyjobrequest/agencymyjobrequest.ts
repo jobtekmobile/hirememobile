@@ -131,7 +131,7 @@ export class AgencymyjobrequestPage {
     this.navCtrl.push("JobRequestDescDetails", { jobRequestId: item.JobRequestId });
   }
   gotoCreate() {
-    this.navCtrl.push("JobCategory", { category: this.categories });
+    this.navCtrl.push("JobCategory", { category: this.categories,fromPage:"agencyJobRequest" });
   }
   deleteSelectedJobRequests(id, index) {
     let method = this.alerCtrl.create({
