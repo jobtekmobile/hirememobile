@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the DashboardPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { EnLanguageServices } from '../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../providers/frlanguage.service';
+import { CommonServices } from '../../providers/common.service';
 
 @IonicPage()
 @Component({
@@ -14,11 +10,26 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'dashboard.html',
 })
 export class DashboardPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  labelList:any = [];
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    private commonService: CommonServices,
+    private enLanguageServices:EnLanguageServices,
+    private frLanguageServices:FrLanguageServices) {
+     // this.labelList = enLanguageServices.getLabelLists();
   }
 
   ionViewDidLoad() {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+    .then((result) => {
+      if (result && result.language) {
+        if (result.language == "en") {
+          this.labelList = this.enLanguageServices.getLabelLists();
+        } else {
+          this.labelList = this.frLanguageServices.getLabelLists();
+        }
+        
+      }
+    });
     console.log('ionViewDidLoad DashboardPage');
   }
 

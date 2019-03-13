@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar>
         <ion-title>
-            Filter option for {{title}} job
+            {{labelList.label61}} {{title}} {{labelList.label62}}
         </ion-title>
         <ion-buttons start>
             <button ion-button (click)="closeModal()">
@@ -15,13 +15,13 @@
 <ion-content>
     <ion-list>
         <ion-list-header style="margin: 0px;color:#ef548a;">
-            STANDARD CRITERIAS
+            {{labelList.label63}}
         </ion-list-header>
         <!-- Gender -->
         <ion-row>
             <ion-col col-12>
                 <ion-item class="ion-item-noborder">
-                    <ion-label>Gender</ion-label>
+                    <ion-label>{{labelList.label14}}</ion-label>
                     <ion-toggle [(ngModel)]="specificCrieteria.IsGenderActive" [checked]="specificCrieteria.IsGenderActive" (ionChange)="onToggleChange('Gender')"></ion-toggle>
                 </ion-item>
                 <div class="ion-item-border" *ngIf="specificCrieteria.IsGenderActive">
@@ -30,13 +30,13 @@
                             <ion-col col-6 style="padding:0px;">
                                 <ion-item class="ion-item-noborder">
                                     <ion-radio item-left value="2"></ion-radio>
-                                    <ion-label class="font-size-14">Male</ion-label>
+                                    <ion-label class="font-size-14">{{labelList.label15}}</ion-label>
                                 </ion-item>
                             </ion-col>
                             <ion-col col-6 style="padding:0px;">
                                 <ion-item class="ion-item-noborder">
                                     <ion-radio item-left value="1"></ion-radio>
-                                    <ion-label class="font-size-14">Female</ion-label>
+                                    <ion-label class="font-size-14">{{labelList.label16}}</ion-label>
                                 </ion-item>
                             </ion-col>
                         </ion-row>
@@ -47,7 +47,7 @@
         <ion-row>
             <ion-col col-12>
                 <ion-item class="ion-item-noborder">
-                    <ion-label>ID Card Checked</ion-label>
+                    <ion-label>{{labelList.label64}}</ion-label>
                     <ion-toggle [(ngModel)]="specificCrieteria.IsProfileVerifiedActive" [checked]="specificCrieteria.IsProfileVerifiedActive"
                         (ionChange)="onToggleChange('ProfileVerified')"></ion-toggle>
                 </ion-item>
@@ -57,13 +57,13 @@
                             <ion-col col-6 style="padding:0px;">
                                 <ion-item class="ion-item-noborder">
                                     <ion-radio item-left value="true"></ion-radio>
-                                    <ion-label class="font-size-14">Yes</ion-label>
+                                    <ion-label class="font-size-14">{{labelList.label60}}</ion-label>
                                 </ion-item>
                             </ion-col>
                             <ion-col col-6 style="padding:0px;">
                                 <ion-item class="ion-item-noborder">
                                     <ion-radio item-left value="false"></ion-radio>
-                                    <ion-label class="font-size-14">No</ion-label>
+                                    <ion-label class="font-size-14">{{labelList.label59}}</ion-label>
                                 </ion-item>
                             </ion-col>
                         </ion-row>
@@ -74,7 +74,7 @@
         <ion-row>
             <ion-col col-12>
                 <ion-item class="ion-item-noborder">
-                    <ion-label>Age</ion-label>
+                    <ion-label>{{labelList.label50}}</ion-label>
                     <ion-toggle [(ngModel)]="specificCrieteria.IsAgeFilterActive" (ionChange)="onToggleChange('Age')" [checked]="specificCrieteria.IsAgeFilterActive"></ion-toggle>
                 </ion-item>
                 <div class="ion-item-border" *ngIf="specificCrieteria.IsAgeFilterActive">
@@ -83,7 +83,7 @@
                             <ion-list style="margin:0px;">
                                 <ion-item class="ion-item-noborder">
                                     <ion-select [(ngModel)]="specificCrieteria.MinAge">
-                                        <ion-option value="">--Select--</ion-option>
+                                        <ion-option value="">--{{labelList.label7}}--</ion-option>
                                         <ion-option *ngFor="let item of minAge" [value]="item.value">{{item.label}}</ion-option>
                                     </ion-select>
                                 </ion-item>
@@ -93,7 +93,7 @@
                             <ion-list style="margin:0px;">
                                 <ion-item class="ion-item-noborder">
                                     <ion-select [(ngModel)]="specificCrieteria.MaxAge">
-                                        <ion-option value="">--Select--</ion-option>
+                                        <ion-option value="">--{{labelList.label7}}--</ion-option>
                                         <ion-option *ngFor="let item of age" [value]="item.value">{{item.label}}</ion-option>
                                     </ion-select>
                                 </ion-item>
@@ -106,7 +106,7 @@
         <ion-row>
             <ion-col col-12>
                 <ion-item class="ion-item-noborder">
-                    <ion-label>Years of Experiences</ion-label>
+                    <ion-label>{{labelList.label65}}</ion-label>
                     <ion-toggle [(ngModel)]="specificCrieteria.IsExperienceFilterActive" (ionChange)="onToggleChange('Experience')" [checked]="specificCrieteria.IsExperienceFilterActive"></ion-toggle>
                 </ion-item>
                 <div class="ion-item-border" *ngIf="specificCrieteria.IsExperienceFilterActive">
@@ -115,7 +115,7 @@
                             <ion-list style="margin:0px;">
                                 <ion-item>
                                     <ion-select [(ngModel)]="specificCrieteria.MinYearsOfExperience">
-                                        <ion-option value="">--Select--</ion-option>
+                                        <ion-option value="">--{{labelList.label7}}--</ion-option>
                                         <ion-option *ngFor="let exp of experiences" [value]="exp.value">{{exp.label}}</ion-option>
                                     </ion-select>
                                 </ion-item>
@@ -125,7 +125,7 @@
                             <ion-list style="margin:0px;">
                                 <ion-item>
                                     <ion-select [(ngModel)]="specificCrieteria.MaxYearsOfExperience">
-                                        <ion-option value="">--Select--</ion-option>
+                                        <ion-option value="">--{{labelList.label7}}--</ion-option>
                                         <ion-option *ngFor="let exp of experiences" [value]="exp.value">{{exp.label}}</ion-option>
                                     </ion-select>
                                 </ion-item>
@@ -139,7 +139,7 @@
         <ion-row>
             <ion-col col-12>
                 <ion-item class="ion-item-noborder">
-                    <ion-label>Type of Staff</ion-label>
+                    <ion-label>{{labelList.label66}}</ion-label>
                     <ion-toggle [(ngModel)]="specificCrieteria.IsStaffTypeFilterActive" [checked]="specificCrieteria.IsStaffTypeFilterActive"
                         (ionChange)="onToggleChange('StaffType')"></ion-toggle>
                 </ion-item>
@@ -149,13 +149,13 @@
                             <ion-col col-6 style="padding:0px;">
                                 <ion-item class="ion-item-noborder">
                                     <ion-radio item-left checked="true" value="1"></ion-radio>
-                                    <ion-label>Independant</ion-label>
+                                    <ion-label>{{labelList.label48}}</ion-label>
                                 </ion-item>
                             </ion-col>
                             <ion-col col-6 style="padding:0px;">
                                 <ion-item class="ion-item-noborder">
                                     <ion-radio item-left value="2"></ion-radio>
-                                    <ion-label>Agency</ion-label>
+                                    <ion-label>{{labelList.label10}}</ion-label>
                                 </ion-item>
                             </ion-col>
                         </ion-row>
@@ -166,13 +166,13 @@
         <ion-row>
             <ion-col col-12>
                 <ion-item class="ion-item-noborder">
-                    <ion-label>Disponibility</ion-label>
+                    <ion-label>{{labelList.label67}}</ion-label>
                     <ion-toggle [(ngModel)]="specificCrieteria.IsDisponibilityFilterActive" [checked]="specificCrieteria.IsDisponibilityFilterActive"
                         (ionChange)="onToggleChange('Date')"></ion-toggle>
                 </ion-item>
                 <div class="ion-item-border" *ngIf="specificCrieteria.IsDisponibilityFilterActive">
                     <ion-item>
-                        <ion-label>Select Date</ion-label>
+                        <ion-label>{{labelList.label68}}</ion-label>
                         <ion-datetime displayFormat="DD-MMM-YYYY" pickerFormat="DD-MMM-YYYY" placeholder="" [(ngModel)]="specificCrieteria.Disponibility"></ion-datetime>
                     </ion-item>
                 </div>
@@ -181,7 +181,7 @@
         <ion-row>
             <ion-col col-12>
                 <ion-item class="ion-item-noborder">
-                    <ion-label>Localizations</ion-label>
+                    <ion-label>{{labelList.label69}}</ion-label>
                     <ion-toggle [(ngModel)]="specificCrieteria.IsLocalizationFilterActive" (ionChange)="onToggleChange('Localization')" [checked]="specificCrieteria.IsLocalizationFilterActive"></ion-toggle>
                 </ion-item>
                 <div class="ion-item-border" *ngIf="specificCrieteria.IsLocalizationFilterActive">
@@ -190,7 +190,7 @@
                             <ion-list style="margin:0px;">
                                 <ion-item>
                                     <ion-select [(ngModel)]="specificCrieteria.City" (ionChange)="onSelectedCity()">
-                                        <ion-option value="">--Select City--</ion-option>
+                                        <ion-option value="">--{{labelList.label22}}--</ion-option>
                                         <ion-option *ngFor="let item of cities" [value]="item.CityId">{{item.CityName}}</ion-option>
                                     </ion-select>
                                 </ion-item>
@@ -200,7 +200,7 @@
                             <ion-list style="margin:0px;">
                                 <ion-item>
                                     <ion-select [(ngModel)]="specificCrieteria.District" [disabled]="specificCrieteria.CityId == 0">
-                                        <ion-option value="">--Select District--</ion-option>
+                                        <ion-option value="">--{{labelList.label24}}--</ion-option>
                                         <ion-option *ngFor="let item of districts" [value]="item.DistrictId">{{item.DistrictName}}</ion-option>
                                     </ion-select>
                                 </ion-item>
@@ -213,7 +213,7 @@
         <ion-row>
             <ion-col col-12>
                 <ion-item class="ion-item-noborder">
-                    <ion-label>Salary Between</ion-label>
+                    <ion-label>{{labelList.label70}}</ion-label>
                     <ion-toggle [(ngModel)]="specificCrieteria.IsSalaryFilterActive" [checked]="specificCrieteria.IsSalaryFilterActive" (ionChange)="onToggleChange('Salary')"></ion-toggle>
                 </ion-item>
                 <ion-list *ngIf="specificCrieteria.IsSalaryFilterActive">
@@ -221,7 +221,7 @@
                         <ion-row>
                             <ion-col col-6 style="padding:0px;">
                                 <ion-item class="no-border">
-                                    <ion-input [(ngModel)]="specificCrieteria.MinSalary" type="tel" placeholder="Min" spellcheck="false" autocapitalize="off"
+                                    <ion-input [(ngModel)]="specificCrieteria.MinSalary" type="tel" [placeholder]="labelList.label71" spellcheck="false" autocapitalize="off"
                                         maxlength="7" (keypress)="onlyNumber($event)">
                                     </ion-input>
 
@@ -229,7 +229,7 @@
                             </ion-col>
                             <ion-col col-6 style="padding:0px;">
                                 <ion-item class="no-border">
-                                    <ion-input [(ngModel)]="specificCrieteria.MaxSalary" type="tel" placeholder="Min" spellcheck="false" autocapitalize="off"
+                                    <ion-input [(ngModel)]="specificCrieteria.MaxSalary" type="tel" [placeholder]="labelList.label72" spellcheck="false" autocapitalize="off"
                                         maxlength="7" (keypress)="onlyNumber($event)">
                                     </ion-input>
                                 </ion-item>
@@ -242,7 +242,7 @@
     </ion-list>
     <ion-list>
         <ion-list-header style="margin: 0px;color:#ef548a;">
-            SPECIFIC CRITERIAS
+            {{labelList.label73}}
         </ion-list-header>
     </ion-list>
     <ion-row class="padding-left-15" *ngIf="jobTasks.length > 0">

@@ -10,7 +10,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>My Job Request</ion-title>
+    <ion-title>{{labelList.pagetitle3}}</ion-title>
   </ion-navbar>
   <ion-toolbar class="segment-toolbar">
     <ion-row class="filters">
@@ -43,7 +43,7 @@
                 <!-- <ion-avatar item-start class="avatar-top">
                       <img class="img-size" *ngIf="item.ProfilePicUrl == '' && item.Gender == 1" src="assets/imgs/maledefault.svg" />
                       <img class="img-size" *ngIf="item.ProfilePicUrl == '' && item.Gender == 2" src="assets/imgs/femaledefault.svg" />
-                      <img class="img-size" *ngIf="item.ProfilePicUrl && item.ProfilePicUrl != ''" src="data:image/png;base64,{{item.ProfilePicUrl}}" />
+                      <img class="img-size" *ngIf="item.ProfilePicUrl && item.ProfilePicUrl != ''" src="{{item.ProfilePicUrl}}" />
   
                       <img src="assets/imgs/verified.png" class="verified-img" *ngIf="item.VerifiedByAdmin" alt="">
                     </ion-avatar> -->
@@ -62,8 +62,8 @@
                     </ion-col>
 
                     <ion-col col-4 class="card-job-item-con">
-                      <p class="req-type-color" *ngIf="item.StaffType == 1">( Individual )</p>
-                      <p class="req-type-color" *ngIf="item.StaffType == 2">( Agency )</p>
+                      <p class="req-type-color" *ngIf="item.StaffType == 1">( {{labelList.label103}} )</p>
+                      <p class="req-type-color" *ngIf="item.StaffType == 2">( {{labelList.label10}} )</p>
                     </ion-col>
                   </ion-row>
                   <p class="para-overflow-hidden">
@@ -79,10 +79,10 @@
                     </span>
 
                     <span class="margin-right-10">
-                      Age: {{item.Age}} Yrs.
+                      {{labelList.label50}}: {{item.Age}} Yrs.
                     </span>
                     <span class="">
-                      Exp: {{item.ExperienceInYears}} Yrs.
+                      {{labelList.label51}}: {{item.ExperienceInYears}} Yrs.
                     </span>
                   </p>
                   <!-- <p class="para-overflow-hidden">
@@ -99,7 +99,7 @@
                       </p> -->
                   <p class="para-overflow-hidden">
                     <span>
-                      Published: {{item.PublishedDate}}
+                      {{labelList.label52}}: {{item.PublishedDate}}
                     </span>
 
                   </p>
@@ -107,14 +107,14 @@
               </ion-item>
               <ion-row no-padding class="action-con">
                 <ion-col class="action-con-image margin-auto">
-                  <img src="data:image/png;base64,{{item.IdProofDoc}}" *ngIf="item.IdProofDoc != '' && item.IdProofDoc != null" #idcardfront
+                  <img src="{{item.IdProofDoc}}" *ngIf="item.IdProofDoc != '' && item.IdProofDoc != null" #idcardfront
                     (click)="presentImage(idcardfront)" class="action-con-image-size">
                   <img src="assets/imgs/noidcard.jpg" *ngIf="item.IdProofDoc == '' || item.IdProofDoc == null" class="action-con-image-size">
 
                 </ion-col>
 
                 <ion-col text-right class="action-con-image margin-auto">
-                  <img src="data:image/png;base64,{{item.IdProofDoc1}}" *ngIf="item.IdProofDoc1 != '' && item.IdProofDoc1 != null" #idcardback
+                  <img src="{{item.IdProofDoc1}}" *ngIf="item.IdProofDoc1 != '' && item.IdProofDoc1 != null" #idcardback
                     (click)="presentImage(idcardback)" class="action-con-image-size">
                   <img src="assets/imgs/noidcard.jpg" *ngIf="item.IdProofDoc1 == '' || item.IdProofDoc1 == null" class="action-con-image-size">
                 </ion-col>
@@ -123,14 +123,14 @@
                 <ion-col class="action-con-inner">
                   <button ion-button clear small icon-start class="action-btn" (click)="deleteSelectedJobRequests(item.JobRequestId,i)">
                     <ion-icon name="trash"></ion-icon>
-                    Delete
+                    {{labelList.label77}}
                   </button>
                 </ion-col>
 
                 <ion-col text-right class="action-con-inner">
                   <button ion-button clear small icon-start class="action-btn" (click)="gotoDetails(item)">
                     <ion-icon name="information-circle"></ion-icon>
-                    Detail
+                    {{labelList.label54}}
                   </button>
                 </ion-col>
               </ion-row>

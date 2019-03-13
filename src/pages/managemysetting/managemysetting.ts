@@ -7,6 +7,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import moment from 'moment';
 import { File } from '@ionic-native/file';
 import { ChangeDetectorRef } from '@angular/core';
+import { EnLanguageServices } from '../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../providers/frlanguage.service';
 /**
  * Generated class for the ManagemysettingPage page.
  *
@@ -35,15 +37,29 @@ export class ManagemysettingPage {
   isEmailSelected = false;
   isPhoneSelected = false;
   loggedInUserDetails: any = {};
+  labelList:any = [];
   constructor(private cdr: ChangeDetectorRef, private file: File, public actionSheetCtrl: ActionSheetController, private camera: Camera, public navCtrl: NavController, public _dataContext: DataContext, public navParams: NavParams, imageViewerCtrl: ImageViewerController,
-    private commonService: CommonServices) {
+    private commonService: CommonServices,
+    private enLanguageServices:EnLanguageServices,
+    private frLanguageServices:FrLanguageServices) {
     this._imageViewerCtrl = imageViewerCtrl;
     //const imageViewer = this._imageViewerCtrl.create(myImage);
-
+  //  this.labelList = enLanguageServices.getLabelLists();
     this.getLoggedInUserDetailsFromCache();
   }
 
   ionViewDidLoad() {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+    .then((result) => {
+      if (result && result.language) {
+        if (result.language == "en") {
+          this.labelList = this.enLanguageServices.getLabelLists();
+        } else {
+          this.labelList = this.frLanguageServices.getLabelLists();
+        }
+        
+      }
+    });
     console.log('ionViewDidLoad ManagemysettingPage');
   }
   getLoggedInUserDetailsFromCache() {
@@ -128,7 +144,7 @@ export class ManagemysettingPage {
         //   this.commonService.onMessageHandler("No notification found.", 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve profile details. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg22, 0);
         });
   }
 
@@ -173,7 +189,7 @@ export class ManagemysettingPage {
         //   this.commonService.onMessageHandler("No notification found.", 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve profile details. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg22, 0);
         });
   }
 
@@ -218,7 +234,7 @@ export class ManagemysettingPage {
         //   this.commonService.onMessageHandler("No notification found.", 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve profile details. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg22, 0);
         });
   }
   getCountriesDetails() {
@@ -237,7 +253,7 @@ export class ManagemysettingPage {
         //   this.commonService.onMessageHandler("No notification found.", 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve countries details. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg3, 0);
         });
   }
 
@@ -257,7 +273,7 @@ export class ManagemysettingPage {
         //   this.commonService.onMessageHandler("No notification found.", 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve countries details. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg4, 0);
         });
   }
   getDistrictDetails() {
@@ -276,7 +292,7 @@ export class ManagemysettingPage {
         //   this.commonService.onMessageHandler("No notification found.", 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve countries details. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg5, 0);
         });
   }
 
@@ -333,7 +349,7 @@ export class ManagemysettingPage {
         //   this.commonService.onMessageHandler("No notification found.", 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to update details. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg23, 0);
         });
   }
 
@@ -366,7 +382,7 @@ export class ManagemysettingPage {
         //   this.commonService.onMessageHandler("No notification found.", 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to update details. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg23, 0);
         });
   }
 
@@ -399,15 +415,15 @@ export class ManagemysettingPage {
         //   this.commonService.onMessageHandler("No notification found.", 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to update details. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg23, 0);
         });
   }
   uploadImage(data) {
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'Choose File',
+      title: this.labelList.label40,
       buttons: [
         {
-          text: 'Camera',
+          text: this.labelList.label41,
           icon: "ios-camera-outline",
           cssClass: 'icon-btn-color',
           handler: () => {
@@ -415,7 +431,7 @@ export class ManagemysettingPage {
           }
         },
         {
-          text: 'Gallery',
+          text: this.labelList.label42,
           icon: "ios-image-outline",
           handler: () => {
             this.chooseFromGallery(data);
@@ -486,7 +502,7 @@ export class ManagemysettingPage {
             this.cdr.detectChanges();
           }
           else {
-            this.commonService.onMessageHandler("Sorry! you can upload only .png, .jpg, .jpeg files only.", 0);
+            this.commonService.onMessageHandler(this.labelList.errormsg6, 0);
           }
         }
       })
@@ -501,7 +517,7 @@ export class ManagemysettingPage {
           this.commonService.onMessageHandler(response.Message, 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to upload profile picture. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg24, 0);
         });
   }
   uploadIdProofPic() {
@@ -513,7 +529,7 @@ export class ManagemysettingPage {
           this.commonService.onMessageHandler(response.Message, 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to upload profile picture. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg25, 0);
         });
   }
 }

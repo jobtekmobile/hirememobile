@@ -3,13 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DataContext } from '../../providers/dataContext.service';
 import { CommonServices } from '../../providers/common.service';
 import moment from 'moment';
-/**
- * Generated class for the NotificationPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
+import { EnLanguageServices } from '../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../providers/frlanguage.service';
 
 @IonicPage()
 @Component({
@@ -20,12 +15,27 @@ export class NotificationPage {
   loggedInUserDetails: any = {};
   notificationList: any = [];
   isAvailable: boolean = true;
+  labelList:any = [];
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public _dataContext: DataContext,
-    private commonService: CommonServices
+    private commonService: CommonServices,
+    private enLanguageServices:EnLanguageServices,
+    private frLanguageServices:FrLanguageServices
   ) {
+  //  this.labelList = enLanguageServices.getLabelLists();
+  this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+  .then((result) => {
+    if (result && result.language) {
+      if (result.language == "en") {
+        this.labelList = this.enLanguageServices.getLabelLists();
+      } else {
+        this.labelList = this.frLanguageServices.getLabelLists();
+      }
+      
+    }
+  });
   }
 
 
@@ -58,11 +68,11 @@ export class NotificationPage {
           }
           else {
             this.isAvailable = false;
-            this.commonService.onMessageHandler("No notification found.", 0);
+            this.commonService.onMessageHandler(this.labelList.errormsg20, 0);
           }
         },
           error => {
-            this.commonService.onMessageHandler("Failed to retrieve notification details. Please try again", 0);
+            this.commonService.onMessageHandler(this.labelList.errormsg21, 0);
           });
     } else if (this.loggedInUserDetails.type == "Employer") {
       this._dataContext.GetEmployerNotificationDetails(this.loggedInUserDetails.userId)
@@ -76,11 +86,11 @@ export class NotificationPage {
           }
           else {
             this.isAvailable = false;
-            this.commonService.onMessageHandler("No notification found.", 0);
+            this.commonService.onMessageHandler(this.labelList.errormsg20, 0);
           }
         },
           error => {
-            this.commonService.onMessageHandler("Failed to retrieve notification details. Please try again", 0);
+            this.commonService.onMessageHandler(this.labelList.errormsg21, 0);
           });
     } else if (this.loggedInUserDetails.type = "Agency") {
       this._dataContext.GetAgencyNotificationDetails(this.loggedInUserDetails.userId)
@@ -94,11 +104,11 @@ export class NotificationPage {
         }
         else {
           this.isAvailable = false;
-          this.commonService.onMessageHandler("No notification found.", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg20, 0);
         }
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve notification details. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg21, 0);
         });
     }
 

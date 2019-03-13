@@ -1,6 +1,6 @@
 <ion-content padding>
   <div class="register-logo-container">
-    <img src="assets/imgs/logo-01.png">
+    <img src="assets/imgs/logo.png">
   </div>
   <div class="register-form">
     <ion-slides #registerSlider (ionSlideDidChange)="slideChanged()">
@@ -8,61 +8,71 @@
         <div class="register-input-con">
           <ion-list>
             <ion-item class="dropdown-text">
-              <ion-label>Gender</ion-label>
-              <ion-select [(ngModel)]="registerObj.Gender">
-                <ion-option value="2">Female</ion-option>
-                <ion-option value="1">Male</ion-option>
+              <ion-label>{{labelList.label6}}</ion-label>
+              <ion-select [(ngModel)]="registerObj.UserRoles">
+                  <ion-option value="0">--{{labelList.label7}}--</ion-option>
+                <ion-option value="Candidate">{{labelList.label8}}</ion-option>
+                <ion-option value="Employer">{{labelList.label9}}</ion-option>
+                <ion-option value="Agency">{{labelList.label10}}</ion-option>
               </ion-select>
             </ion-item>
 
           </ion-list>
-          <p class="register-label-text">Personal Details</p>
+          <p class="register-label-text">{{labelList.label11}}</p>
           <ion-list>
 
             <ion-item>
-              <ion-input type="text" placeholder="First Name" [(ngModel)]="registerObj.FirstName"></ion-input>
+              <ion-input type="text" [placeholder]="labelList.label12" [(ngModel)]="registerObj.FirstName"></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-input type="text" placeholder="Last Name " [(ngModel)]="registerObj.LastName"></ion-input>
+              <ion-input type="text" [placeholder]="labelList.label13" [(ngModel)]="registerObj.LastName"></ion-input>
             </ion-item>
+            <ion-item class="dropdown-text">
+              <ion-label>{{labelList.label14}}</ion-label>
+              <ion-select [(ngModel)]="registerObj.Gender">
+                <ion-option value="2">{{labelList.label15}}</ion-option>
+                <ion-option value="1">{{labelList.label16}}</ion-option>
+              </ion-select>
+            </ion-item>
+
             <ion-item class="date-text">
-              <ion-label>Date Of Birth</ion-label>
+              <ion-label>{{labelList.label17}}</ion-label>
               <ion-datetime displayFormat="DD-MM-YYYY" pickerFormat="DD-MM-YYYY" min="1900-12-31" max="{{maxDate}}" [(ngModel)]="registerObj.DOB"></ion-datetime>
             </ion-item>
           </ion-list>
-          <p class="register-label-text">Address Details</p>
+          <p class="register-label-text">{{labelList.label18}}</p>
           <ion-list>
             <ion-item class="dropdown-text">
-              <ion-label>Country</ion-label>
+              <ion-label>{{labelList.label19}}</ion-label>
               <ion-select [(ngModel)]="registerObj.CountryId" (ionChange)="getActiveCities()">
-                <ion-option value="0">--Select Country--</ion-option>
+                <ion-option value="0">--{{labelList.label20}}--</ion-option>
                 <ion-option *ngFor="let country of countries" value="{{country.CountryId}}">{{country.CountryName}}</ion-option>
               </ion-select>
             </ion-item>
             <ion-item class="dropdown-text">
-              <ion-label>City</ion-label>
+              <ion-label>{{labelList.label21}}</ion-label>
               <ion-select [(ngModel)]="registerObj.CityId" (ionChange)="getActiveDistricts()">
-                <ion-option value="0">--Select City--</ion-option>
+                <ion-option value="0">--{{labelList.label22}}--</ion-option>
                 <ion-option *ngFor="let city of cities" value="{{city.CityId}}">{{city.CityName}}</ion-option>
               </ion-select>
             </ion-item>
             <ion-item class="dropdown-text">
-              <ion-label>District</ion-label>
+              <ion-label>{{labelList.label23}}</ion-label>
               <ion-select [(ngModel)]="registerObj.DistrictId">
-                <ion-option value="0">--Select District--</ion-option>
+                <ion-option value="0">--{{labelList.label24}}--</ion-option>
                 <ion-option *ngFor="let district of districts" value="{{district.DistrictId}}">{{district.DistrictName}}</ion-option>
               </ion-select>
             </ion-item>
             <ion-item>
-              <ion-textarea placeholder="Address" [(ngModel)]="registerObj.Address"></ion-textarea>
+              <ion-textarea [placeholder]="labelList.label25" [(ngModel)]="registerObj.Address"></ion-textarea>
             </ion-item>
           </ion-list>
-          <p class="register-label-text">Email & Contact</p>
+          <p class="register-label-text">{{labelList.label26}}</p>
           <ion-list>
 
             <ion-item>
-              <ion-input type="Email" placeholder="Email" [(ngModel)]="registerObj.Email"></ion-input>
+              <ion-input type="Email" [placeholder]="labelList.label27" [(ngModel)]="registerObj.Email"></ion-input>
             </ion-item>
 
 
@@ -77,7 +87,7 @@
 
               <ion-col col-9>
                 <ion-item>
-                    <ion-input [(ngModel)]="registerObj.PhoneNumber" type="tel" placeholder="Contact" spellcheck="false" autocapitalize="off"
+                    <ion-input [(ngModel)]="registerObj.PhoneNumber" type="tel" [placeholder]="labelList.label28" spellcheck="false" autocapitalize="off"
                     maxlength="10" (keypress)="onlyNumber($event)">
                 </ion-input>
                 </ion-item>
@@ -87,42 +97,42 @@
         </div>
       </ion-slide>
       <ion-slide>
-        <p class="register-label-text">DOCUMENTS TO UPLOAD</p>
+        <p class="register-label-text">{{labelList.label29}}</p>
         <ion-row>
           <ion-col col-12>
             <ion-row>
               <ion-col col-4 *ngFor="let item of images">
-                <img class="img-size" [src]="item.file && item.file!=''? item.file:'assets/imgs/no-record-found.png'" (click)="uploadImage(item)"
+                <img class="img-size" [src]="item.file && item.file!=''? item.file:'assets/imgs/upload.png'" (click)="uploadImage(item)"
                 />
+                <p style="margin: 0;text-align: center;font-size: 12px;color: #f65f6e;">{{labelList.label30}}</p>
               </ion-col>
             </ion-row>
           </ion-col>
         </ion-row>
-        <p class="register-label-text">USERNAME AND PASSWORD</p>
+        <p class="register-label-text">{{labelList.label31}}</p>
         <ion-list>
           <ion-item>
-            <ion-input type="text" placeholder="USERNAME" [(ngModel)]="registerObj.UserName"></ion-input>
+            <ion-input type="text" [placeholder]="labelList.label32" [(ngModel)]="registerObj.UserName"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-input type="password" placeholder="PASSWORD" [(ngModel)]="registerObj.Password"></ion-input>
+            <ion-input type="password" [placeholder]="labelList.label2" [(ngModel)]="registerObj.Password"></ion-input>
           </ion-item>
-          <p class="pass-hints">Password should be of 6 characters long and should containat least one Upper case letter, one lower case letter
-            one digit one special character e.g Pass@123</p>
+          <p class="pass-hints">{{labelList.label33}}</p>
           <ion-item>
-            <ion-input type="password" placeholder="CONFIRM PASSWORD" [(ngModel)]="registerObj.ConfirmPassword"></ion-input>
+            <ion-input type="password" [placeholder]="labelList.label34" [(ngModel)]="registerObj.ConfirmPassword"></ion-input>
           </ion-item>
           <ion-item class="dropdown-text" *ngIf="securityQuestions.length > 0">
-            <ion-label>Security Question</ion-label>
+            <ion-label>{{labelList.label35}}</ion-label>
             <ion-select [(ngModel)]="registerObj.SecurityQuestionId">
               <ion-option *ngFor="let item of securityQuestions" value="{{item.SecurityQuestionId}}">{{item.Question}}</ion-option>
             </ion-select>
           </ion-item>
           <ion-item>
-            <ion-input type="text" placeholder="Answer" [(ngModel)]="registerObj.SecurityQuestionAnswer"></ion-input>
+            <ion-input type="text" [placeholder]="labelList.label36" [(ngModel)]="registerObj.SecurityQuestionAnswer"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label>i agree terms and conditions</ion-label>
+            <ion-label>{{labelList.label37}}</ion-label>
             <ion-checkbox [(ngModel)]="registerObj.AgreeTermsAndConditions"></ion-checkbox>
           </ion-item>
           <!--[(ngModel)]="registerObj.AgreeTermsAndConditions"-->
@@ -131,15 +141,15 @@
     </ion-slides>
 
     <div class="register-btn-con">
-      <button ion-button round full pr class="login-button" (click)="continue()" *ngIf="slideACtiveIndex == 0">Continue</button>
-      <button ion-button round full pr class="login-button" (click)="register()" *ngIf="slideACtiveIndex == 1">Register</button>
+      <button ion-button round full pr class="login-button" (click)="continue()" *ngIf="slideACtiveIndex == 0">{{labelList.label38}}</button>
+      <button ion-button round full pr class="login-button" (click)="register()" *ngIf="slideACtiveIndex == 1">{{labelList.label39}}</button>
     </div>
     <div class="bottom-con">
 
       <ion-row>
-        <ion-col col-8 class="forgot-text">FORGOT PASSWORD ?</ion-col>
+        <ion-col col-8 class="forgot-text" (click)="gotoForgotPassword()">{{labelList.label4}} ?</ion-col>
 
-        <ion-col col-4 class="text-right signup-text" (click)="gotoLogin()">LOGIN!</ion-col>
+        <ion-col col-4 class="text-right signup-text" (click)="gotoLogin()">{{labelList.label3}}!</ion-col>
       </ion-row>
 
     </div>

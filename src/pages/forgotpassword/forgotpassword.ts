@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DataContext } from '../../providers/dataContext.service';
 import { CommonServices } from '../../providers/common.service';
+import { EnLanguageServices } from '../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../providers/frlanguage.service';
 
 @IonicPage()
 @Component({
@@ -17,11 +19,26 @@ export class ForgotpasswordPage {
     Code: "1234"
   };
   isOtp: boolean=false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public _dataContext: DataContext, private commonService: CommonServices) {
+  labelList:any = [];
+  constructor(public navCtrl: NavController, public navParams: NavParams, public _dataContext: DataContext, 
+    private commonService: CommonServices,private enLanguageServices:EnLanguageServices,
+    private frLanguageServices:FrLanguageServices) {
+     // this.labelList = enLanguageServices.getLabelLists();
     // this.getLoggedInUserDetailsFromCache();
   }
 
   ionViewDidLoad() {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+    .then((result) => {
+      if (result && result.language) {
+        if (result.language == "en") {
+          this.labelList = this.enLanguageServices.getLabelLists();
+        } else {
+          this.labelList = this.frLanguageServices.getLabelLists();
+        }
+        
+      }
+    });
     console.log('ionViewDidLoad ChangepasswordPage');
   }
 
@@ -40,10 +57,10 @@ export class ForgotpasswordPage {
           }
         },
           error => {
-            this.commonService.onMessageHandler("Failed to reset password. Please try again", 0);
+            this.commonService.onMessageHandler(this.labelList.errormsg8, 0);
           });
     } else {
-      this.commonService.onMessageHandler("Email can't be blank", 0);
+      this.commonService.onMessageHandler(this.labelList.validmsg10, 0);
     }
 
   }
@@ -60,12 +77,15 @@ export class ForgotpasswordPage {
           }
         },
           error => {
-            this.commonService.onMessageHandler("Failed to reset password. Please try again", 0);
+            this.commonService.onMessageHandler(this.labelList.errormsg8, 0);
           });
     } else {
-      this.commonService.onMessageHandler("Password and confirm password didnot match", 0);
+      this.commonService.onMessageHandler(this.labelList.validmsg16, 0);
     }
 
+  }
+  gotoLogin() {
+    this.navCtrl.setRoot("LoginPage");
   }
 }
 

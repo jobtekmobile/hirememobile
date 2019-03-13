@@ -10,7 +10,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Export</ion-title>
+    <ion-title>{{labelList.pagetitle16}}</ion-title>
     <ion-buttons end (click)="openFilter()">
         <button ion-button icon-only>
           <ion-icon name="options"></ion-icon>
@@ -36,7 +36,7 @@
       <p>
         <span class="membertype">{{item.MemberType}}</span>
         <span class="jobtype para-overflow-hidden">&nbsp;({{item.JobSought}})</span>
-        <span class="age">Age: {{item.Age}} Yrs</span>
+        <span class="age">{{labelList.label50}}: {{item.Age}} Yrs</span>
       </p>
       <p><img class="phone-img" src="assets/imgs/mail_icon.svg">{{item.EmailId}}</p>
       <p><img class="phone-img" src="assets/imgs/mobile_icon.svg">{{item.ContactNo}} <span class="date-text">{{item.PublishedDate}}</span></p>

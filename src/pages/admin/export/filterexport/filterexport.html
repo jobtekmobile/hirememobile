@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar>
         <ion-title>
-            Filter
+            {{labelList.label108}}
         </ion-title>
         <ion-buttons start>
             <button ion-button (click)="dismiss()">
@@ -16,7 +16,7 @@
     <ion-list>
 
         <ion-item class="ion-item-noborder">
-            <ion-label>Select Member</ion-label>
+            <ion-label>{{labelList.label109}}</ion-label>
 
         </ion-item>
 
@@ -26,26 +26,26 @@
                     <ion-col col-3 style="padding:0px;" style="padding:3px;">
                         <ion-item class="ion-item-noborder">
                             <ion-radio checked="true" value="All"></ion-radio>
-                            <ion-label>All</ion-label>
+                            <ion-label>{{labelList.label110}}</ion-label>
                         </ion-item>
                     </ion-col>
                     <ion-col col-5 style="padding:0px;">
                         <ion-item class="ion-item-noborder" style="padding:3px;">
                             <ion-radio value="Candidate"></ion-radio>
-                            <ion-label>Candidate</ion-label>
+                            <ion-label>{{labelList.label8}}</ion-label>
                         </ion-item>
                     </ion-col>
                     <ion-col col-4 style="padding:0px;">
                         <ion-item class="ion-item-noborder" style="padding:3px;">
                             <ion-radio value="Employer"></ion-radio>
-                            <ion-label>Employer</ion-label>
+                            <ion-label>{{labelList.label9}}</ion-label>
                         </ion-item>
                     </ion-col>
                 </ion-row>
             </ion-list>
         </div>
         <ion-item class="ion-item-noborder">
-            <ion-label>Gender</ion-label>
+            <ion-label>{{labelList.label14}}</ion-label>
 
         </ion-item>
 
@@ -55,13 +55,13 @@
                     <ion-col col-6 style="padding:0px;">
                         <ion-item class="ion-item-noborder">
                             <ion-radio value="Woman"></ion-radio>
-                            <ion-label>Woman</ion-label>
+                            <ion-label>{{labelList.label15}}</ion-label>
                         </ion-item>
                     </ion-col>
                     <ion-col col-6 style="padding:0px;">
                         <ion-item class="ion-item-noborder">
                             <ion-radio value="Man"></ion-radio>
-                            <ion-label>Man</ion-label>
+                            <ion-label>{{labelList.label16}}</ion-label>
                         </ion-item>
                     </ion-col>
                 </ion-row>
@@ -69,7 +69,7 @@
         </div>
 
         <ion-item class="ion-item-noborder">
-            <ion-label>Select Job</ion-label>
+            <ion-label>{{labelList.label111}}</ion-label>
 
         </ion-item>
 
@@ -79,7 +79,7 @@
                     <ion-item class="ion-item-noborder">
                       
                         <ion-select [(ngModel)]="searchParam.Job" style="max-width: 100%;width: 100%;">
-                                <ion-option value="">Choose Job</ion-option>
+                                <ion-option value="">{{labelList.label112}}</ion-option>
                             <ion-option *ngFor="let item of jobs" [value]="item.JobName">{{item.JobName}}</ion-option>
                         </ion-select>
                     </ion-item>
@@ -90,7 +90,7 @@
 
         <!-- Gender -->
         <ion-item class="ion-item-noborder">
-            <ion-label>Profile Verified</ion-label>
+            <ion-label>{{labelList.label113}}</ion-label>
 
         </ion-item>
 
@@ -100,13 +100,13 @@
                     <ion-col col-6 style="padding:0px;">
                         <ion-item class="ion-item-noborder">
                             <ion-radio value="Yes"></ion-radio>
-                            <ion-label>Yes</ion-label>
+                            <ion-label>{{labelList.label60}}</ion-label>
                         </ion-item>
                     </ion-col>
                     <ion-col col-6 style="padding:0px;">
                         <ion-item class="ion-item-noborder">
                             <ion-radio value="No"></ion-radio>
-                            <ion-label>No</ion-label>
+                            <ion-label>{{labelList.label59}}</ion-label>
                         </ion-item>
                     </ion-col>
                 </ion-row>

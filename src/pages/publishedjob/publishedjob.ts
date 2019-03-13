@@ -4,6 +4,8 @@ import { PopoverController, IonicPage, NavController, DateTime, NavParams, Alert
 import { ModalController, ViewController } from 'ionic-angular';
 import { CommonServices } from '../../providers/common.service';
 import { DataContext } from '../../providers/dataContext.service';
+import { EnLanguageServices } from '../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../providers/frlanguage.service';
 import moment from 'moment';
 @IonicPage()
 @Component({
@@ -20,18 +22,34 @@ export class PublishedJob {
   tabValue: string;
   loggedInUserDetails: any = {};
   title: string;
+  labelList:any = [];
   constructor(
     public navCtrl: NavController,
     public modalCtrl: ModalController,
     public navParam: NavParams,
     public _dataContext: DataContext,
     private commonService: CommonServices,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    private enLanguageServices:EnLanguageServices,
+    private frLanguageServices:FrLanguageServices
   ) {
-    this.tapOption = [{ Value: "JOB REQUEST", Key: "JobRequest" }, { Value: "JOB OFFER", Key: "JobOffer" }];
+    //this.labelList = enLanguageServices.getLabelLists();
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+    .then((result) => {
+      if (result && result.language) {
+        if (result.language == "en") {
+          this.labelList = this.enLanguageServices.getLabelLists();
+        } else {
+          this.labelList = this.frLanguageServices.getLabelLists();
+        }
+        this.tapOption = [{ Value: this.labelList.label74, Key: "JobRequest" }, { Value: this.labelList.label75, Key: "JobOffer" }];
+      }
+    });
+    
     this.searchFilterData.Job = this.navParam.get("jobId");
     this.title = this.navParam.get("jobName");
     this.publishedJobResult = [];
+    
 
   }
   ionViewDidEnter() {
@@ -62,11 +80,11 @@ export class PublishedJob {
         }
         else {
           this.isAvailable = false;
-          this.commonService.onMessageHandler("No job found.", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg12, 0);
         }
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve jobs. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg13, 0);
         });
   }
   getPublishedJobReponse() {
@@ -81,11 +99,11 @@ export class PublishedJob {
         }
         else {
           this.isAvailable = false;
-          this.commonService.onMessageHandler("No job found.", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg12, 0);
         }
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve jobs. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg13, 0);
         });
   }
   selectedJobRequestDetails(value) {
@@ -99,28 +117,28 @@ export class PublishedJob {
 
   makeFavourite(id) {
     const confirm = this.alertCtrl.create({
-      title: 'Adding as favorite?',
-      message: 'Do you want to make this offer as your favourite?',
+      title: this.labelList.label57,
+      message: this.labelList.label58,
       buttons: [
         {
-          text: 'No',
+          text: this.labelList.label59,
           handler: () => {
             console.log('Disagree clicked');
           }
         },
         {
-          text: 'Yes',
+          text: this.labelList.label60,
           handler: () => {
             this._dataContext.MakeJobOfferAsFavourite(this.loggedInUserDetails.userId, id)
               .subscribe(response => {
                 if (response.length > 0) {
-                  this.commonService.onMessageHandler("You have successfully make this offer as favourite", 1);
+                  this.commonService.onMessageHandler(this.labelList.successmsg2, 1);
                 }
                 else
-                  this.commonService.onMessageHandler("Something went wrong. Please try again", 0);
+                  this.commonService.onMessageHandler(this.labelList.errormsg15, 0);
               },
                 error => {
-                  this.commonService.onMessageHandler("Failed to add favourite. Please try again", 0);
+                  this.commonService.onMessageHandler(this.labelList.errormsg14, 0);
                 });
           }
         }
@@ -161,5 +179,8 @@ export class PublishedJob {
       }
     })
     filterModal.present();
+  }
+  gotoAgencydetailsPage(item){
+    this.navCtrl.push("AgencydetailsPage", { AgencyId: item.AgencyId });
   }
 }

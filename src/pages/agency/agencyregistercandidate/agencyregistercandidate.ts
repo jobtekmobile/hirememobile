@@ -6,12 +6,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import moment from 'moment';
 import { File } from '@ionic-native/file';
 import { ChangeDetectorRef } from '@angular/core';
-/**
- * Generated class for the AgencyregistercandidatePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { EnLanguageServices } from '../../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../../providers/frlanguage.service';
 
 @IonicPage()
 @Component({
@@ -35,10 +31,26 @@ export class AgencyregistercandidatePage {
     { id: 1, image: "", file: "" },
     { id: 2, image: "", file: "" },
   ];
-  constructor(private cdr: ChangeDetectorRef,private file: File, public actionSheetCtrl: ActionSheetController, private camera: Camera, public navCtrl: NavController, public navParams: NavParams, public _dataContext: DataContext, private commonService: CommonServices) {
+  labelList:any = [];
+  constructor(private cdr: ChangeDetectorRef,private file: File, public actionSheetCtrl: ActionSheetController, private camera: Camera, public navCtrl: NavController, public navParams: NavParams, public _dataContext: DataContext, private commonService: CommonServices,
+    private enLanguageServices:EnLanguageServices,
+    private frLanguageServices:FrLanguageServices
+  ) {
+    //this.labelList = enLanguageServices.getLabelLists();
   }
 
   ionViewDidLoad() {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+    .then((result) => {
+      if (result && result.language) {
+        if (result.language == "en") {
+          this.labelList = this.enLanguageServices.getLabelLists();
+        } else {
+          this.labelList = this.frLanguageServices.getLabelLists();
+        }
+        
+      }
+    });
     this.getLoggedInUserDetailsFromCache()
     this.maxDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
     this.getCountries()
@@ -72,14 +84,14 @@ export class AgencyregistercandidatePage {
         .subscribe(response => {
           if (response.Status == "OK") {
             this.registerObj = new Register();
-            this.commonService.onMessageHandler("Successfully registered", 1);
+            this.commonService.onMessageHandler(this.labelList.successmsg1, 1);
             this.slider.slidePrev();
           }
           else
-            this.commonService.onMessageHandler("Failed to register.", 0);
+            this.commonService.onMessageHandler(this.labelList.errormsg2, 0);
         },
           error => {
-            this.commonService.onMessageHandler("Failed to register. Please try again", 0);
+            this.commonService.onMessageHandler(this.labelList.errormsg2, 0);
           });
     }
   }
@@ -91,10 +103,10 @@ export class AgencyregistercandidatePage {
           // this.getActiveDistricts();
         }
         else
-          this.commonService.onMessageHandler("Failed to retrieve cities.", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg3, 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve cities. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg3, 0);
         });
   }
   getActiveCities() {
@@ -105,11 +117,11 @@ export class AgencyregistercandidatePage {
           // this.getActiveDistricts();
         }
         else
-          this.commonService.onMessageHandler("Failed to retrieve cities.", 0);
-      },
-        error => {
-          this.commonService.onMessageHandler("Failed to retrieve cities. Please try again", 0);
-        });
+        this.commonService.onMessageHandler(this.labelList.errormsg4, 0);
+    },
+      error => {
+        this.commonService.onMessageHandler(this.labelList.errormsg4, 0);
+      });
   }
   onSelectedCity() {
     this.getActiveDistricts();
@@ -121,36 +133,36 @@ export class AgencyregistercandidatePage {
           this.districts = responnse;
         }
         else
-          this.commonService.onMessageHandler("Failed to retrieve districts.", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg5, 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve districts. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg5, 0);
         });
   }
   validateFirstSlide(): boolean {
     if (this.registerObj.Gender == undefined || this.registerObj.Gender == "") {
-      this.commonService.onMessageHandler("Select Gender", 0)
+      this.commonService.onMessageHandler(this.labelList.validmsg2, 0)
       return false;
     } else if (this.registerObj.FirstName == undefined || this.registerObj.LastName == "") {
-      this.commonService.onMessageHandler("Select FirstName", 0)
+      this.commonService.onMessageHandler(this.labelList.validmsg3, 0)
       return false;
     } else if (this.registerObj.LastName == undefined || this.registerObj.LastName == "") {
-      this.commonService.onMessageHandler("Select LastName", 0)
+      this.commonService.onMessageHandler(this.labelList.validmsg4, 0)
       return false;
     } else if (this.registerObj.DOB == undefined || this.registerObj.DOB == "") {
-      this.commonService.onMessageHandler("Select DOB", 0)
+      this.commonService.onMessageHandler(this.labelList.validmsg5, 0)
       return false;
     } else if (this.registerObj.CountryId == undefined || this.registerObj.CountryId == null || this.registerObj.CountryId == 0) {
-      this.commonService.onMessageHandler("Select Country", 0)
+      this.commonService.onMessageHandler(this.labelList.validmsg6, 0)
       return false;
     } else if (this.registerObj.CityId == undefined || this.registerObj.CityId == null || this.registerObj.CityId == 0) {
-      this.commonService.onMessageHandler("Select City", 0)
+      this.commonService.onMessageHandler(this.labelList.validmsg7, 0)
       return false;
     } else if (this.registerObj.DistrictId == undefined || this.registerObj.DistrictId == null || this.registerObj.DistrictId == 0) {
-      this.commonService.onMessageHandler("Select District", 0)
+      this.commonService.onMessageHandler(this.labelList.validmsg8, 0)
       return false;
     } else if (this.registerObj.Address == undefined || this.registerObj.Address == "") {
-      this.commonService.onMessageHandler("Select Address", 0)
+      this.commonService.onMessageHandler(this.labelList.validmsg9, 0)
       return false;
     } else {
       return true;
@@ -158,13 +170,13 @@ export class AgencyregistercandidatePage {
   }
   validateSecondSlide() {
     if (this.registerObj.Email == undefined || this.registerObj.Email == "") {
-      this.commonService.onMessageHandler("Select Email", 0)
+      this.commonService.onMessageHandler(this.labelList.validmsg10, 0)
       return false;
     } else if (this.registerObj.CountryCode == undefined || this.registerObj.CountryCode == null) {
-      this.commonService.onMessageHandler("Select CountryCode", 0)
+      this.commonService.onMessageHandler(this.labelList.validmsg11, 0)
       return false;
     } else if (this.registerObj.PhoneNumber == undefined || this.registerObj.PhoneNumber == "") {
-      this.commonService.onMessageHandler("Select PhoneNumber", 0)
+      this.commonService.onMessageHandler(this.labelList.validmsg12, 0)
       return false;
     }
     // else if (this.registerObj.Password == undefined || this.registerObj.Password == "") {
@@ -184,10 +196,10 @@ export class AgencyregistercandidatePage {
   }
   uploadImage(data) {
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'Choose File',
+      title: this.labelList.label40,
       buttons: [
         {
-          text: 'Camera',
+          text: this.labelList.label41,
           icon: "ios-camera-outline",
           cssClass: 'icon-btn-color',
           handler: () => {
@@ -195,7 +207,7 @@ export class AgencyregistercandidatePage {
           }
         },
         {
-          text: 'Gallery',
+          text: this.labelList.label42,
           icon: "ios-image-outline",
           handler: () => {
             this.chooseFromGallery(data);
@@ -253,7 +265,7 @@ export class AgencyregistercandidatePage {
             this.cdr.detectChanges();
           }
           else {
-            this.commonService.onMessageHandler("Sorry! you can upload only .png, .jpg, .jpeg files only.", 0);
+            this.commonService.onMessageHandler(this.labelList.errormsg6, 0);
           }
         }
       })

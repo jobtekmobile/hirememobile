@@ -3,6 +3,8 @@ import { PopoverController, IonicPage, NavController, DateTime, NavParams, Alert
 import { DataContext } from '../../providers/dataContext.service';
 import { CommonServices } from '../../providers/common.service';
 import moment from 'moment';
+import { EnLanguageServices } from '../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../providers/frlanguage.service';
 
 @IonicPage()
 @Component({
@@ -16,14 +18,28 @@ export class JobRequestDescDetails {
   title: string;
   userDetails: any = {};
   jobTasks:any=[];
+  labelList:any = [];
   constructor(
     public navCtrl: NavController,
     public navParam: NavParams,
     public _dataContext: DataContext,
     private commonService: CommonServices,
     public alertCtrl: AlertController,
-    public events: Events
+    public events: Events,private enLanguageServices:EnLanguageServices,
+    private frLanguageServices:FrLanguageServices
   ) {
+   // this.labelList = enLanguageServices.getLabelLists();
+   this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+   .then((result) => {
+     if (result && result.language) {
+       if (result.language == "en") {
+         this.labelList = this.enLanguageServices.getLabelLists();
+       } else {
+         this.labelList = this.frLanguageServices.getLabelLists();
+       }
+       
+     }
+   });
     this.jobRequestId = this.navParam.get("jobRequestId");
     this.userDetails = this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
   }
@@ -61,10 +77,10 @@ export class JobRequestDescDetails {
           this.jobTasks = this.publishedJobRequestDesc.Job.JobTasks;
         }
         else
-          this.commonService.onMessageHandler("No job request details available.", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg34, 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve job request details. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg34, 0);
         });
   }
   validateJobRequest() {
@@ -78,22 +94,22 @@ export class JobRequestDescDetails {
         }
       },
         error => {
-          this.commonService.onMessageHandler("Failed to verify job request. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg29, 0);
         });
   }
   Verify() {
     const confirm = this.alertCtrl.create({
-      title: 'Verify Job Request?',
-      message: 'Do you want to verify this job request?',
+      title: this.labelList.label104,
+      message: this.labelList.label104,
       buttons: [
         {
-          text: 'No',
+          text: this.labelList.label59,
           handler: () => {
             console.log('Disagree clicked');
           }
         },
         {
-          text: 'Yes',
+          text: this.labelList.label60,
           handler: () => {
             this.validateJobRequest();
           }
@@ -103,10 +119,14 @@ export class JobRequestDescDetails {
     confirm.present();
   }
   checkIfExists(job) {
-    var arr = this.publishedJobRequestDesc.JobRequestJobTasks.map(t => {return t.JobTaskId});
+   
+    var arr = this.publishedJobRequestDesc.JobRequestJobTasks.map(t => {return t.TaskResponse});
+    console.log(arr);
     if(this.publishedJobRequestDesc.JobRequestJobTasks.map(t => {return t.JobTaskId}).indexOf(job.JobTaskId) !== -1){
+      //job["TaskResponse"] = ""
         job.Selected = true;
     };
+    job["TaskResponse"] = arr[0];
     return true;
   }
 }

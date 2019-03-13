@@ -4,6 +4,8 @@ import { ViewController } from 'ionic-angular';
 import { DataContext } from '../../../providers/dataContext.service';
 import { CommonServices } from '../../../providers/common.service';
 import moment from 'moment';
+import { EnLanguageServices } from '../../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../../providers/frlanguage.service';
 @IonicPage()
 @Component({
   selector: 'page-jobrequestnote',
@@ -15,16 +17,31 @@ export class JobRequestNotePage {
   showType:string = "list_section"
   craeteNoteObj = new CreateNote();
   noteLists:Array<any> = [];
+  labelList:any = [];
   constructor(
     public platform: Platform,
     public params: NavParams,
     public viewCtrl: ViewController,
     public navParams: NavParams,
-    public _dataContext: DataContext, private commonService: CommonServices
+    public _dataContext: DataContext, private commonService: CommonServices,
+    private enLanguageServices:EnLanguageServices,
+    private frLanguageServices:FrLanguageServices
   ) {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+    .then((result) => {
+      if (result && result.language) {
+        if (result.language == "en") {
+          this.labelList = this.enLanguageServices.getLabelLists();
+        } else {
+          this.labelList = this.frLanguageServices.getLabelLists();
+        }
+        
+      }
+    });
     this.showType = "list_section";
     this.requestInfo = this.navParams.get('info');
     this.userId = this.navParams.get('userId');
+   // this.labelList = enLanguageServices.getLabelLists();
     this.getNoteList();
   }
   getNoteList(){
@@ -35,10 +52,10 @@ export class JobRequestNotePage {
         this.noteLists = response;
       }
       else
-        this.commonService.onMessageHandler("No Notes found.", 0);
+        this.commonService.onMessageHandler(this.labelList.errormsg17, 0);
     },
       error => {
-        this.commonService.onMessageHandler("Failed to retrieve Notes. Please try again", 0);
+        this.commonService.onMessageHandler(this.labelList.errormsg15, 0);
       });
   }
   
@@ -62,7 +79,7 @@ export class JobRequestNotePage {
         this.getNoteList();
     },
       error => {
-        this.commonService.onMessageHandler("Failed to retrieve Notes. Please try again", 0);
+        this.commonService.onMessageHandler(this.labelList.errormsg15, 0);
       });
   }
 }

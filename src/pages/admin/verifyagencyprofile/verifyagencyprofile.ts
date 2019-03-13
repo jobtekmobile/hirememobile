@@ -5,7 +5,8 @@ import { DataContext } from '../../../providers/dataContext.service';
 import { CommonServices } from '../../../providers/common.service';
 import moment from 'moment';
 import { AlertController } from 'ionic-angular';
-
+import { EnLanguageServices } from '../../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../../providers/frlanguage.service';
 @IonicPage()
 @Component({
   selector: 'page-verifyagencyprofile',
@@ -15,13 +16,26 @@ export class VerifyagencyprofilePage {
   _imageViewerCtrl: ImageViewerController;
   agencyDetails: any = [];
   loggedInUserDetails:any={};
-
+  labelList:any = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, imageViewerCtrl: ImageViewerController,
-    public _dataContext: DataContext, private commonService: CommonServices, public alertCtrl: AlertController) {
+    public _dataContext: DataContext, private commonService: CommonServices, public alertCtrl: AlertController,private enLanguageServices:EnLanguageServices,
+    private frLanguageServices:FrLanguageServices) {
+   // this.labelList = enLanguageServices.getLabelLists();
     this._imageViewerCtrl = imageViewerCtrl;
     //const imageViewer = this._imageViewerCtrl.create(myImage);
   }
   ionViewDidLoad() {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+        .then((result) => {
+          if (result && result.language) {
+            if (result.language == "en") {
+              this.labelList = this.enLanguageServices.getLabelLists();
+            } else {
+              this.labelList = this.frLanguageServices.getLabelLists();
+            }
+            
+          }
+        });
     this.getLoggedInUserDetailsFromCache();
   }
   getLoggedInUserDetailsFromCache() {
@@ -53,7 +67,7 @@ export class VerifyagencyprofilePage {
         });
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve countries details. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg15, 0);
         });
   }
   activateAgency(item) {
@@ -65,23 +79,23 @@ export class VerifyagencyprofilePage {
         }
       },
         error => {
-          this.commonService.onMessageHandler("Failed to activate agency. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg26, 0);
         });
   }
 
   verify(item) {
     const confirm = this.alertCtrl.create({
-      title: 'Verify Agency?',
-      message: 'Do you want to verify this agency?',
+      title: this.labelList.label97,
+      message: this.labelList.label98,
       buttons: [
         {
-          text: 'No',
+          text: this.labelList.label59,
           handler: () => {
             console.log('Disagree clicked');
           }
         },
         {
-          text: 'Yes',
+          text: this.labelList.label60,
           handler: () => {
             this.activateAgency(item);
           }

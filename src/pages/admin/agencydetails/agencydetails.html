@@ -9,7 +9,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Agency Detail</ion-title>
+    <ion-title>{{labelList.pagetitle17}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -18,7 +18,7 @@
   <ion-card class="job-card-con">
     <ion-item class="">
       <ion-avatar item-start class="avatar-top">
-         <img class="img-size" #myImage (click)="presentImage(myImage)" *ngIf="agencyDetails.AgencyLogo != '' && agencyDetails.AgencyLogo != null" src="data:image/png;base64,{{agencyDetails.AgencyLogo}}" />
+         <img class="img-size" #myImage (click)="presentImage(myImage)" *ngIf="agencyDetails.AgencyLogo != '' && agencyDetails.AgencyLogo != null" src="{{agencyDetails.AgencyLogo}}" />
         <img class="img-size" src="assets/imgs/maledefault.svg" *ngIf="agencyDetails.AgencyLogo == '' || agencyDetails.AgencyLogo == null" />
 
       </ion-avatar>
@@ -44,14 +44,14 @@
     </ion-item>
     <ion-row no-padding class="action-con" *ngIf="loggedInUserDetails.type=='Admin'">
       <ion-col class="action-con-image">
-        <img src="data:image/png;base64,{{agencyDetails.IdProofDoc}}" *ngIf="agencyDetails.IdProofDoc != '' && agencyDetails.IdProofDoc != null" #myImage1 (click)="presentImage(myImage1)" class="action-con-image-size">
+        <img src="{{agencyDetails.IdProofDoc}}" *ngIf="agencyDetails.IdProofDoc != '' && agencyDetails.IdProofDoc != null" #myImage1 (click)="presentImage(myImage1)" class="action-con-image-size">
         <img src="assets/imgs/noidcard.jpg" *ngIf="agencyDetails.IdProofDoc == '' || agencyDetails.IdProofDoc == null" class="action-con-image-size">
 
 
       </ion-col>
 
       <ion-col text-right class="action-con-image">
-        <img src="data:image/png;base64,{{agencyDetails.IdProofDoc1}}" *ngIf="agencyDetails.IdProofDoc1 != '' && agencyDetails.IdProofDoc1 != null" #myImage2 (click)="presentImage(myImage2)" class="action-con-image-size">
+        <img src="{{agencyDetails.IdProofDoc1}}" *ngIf="agencyDetails.IdProofDoc1 != '' && agencyDetails.IdProofDoc1 != null" #myImage2 (click)="presentImage(myImage2)" class="action-con-image-size">
         <img src="assets/imgs/noidcard.jpg" *ngIf="agencyDetails.IdProofDoc1 == '' || agencyDetails.IdProofDoc1 == null" class="action-con-image-size">
 
       </ion-col>
@@ -59,26 +59,26 @@
   </ion-card>
   <ion-list class="profile-con">
     <ion-item>
-      Manager first name
+      {{labelList.label114}}
       <ion-note item-end>
           {{agencyDetails.ManagerFirstName}}
       </ion-note>
     </ion-item>
 
     <ion-item>
-      Manager last name
+      {{labelList.label115}}
       <ion-note item-end>
           {{agencyDetails.ManagerLastName}}
       </ion-note>
     </ion-item>
     <ion-item>
-      Manager DOB
+      {{labelList.label116}}
       <ion-note item-end>
           {{agencyDetails.ManagerDOB}}
       </ion-note>
     </ion-item>
     <ion-item>
-      Company Activity Desc
+      {{labelList.label117}}
     </ion-item>
     <ion-item>
      
@@ -87,28 +87,28 @@
       </ion-note>
     </ion-item>
     <ion-item>
-      Country
+      {{labelList.label19}}
       <ion-note item-end>
           {{agencyDetails.Country}}
       </ion-note>
     </ion-item>
 
     <ion-item>
-      City
+      {{labelList.label21}}
       <ion-note item-end>
           {{agencyDetails.City}}
       </ion-note>
     </ion-item>
 
     <ion-item>
-        District
+      {{labelList.label23}}
       <ion-note item-end>
         {{agencyDetails.District}}
       </ion-note>
     </ion-item>
 
     <ion-item>
-      Profile Verified
+      {{labelList.label119}}
       <ion-note item-end>
           <span *ngIf="agencyDetails.ProfileVerified">Verified</span>
           <span *ngIf="!agencyDetails.ProfileVerified">Not Verified</span>
@@ -116,7 +116,7 @@
     </ion-item>
 
     <ion-item>
-      Created Date
+      {{labelList.label118}}
       <ion-note item-end>
           {{agencyDetails.CreatedDate}}
       </ion-note>

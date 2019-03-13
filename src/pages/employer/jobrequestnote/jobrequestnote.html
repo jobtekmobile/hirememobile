@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar>
         <ion-title>
-            Notes
+            {{labelList.label91}}
         </ion-title>
         <ion-buttons start>
             <button ion-button (click)="dismiss()">
@@ -46,13 +46,13 @@
                       emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star" nullable="false">
                 </rating>
             </p>
-            <ion-textarea rows="5" class="description" [(ngModel)]="craeteNoteObj.Note" placeholder="Description"></ion-textarea>
+            <ion-textarea rows="5" class="description" [(ngModel)]="craeteNoteObj.Note" [placeholder]="labelList.label53"></ion-textarea>
             <ion-row>
                     <ion-col col-6>
-                        <button ion-button (click)="cancelCreate()">cancel</button>
+                        <button ion-button (click)="cancelCreate()">{{labelList.label80}}</button>
                     </ion-col>
                     <ion-col col-6>
-                            <button ion-button (click)="saveNote()">save</button>
+                            <button ion-button (click)="saveNote()">{{labelList.label92}}</button>
                     </ion-col>
                 </ion-row>
     </div>

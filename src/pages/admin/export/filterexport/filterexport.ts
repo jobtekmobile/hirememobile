@@ -4,6 +4,8 @@ import { ViewController } from 'ionic-angular';
 import { DataContext } from '../../../../providers/dataContext.service';
 import { CommonServices } from '../../../../providers/common.service';
 import moment from 'moment';
+import { EnLanguageServices } from '../../../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../../../providers/frlanguage.service';
 @IonicPage()
 @Component({
   selector: 'page-filterexport',
@@ -39,13 +41,27 @@ export class FilterExportPage {
 
   jobs: any = [];
   searchParam = { MemberType: 0,Job:"" };
+  labelList:any = [];
   members = [];
   constructor(
     public platform: Platform,
     public params: NavParams,
     public viewCtrl: ViewController,
-    public _dataContext: DataContext, private commonService: CommonServices
+    public _dataContext: DataContext, private commonService: CommonServices,
+    private enLanguageServices:EnLanguageServices,
+    private frLanguageServices:FrLanguageServices
   ) {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+    .then((result) => {
+      if (result && result.language) {
+        if (result.language == "en") {
+          this.labelList = this.enLanguageServices.getLabelLists();
+        } else {
+          this.labelList = this.frLanguageServices.getLabelLists();
+        }
+        
+      }
+    });
     this.getJobs();
     for (let i = 16; i < 51; i++) {
       this.age.push({ label: i.toString(), value: i });
@@ -95,7 +111,7 @@ export class FilterExportPage {
         console.log(this.jobs);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve members. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg12, 0);
         });
   }
   searchMembersForAdmin() {
@@ -110,7 +126,7 @@ export class FilterExportPage {
         this.viewCtrl.dismiss(Data);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve unverified job request. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg15, 0);
         });
   }
   dismiss() {

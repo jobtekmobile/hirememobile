@@ -1,21 +1,13 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the SerchjobsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
-// Angular
 import { Injector, ViewChild } from '@angular/core';
 
-// Ionic
 import { Slides } from 'ionic-angular';
 import { CommonServices } from '../../providers/common.service';
 import { DataContext } from '../../providers/dataContext.service';
-
+import { EnLanguageServices } from '../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../providers/frlanguage.service';
 
 @IonicPage()
 @Component({
@@ -31,14 +23,27 @@ export class SearchjobsPage {
   isAvailable: boolean = true;
   selectedJobByCategoryId: any = [];
   jobtitle: string;
+  labelList:any = [];
   constructor(
     public injector: Injector,
     public navCtrl: NavController,
     public navParams: NavParams,
     public _dataContext: DataContext,
-    private commonService: CommonServices
+    private commonService: CommonServices,
+    private enLanguageServices:EnLanguageServices,
+    private frLanguageServices:FrLanguageServices
   ) {
-
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+    .then((result) => {
+      if (result && result.language) {
+        if (result.language == "en") {
+          this.labelList = this.enLanguageServices.getLabelLists();
+        } else {
+          this.labelList = this.frLanguageServices.getLabelLists();
+        }
+        
+      }
+    });
   }
   ionViewWillEnter() {
     this.getActiveCategories();
@@ -64,11 +69,11 @@ export class SearchjobsPage {
         }
         else {
           this.isAvailable = true;
-          this.commonService.onMessageHandler("No category found.", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg11, 0);
         }
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve categories. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg10, 0);
         });
   }
 

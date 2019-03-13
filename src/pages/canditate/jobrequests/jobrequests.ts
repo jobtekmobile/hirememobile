@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, Slides, AlertController } from 'io
 import { DataContext } from '../../../providers/dataContext.service';
 import { CommonServices } from '../../../providers/common.service';
 import moment from 'moment';
+import { EnLanguageServices } from '../../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../../providers/frlanguage.service';
 
 /**
  * Generated class for the JobrequestsPage page.
@@ -29,15 +31,29 @@ export class JobrequestsPage {
   allMyJobRequestList: any = [];
   loggedInUserDetails: any = {};
   myJobRequestListByCategoryId: any = [];
-
+  labelList:any = [];
   constructor(public injector: Injector, public navCtrl: NavController,
     public navParams: NavParams,
     public _dataContext: DataContext,
-    private commonService: CommonServices, public alerCtrl: AlertController) {
+    private commonService: CommonServices, public alerCtrl: AlertController,
+    private enLanguageServices:EnLanguageServices,
+    private frLanguageServices:FrLanguageServices) {
     this.publishedJobResult = [];
+    //this.labelList = enLanguageServices.getLabelLists();
   }
   // ...
   ionViewWillEnter() {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+    .then((result) => {
+      if (result && result.language) {
+        if (result.language == "en") {
+          this.labelList = this.enLanguageServices.getLabelLists();
+        } else {
+          this.labelList = this.frLanguageServices.getLabelLists();
+        }
+        
+      }
+    });
     this.getLoggedInUserDetailsFromCache();
   }
   getLoggedInUserDetailsFromCache() {
@@ -64,10 +80,10 @@ export class JobrequestsPage {
           //this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
         }
         else
-          this.commonService.onMessageHandler("No category found.", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg11, 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve categories. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg10, 0);
         });
   }
   public filterDataBySelectedCategory(categoryId: number): void {
@@ -97,11 +113,11 @@ export class JobrequestsPage {
         else {
           this.myJobRequestListByCategoryId = [];
           this.isAvailable = false;
-          this.commonService.onMessageHandler("No result found.", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg17, 0);
         }
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve notification details. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg15, 0);
         });
   }
   private initializeCategories(): void {
@@ -148,19 +164,19 @@ export class JobrequestsPage {
   }
   deleteSelectedJobRequests(id, index) {
     let method = this.alerCtrl.create({
-      title: "Please Confirm!",
-      message: "Do you want to delete ?",
+      title: this.labelList.label78,
+      message: this.labelList.label79,
       cssClass: 'alert-header-back-style',
       buttons: [
         {
-          text: 'CANCEL',
+          text: this.labelList.label80,
           cssClass: 'cancel-btn-style',
           handler: () => {
             // return false;
           }
         },
         {
-          text: "DELETE",
+          text: this.labelList.label77c,
           cssClass: 'ok-btn-style',
           handler: () => {
             this._dataContext.DeleteJobRequest(this.loggedInUserDetails.userId, id)
@@ -176,10 +192,10 @@ export class JobrequestsPage {
                   this.commonService.onMessageHandler(response.Message, 1);
                 }
                 else
-                  this.commonService.onMessageHandler("Failed to delete. Please try again", 0);
+                  this.commonService.onMessageHandler(this.labelList.errormsg18, 0);
               },
                 error => {
-                  this.commonService.onMessageHandler("Failed to delete. Please try again", 0);
+                  this.commonService.onMessageHandler(this.labelList.errormsg18, 0);
                 });
           }
         }

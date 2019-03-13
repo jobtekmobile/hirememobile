@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>JOB Offer form</ion-title>
+    <ion-title>{{labelList.pagetitle20}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -13,57 +13,57 @@
       <ion-row class="">
         <ion-col col-12>
           <p class="form-header">
-            What gender are you looking for ?
+            {{labelList.label134}}
           </p>
         </ion-col>
         <ion-list class="margin-bottom-5" radio-group [(ngModel)]="jobCriteria.Gender">
           <ion-item class="radio-btn-sec default-add">
             <ion-radio item-left value="2"></ion-radio>
-            <ion-label class="font-size-14">Women</ion-label>
+            <ion-label class="font-size-14">{{labelList.label15}}</ion-label>
           </ion-item>
           <ion-item class="radio-btn-sec default-add">
             <ion-radio item-left value="1"></ion-radio>
-            <ion-label class="font-size-14">Man</ion-label>
+            <ion-label class="font-size-14">{{labelList.label16}}</ion-label>
           </ion-item>
         </ion-list>
       </ion-row>
       <ion-row class="">
         <ion-col col-12>
           <p class="form-header">
-            What type of Staff are you looking for ?
+            {{labelList.label135}}
           </p>
         </ion-col>
         <ion-list class="margin-bottom-5" radio-group [(ngModel)]="jobCriteria.StaffType">
           <ion-item class="radio-btn-sec default-add">
-            <ion-radio item-left value="0"></ion-radio>
-            <ion-label class="font-size-14">Agency</ion-label>
+            <ion-radio item-left value="2"></ion-radio>
+            <ion-label class="font-size-14">{{labelList.label10}}</ion-label>
           </ion-item>
           <ion-item class="radio-btn-sec default-add">
             <ion-radio item-left value="1"></ion-radio>
-            <ion-label class="font-size-14">Independant</ion-label>
+            <ion-label class="font-size-14">{{labelList.label48}}</ion-label>
           </ion-item>
           <ion-item class="radio-btn-sec default-add">
-            <ion-radio item-left value="2"></ion-radio>
-            <ion-label class="font-size-14">Doesn't Matter</ion-label>
+            <ion-radio item-left value="0"></ion-radio>
+            <ion-label class="font-size-14">{{labelList.label76}}</ion-label>
           </ion-item>
         </ion-list>
       </ion-row>
       <ion-row>
         <ion-col col-12>
           <p class="form-header">
-            What age range are you looking for ?
+            {{labelList.label136}}
           </p>
         </ion-col>
         <ion-col col-6>
           <ion-item class="padding-left-10">
-            <ion-input [(ngModel)]="jobCriteria.MinAge" type="tel" placeholder="Min Age" #minAge="ngModel" spellcheck="false" autocapitalize="off"
+            <ion-input [(ngModel)]="jobCriteria.MinAge" type="tel" [placeholder]="labelList.label71" #minAge="ngModel" spellcheck="false" autocapitalize="off"
               maxlength="2" (keypress)="onlyNumber($event)">
             </ion-input>
           </ion-item>
         </ion-col>
         <ion-col col-6>
           <ion-item class="padding-left-10">
-            <ion-input [(ngModel)]="jobCriteria.MaxAge" type="tel" placeholder="Max Age" #maxAge="ngModel" spellcheck="false" autocapitalize="off"
+            <ion-input [(ngModel)]="jobCriteria.MaxAge" type="tel" [placeholder]="labelList.label72" #maxAge="ngModel" spellcheck="false" autocapitalize="off"
               maxlength="3" (keypress)="onlyNumber($event)">
             </ion-input>
           </ion-item>
@@ -72,19 +72,19 @@
       <ion-row>
         <ion-col col-12>
           <p class="form-header">
-            What min years of experience do you require ?
+            {{labelList.label137}}
           </p>
         </ion-col>
         <ion-col col-6>
           <ion-item class="padding-left-10">
-            <ion-input [(ngModel)]="jobCriteria.ExperienceInYears" type="tel" placeholder="Year of exp." spellcheck="false" autocapitalize="off"
+            <ion-input [(ngModel)]="jobCriteria.ExperienceInYears" type="tel" [placeholder]="labelList.label93" spellcheck="false" autocapitalize="off"
               maxlength="2" (keypress)="onlyNumber($event)">
             </ion-input>
           </ion-item>
         </ion-col>
         <ion-col col-6>
           <ion-item class="padding-left-10">
-            <ion-input [(ngModel)]="jobCriteria.ExperienceInMonths" type="tel" placeholder="Month of exp." spellcheck="false" autocapitalize="off"
+            <ion-input [(ngModel)]="jobCriteria.ExperienceInMonths" type="tel" [placeholder]="labelList.label121" spellcheck="false" autocapitalize="off"
               maxlength="3" (keypress)="onlyNumber($event)">
             </ion-input>
           </ion-item>
@@ -94,18 +94,18 @@
       <ion-row>
         <ion-col col-12>
           <p class="form-header">
-            Candidate localizations ?
+           {{labelList.label122}}
           </p>
         </ion-col>
         <ion-col col-6>
           <ion-select class="margin-left-10" [(ngModel)]="jobCriteria.CityId" (ionChange)="onSelectedCity()">
-            <ion-option value="0">--Select City--</ion-option>
+            <ion-option value="0">--{{labelList.label22}}--</ion-option>
             <ion-option *ngFor="let item of cities" value="{{item.CityId}}">{{item.CityName}}</ion-option>
           </ion-select>
         </ion-col>
         <ion-col col-6>
           <ion-select class="margin-left-10" [(ngModel)]="jobCriteria.DistrictId" [disabled]="jobCriteria.CityId == 0">
-            <ion-option value="0">--Select District--</ion-option>
+            <ion-option value="0">--{{labelList.label24}}--</ion-option>
             <ion-option *ngFor="let item of districts" value="{{item.DistrictId}}">{{item.DistrictName}}</ion-option>
           </ion-select>
         </ion-col>
@@ -113,35 +113,35 @@
       <ion-row>
         <ion-col col-12>
           <p class="form-header">
-            What salary do you propose for the candidate ?
+            {{labelList.label138}}
           </p>
         </ion-col>
         <ion-col col-12>
           <ion-list class="margin-bottom-5" radio-group [(ngModel)]="jobCriteria.SalaryType">
             <ion-item class="radio-btn-sec default-add">
               <ion-radio item-left value="1"></ion-radio>
-              <ion-label class="font-size-14">Monthly</ion-label>
+              <ion-label class="font-size-14">{{labelList.label124}}</ion-label>
             </ion-item>
             <ion-item class="radio-btn-sec default-add">
               <ion-radio item-left value="2"></ion-radio>
-              <ion-label class="font-size-14">Hourly</ion-label>
+              <ion-label class="font-size-14">{{labelList.label125}}</ion-label>
             </ion-item>
             <ion-item class="radio-btn-sec default-add">
               <ion-radio item-left value="3"></ion-radio>
-              <ion-label class="font-size-14">Price Of Service</ion-label>
+              <ion-label class="font-size-14">{{labelList.label126}}</ion-label>
             </ion-item>
           </ion-list>
         </ion-col>
         <ion-col col-6>
           <ion-item class="padding-left-10">
-            <ion-input [(ngModel)]="jobCriteria.ExpectedMinSalary" type="tel" placeholder="Min Salary" #minSal="ngModel" spellcheck="false" autocapitalize="off"
+            <ion-input [(ngModel)]="jobCriteria.ExpectedMinSalary" type="tel" [placeholder]="labelList.label71" #minSal="ngModel" spellcheck="false" autocapitalize="off"
               maxlength="10" (keypress)="onlyNumber($event)">
             </ion-input>
           </ion-item>
         </ion-col>
         <ion-col col-6>
           <ion-item class="padding-left-10">
-            <ion-input [(ngModel)]="jobCriteria.ExpectedMaxSalary" type="tel" placeholder="Max Salary" #maxSal="ngModel" spellcheck="false" autocapitalize="off"
+            <ion-input [(ngModel)]="jobCriteria.ExpectedMaxSalary" type="tel" [placeholder]="labelList.label72" #maxSal="ngModel" spellcheck="false" autocapitalize="off"
               maxlength="10" (keypress)="onlyNumber($event)">
             </ion-input>
           </ion-item>
@@ -151,7 +151,7 @@
         <ion-col col-12>
           <ion-item class="margin-bottom-5">
             <ion-label class="margin-top-0 font-size-14">
-              <span>Canditate must know how to read ?</span>
+              <span>{{labelList.label139}}</span>
               <span>
                 <img src="assets/imgs/createJobReq/study.svg" class="img-sub-size margin-left-10" style="width:25px">
               </span>
@@ -162,7 +162,7 @@
           </ion-item>
           <ion-item class="margin-bottom-5">
             <ion-label class="margin-top-0 font-size-14">
-              <span>Candidate must know how to write ?</span>
+              <span>{{labelList.label140}}</span>
               <span>
                 <img src="assets/imgs/createJobReq/write-letter.svg" class="img-sub-size margin-left-10" style="width:25px">
               </span>
@@ -173,7 +173,7 @@
           </ion-item>
           <ion-item class="margin-bottom-5">
             <ion-label class="margin-top-0 font-size-14">
-              <span>Candidate must sleep on Site ?</span>
+              <span>{{labelList.label141}}</span>
               <span>
                 <img src="assets/imgs/createJobReq/slumber.svg" class="img-sub-size margin-left-10" style="width:25px">
               </span>
@@ -187,7 +187,7 @@
       <ion-row>
         <ion-col col-12>
           <p class="form-header">
-            When should the service start ?
+            {{labelList.label142}}
           </p>
         </ion-col>
         <ion-col col-6>
@@ -203,19 +203,19 @@
       <ion-row>
         <ion-col col-12>
           <p class="form-header">
-            How many people live in your home ?
+            {{labelList.label143}}
           </p>
         </ion-col>
         <ion-col col-6>
           <ion-item class="padding-left-10">
-            <ion-input [(ngModel)]="jobCriteria.MinGroupPeople" type="tel" placeholder="No of Adults" #adult="ngModel" spellcheck="false" autocapitalize="off"
+            <ion-input [(ngModel)]="jobCriteria.MinGroupPeople" type="tel" [placeholder]="labelList.label144" #adult="ngModel" spellcheck="false" autocapitalize="off"
               maxlength="2" (keypress)="onlyNumber($event)">
             </ion-input>
           </ion-item>
         </ion-col>
         <ion-col col-6>
           <ion-item class="padding-left-10">
-            <ion-input [(ngModel)]="jobCriteria.MaxGroupPeople" type="tel" placeholder="No of Children" #children="ngModel" spellcheck="false"
+            <ion-input [(ngModel)]="jobCriteria.MaxGroupPeople" type="tel" [placeholder]="labelList.label145" #children="ngModel" spellcheck="false"
               autocapitalize="off" maxlength="2" (keypress)="onlyNumber($event)">
             </ion-input>
           </ion-item>
@@ -225,7 +225,7 @@
       <ion-row class="padding-left-15" *ngIf="jobTasks.length > 0">
           <ion-col col-12>
               <p class="form-header">
-                Skills
+                {{labelList.label130}}
               </p>
             </ion-col>
         <ion-col col-12>
@@ -256,18 +256,18 @@
       <ion-row>
           <ion-col col-12>
             <p class="form-header">
-              Additional Description
+              {{labelList.label131}}
             </p>
           </ion-col>
           <ion-col col-12>
             <ion-item>
-              <ion-textarea placeholder="Comment" [(ngModel)]="jobCriteria.AdditionalDescription"></ion-textarea>
+              <ion-textarea [placeholder]="labelList.label132" [(ngModel)]="jobCriteria.AdditionalDescription"></ion-textarea>
             </ion-item>
           </ion-col>
         </ion-row>
       <ion-row>
         <ion-col col-12>
-          <button class="btn" type="button" (click)="onCreateJobResponse()" class="submit-btn">Submit</button>
+          <button class="btn" type="button" (click)="onCreateJobResponse()" class="submit-btn">{{labelList.label133}}</button>
         </ion-col>
       </ion-row>
     </ion-col>

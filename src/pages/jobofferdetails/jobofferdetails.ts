@@ -3,6 +3,8 @@ import { PopoverController, IonicPage, NavController, DateTime, NavParams, Alert
 import { DataContext } from '../../providers/dataContext.service';
 import { CommonServices } from '../../providers/common.service';
 import moment from 'moment';
+import { EnLanguageServices } from '../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../providers/frlanguage.service';
 @IonicPage()
 @Component({
   selector: 'page-jobofferdetails',
@@ -16,14 +18,28 @@ export class JobOfferDetails {
   userDetails: any = {};
   jobTasks: any = [];
   loggedInUserDetails: any = {};
+  labelList:any = [];
   constructor(
     public navCtrl: NavController,
     public navParam: NavParams,
     public _dataContext: DataContext,
     private commonService: CommonServices,
     public alertCtrl: AlertController,
-    public events: Events
+    public events: Events,private enLanguageServices:EnLanguageServices,
+    private frLanguageServices:FrLanguageServices
   ) {
+   // this.labelList = enLanguageServices.getLabelLists();
+   this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+   .then((result) => {
+     if (result && result.language) {
+       if (result.language == "en") {
+         this.labelList = this.enLanguageServices.getLabelLists();
+       } else {
+         this.labelList = this.frLanguageServices.getLabelLists();
+       }
+       
+     }
+   });
     this.jobOfferId = this.navParam.get("jobOfferId");
 
     this.userDetails = this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
@@ -61,10 +77,10 @@ export class JobOfferDetails {
           this.jobTasks = this.publishedJobOfferDesc.Job.JobTasks;
         }
         else
-          this.commonService.onMessageHandler("No job offer details available.", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg33, 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve job offer details. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg33, 0);
         });
   }
 
@@ -87,23 +103,23 @@ export class JobOfferDetails {
         }
       },
         error => {
-          this.commonService.onMessageHandler("Failed to verify job offer. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg28, 0);
         });
   }
 
   verify() {
     const confirm = this.alertCtrl.create({
-      title: 'Verify Job Offer?',
-      message: 'Do you want to verify this job offer?',
+      title: this.labelList.label106,
+      message: this.labelList.label107,
       buttons: [
         {
-          text: 'No',
+          text: this.labelList.label59,
           handler: () => {
             console.log('Disagree clicked');
           }
         },
         {
-          text: 'Yes',
+          text: this.labelList.label60,
           handler: () => {
             this.validateJobOffer();
           }

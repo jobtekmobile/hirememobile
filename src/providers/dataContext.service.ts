@@ -439,4 +439,24 @@ export class DataContext {
             .map((response: Response) => response.json())
             .catch(this._http.handleError);
     }
+
+      //Delete job request for admin
+      DeleteJobRequestForAdmin = (userId: number, jobRequestId: number): Observable<any> => {
+        return this._http.delete(this.commonService.getApiControllerName("deleteJobRequestForAdmin").toString() + "/" + userId + "/JobRequests/" + jobRequestId)
+            .map((response: any) => response.json())
+            .catch(this._http.handleError);
+    }
+
+      //delete employer job offer by employee id and job offer id
+      DeleteEmployerJobOfferNew = (employerId: number, jobOffertId: number): Observable<any> => {
+        return this._http.delete(this.commonService.getApiControllerName("deleteEmployerJobOffer").toString() + "/" + employerId + "/JobOffers/" + jobOffertId)
+            .map((response: any) => response.json())
+            .catch(this._http.handleError);
+    }
+
+    ActivateCandidateForAgency= (candidateId: number,agencyid): Observable<any> => {
+        return this._http.get(this.commonService.getApiControllerName("activateCadidateForAgency").toString() +"/" +agencyid+ "/Candidates/" + candidateId+"/Activate", "")
+            .map((response: Response) => response.json())
+            .catch(this._http.handleError);
+    }
 }

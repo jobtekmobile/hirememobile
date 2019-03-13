@@ -4,12 +4,8 @@ import moment from 'moment';
 import { Http, Response, Headers, RequestOptionsArgs } from '@angular/http';
 import { DataContext } from '../../../providers/dataContext.service';
 import { CommonServices } from '../../../providers/common.service';
-/**
- * Generated class for the ExportPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { EnLanguageServices } from '../../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../../providers/frlanguage.service';
 
 @IonicPage()
 @Component({
@@ -19,14 +15,27 @@ import { CommonServices } from '../../../providers/common.service';
 export class ExportPage {
   members = [];
   searchParam = { MemberType: 0 };
-
+  labelList:any = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, private _http: Http,
-    public _dataContext: DataContext, private commonService: CommonServices) {
+    public _dataContext: DataContext, private commonService: CommonServices,private enLanguageServices:EnLanguageServices,
+    private frLanguageServices:FrLanguageServices) {
+   // this.labelList = enLanguageServices.getLabelLists();
 
     this.searchMembersForAdmin();
   }
 
   ionViewDidLoad() {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+        .then((result) => {
+          if (result && result.language) {
+            if (result.language == "en") {
+              this.labelList = this.enLanguageServices.getLabelLists();
+            } else {
+              this.labelList = this.frLanguageServices.getLabelLists();
+            }
+            
+          }
+        });
     console.log('ionViewDidLoad ExportPage');
   }
   searchMembersForAdmin() {
@@ -41,7 +50,7 @@ export class ExportPage {
         });
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve members. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg31, 0);
         });
   }
   openFilter() {

@@ -3,7 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Chart } from 'chart.js';
 import { DataContext } from '../../../providers/dataContext.service';
 import { CommonServices } from '../../../providers/common.service';
-
+import { EnLanguageServices } from '../../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../../providers/frlanguage.service';
 @IonicPage()
 @Component({
     selector: 'page-admindashboard',
@@ -51,11 +52,26 @@ export class AdmindashboardPage {
         "#f2daf5",
         "#6a6a92"
     ];
-    constructor(public navCtrl: NavController, public navParams: NavParams, public _dataContext: DataContext, private commonService: CommonServices) {
-        this.tapOption = [{ Value: "JOB REQUEST", Key: "JobRequest" }, { Value: "JOB OFFER", Key: "JobOffer" }];
+    labelList:any = [];
+    constructor(public navCtrl: NavController, public navParams: NavParams, public _dataContext: DataContext, 
+        private commonService: CommonServices,private enLanguageServices:EnLanguageServices,
+        private frLanguageServices:FrLanguageServices) {
+      //  this.labelList = enLanguageServices.getLabelLists();
+       
 
     }
     ionViewDidEnter() {
+        this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+        .then((result) => {
+          if (result && result.language) {
+            if (result.language == "en") {
+              this.labelList = this.enLanguageServices.getLabelLists();
+            } else {
+              this.labelList = this.frLanguageServices.getLabelLists();
+            }
+            this.tapOption = [{ Value: this.labelList.label74, Key: "JobRequest" }, { Value: this.labelList.label75, Key: "JobOffer" }];
+          }
+        });
         this.tabValue = "JobRequest";
         this.getLoggedInUserDetailsFromCache();
     }
@@ -78,7 +94,7 @@ export class AdmindashboardPage {
                 this.setDoughnut();
             },
                 error => {
-                    this.commonService.onMessageHandler("Failed to retrieve countries details. Please try again", 0);
+                    this.commonService.onMessageHandler(this.labelList.errormsg15, 0);
                 });
     }
     getJobRequestDoughnotDataForAdmin() {
@@ -88,7 +104,7 @@ export class AdmindashboardPage {
                 this.setDoughnut();
             },
                 error => {
-                    this.commonService.onMessageHandler("Failed to retrieve countries details. Please try again", 0);
+                    this.commonService.onMessageHandler(this.labelList.errormsg15, 0);
                 });
     }
     getJobOfferCountsForAdmin() {
@@ -99,7 +115,7 @@ export class AdmindashboardPage {
                 this.getJobOfferDoughnotDataForAdmin();
             },
                 error => {
-                    this.commonService.onMessageHandler("Failed to retrieve countries details. Please try again", 0);
+                    this.commonService.onMessageHandler(this.labelList.errormsg15, 0);
                 });
     }
     getJobRequestCountsForAdmin() {
@@ -111,7 +127,7 @@ export class AdmindashboardPage {
 
             },
                 error => {
-                    this.commonService.onMessageHandler("Failed to retrieve countries details. Please try again", 0);
+                    this.commonService.onMessageHandler(this.labelList.errormsg15, 0);
                 });
     }
 

@@ -4,6 +4,8 @@ import { ImageViewerController } from 'ionic-img-viewer';
 import { DataContext } from '../../../providers/dataContext.service';
 import { CommonServices } from '../../../providers/common.service';
 import moment from 'moment';
+import { EnLanguageServices } from '../../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../../providers/frlanguage.service';
 import { AlertController } from 'ionic-angular';
 
 @IonicPage()
@@ -15,12 +17,26 @@ export class VerifyemployerprofilePage {
   loggedInUserDetails: any = {};
   _imageViewerCtrl: ImageViewerController;
   employeers: any = [];
+  labelList:any = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, imageViewerCtrl: ImageViewerController,
-    public _dataContext: DataContext, private commonService: CommonServices, public alertCtrl: AlertController) {
+    public _dataContext: DataContext, private commonService: CommonServices, public alertCtrl: AlertController,private enLanguageServices:EnLanguageServices,
+    private frLanguageServices:FrLanguageServices) {
+   // this.labelList = enLanguageServices.getLabelLists();
     this._imageViewerCtrl = imageViewerCtrl;
   }
 
   ionViewDidLoad() {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+        .then((result) => {
+          if (result && result.language) {
+            if (result.language == "en") {
+              this.labelList = this.enLanguageServices.getLabelLists();
+            } else {
+              this.labelList = this.frLanguageServices.getLabelLists();
+            }
+            
+          }
+        });
     this.getLoggedInUserDetailsFromCache();
   }
   getLoggedInUserDetailsFromCache() {
@@ -53,7 +69,7 @@ export class VerifyemployerprofilePage {
         });
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve unverified employeers. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg15, 0);
         });
   }
   activateEmployer(item) {
@@ -65,23 +81,23 @@ export class VerifyemployerprofilePage {
         }
       },
         error => {
-          this.commonService.onMessageHandler("Failed to verify employeer. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg28, 0);
         });
   }
 
   verify(item) {
     const confirm = this.alertCtrl.create({
-      title: 'Verify Candidate?',
-      message: 'Do you want to verify this employeer?',
+      title: this.labelList.label101,
+      message: this.labelList.label102,
       buttons: [
         {
-          text: 'No',
+          text: this.labelList.label59,
           handler: () => {
             console.log('Disagree clicked');
           }
         },
         {
-          text: 'Yes',
+          text: this.labelList.label60,
           handler: () => {
             this.activateEmployer(item);
           }

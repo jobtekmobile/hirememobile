@@ -7,6 +7,8 @@ import { DataContext } from '../../../providers/dataContext.service';
 import { FormBuilder, Validators, FormControl, FormGroup, FormArray } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
+import { EnLanguageServices } from '../../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../../providers/frlanguage.service';
 
 @IonicPage()
 @Component({
@@ -57,6 +59,7 @@ export class CreateAgencyJobRequestForm {
   ];
 
   loggedInUserDetails: any = {};
+  labelList:any = [];
   constructor(
     public navCtrl: NavController,
     public _dataContext: DataContext,
@@ -65,9 +68,10 @@ export class CreateAgencyJobRequestForm {
     public navParam: NavParams,
     public actionSheetCtrl: ActionSheetController,
     private camera: Camera,
-    private cdr: ChangeDetectorRef, private file: File
+    private cdr: ChangeDetectorRef, private file: File,private enLanguageServices:EnLanguageServices,
+    private frLanguageServices:FrLanguageServices
   ) {
-
+   // this.labelList = enLanguageServices.getLabelLists();
     // this.createJobRequest = new FormGroup({
     //   Gender: new FormControl(2),
     //   CityId: new FormControl(0),
@@ -101,6 +105,17 @@ export class CreateAgencyJobRequestForm {
     this.createJobRequest.SalaryType = 1;
   }
   ionViewWillEnter() {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+    .then((result) => {
+      if (result && result.language) {
+        if (result.language == "en") {
+          this.labelList = this.enLanguageServices.getLabelLists();
+        } else {
+          this.labelList = this.frLanguageServices.getLabelLists();
+        }
+        
+      }
+    });
     this.getLoggedInUserDetailsFromCache();
     this.showSelectedDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
     this.minDate = "1900-12-31";
@@ -135,7 +150,7 @@ export class CreateAgencyJobRequestForm {
         }
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve categories. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg15, 0);
         });
   }
   getActiveJobTasks() {
@@ -145,10 +160,10 @@ export class CreateAgencyJobRequestForm {
           this.jobTasks = responnse.JobTasks;
         }
         else
-          this.commonService.onMessageHandler("Failed to retrieve job tasks.", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg16, 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve job tasks. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg16, 0);
         });
   }
   getActiveCities() {
@@ -159,10 +174,10 @@ export class CreateAgencyJobRequestForm {
           // this.getActiveDistricts();
         }
         else
-          this.commonService.onMessageHandler("Failed to retrieve cities.", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg4, 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve cities. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg4, 0);
         });
   }
   onSelectedCity() {
@@ -175,10 +190,10 @@ export class CreateAgencyJobRequestForm {
           this.districts = responnse;
         }
         else
-          this.commonService.onMessageHandler("Failed to retrieve districts.", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg5, 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve districts. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg5, 0);
         });
   }
   //validate only number
@@ -223,20 +238,20 @@ export class CreateAgencyJobRequestForm {
             this.navCtrl.setRoot("AgencymyjobrequestPage");
           }
           else
-            this.commonService.onMessageHandler("Failed to save.", 0);
+            this.commonService.onMessageHandler(this.labelList.errormsg32, 0);
         },
           error => {
-            this.commonService.onMessageHandler("Failed to save. Please try again", 0);
+            this.commonService.onMessageHandler(this.labelList.errormsg32, 0);
           });
     }
   }
 
   uploadImage(data) {
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'Choose File',
+      title: this.labelList.label40,
       buttons: [
         {
-          text: 'Camera',
+          text: this.labelList.label41,
           icon: "ios-camera-outline",
           cssClass: 'icon-btn-color',
           handler: () => {
@@ -244,7 +259,7 @@ export class CreateAgencyJobRequestForm {
           }
         },
         {
-          text: 'Gallery',
+          text: this.labelList.label42,
           icon: "ios-image-outline",
           handler: () => {
             this.chooseFromGallery(data);
@@ -303,7 +318,7 @@ export class CreateAgencyJobRequestForm {
             this.cdr.detectChanges();
           }
           else {
-            this.commonService.onMessageHandler("Sorry! you can upload only .png, .jpg, .jpeg files only.", 0);
+            this.commonService.onMessageHandler(this.labelList.errormsg6, 0);
           }
         }
       })
@@ -311,25 +326,25 @@ export class CreateAgencyJobRequestForm {
   }
   validateJobRequestForm() {
     if (this.createJobRequest.Title == undefined || this.createJobRequest.Title == "") {
-      this.commonService.onMessageHandler("Job title is required", 0)
+      this.commonService.onMessageHandler(this.labelList.validmsg25, 0)
       return false;
     }
     else if (this.createJobRequest.ExperienceInYears == undefined || this.createJobRequest.ExperienceInYears == "") {
-      this.commonService.onMessageHandler("Year of exp. is required", 0)
+      this.commonService.onMessageHandler(this.labelList.validmsg22, 0)
       return false;
     }
     else if (this.createJobRequest.CityId == undefined || this.createJobRequest.CityId == "" || this.createJobRequest.CityId == 0) {
-      this.commonService.onMessageHandler("City is required.", 0)
+      this.commonService.onMessageHandler(this.labelList.validmsg7, 0)
       return false;
     }
     else if (this.createJobRequest.DistrictId == undefined || this.createJobRequest.DistrictId == "" || this.createJobRequest.DistrictId == 0) {
-      this.commonService.onMessageHandler("District is required.", 0)
+      this.commonService.onMessageHandler(this.labelList.validmsg8, 0)
       return false;
     } else if (this.createJobRequest.ExpectedMinSalary == undefined || this.createJobRequest.ExpectedMinSalary == "") {
-      this.commonService.onMessageHandler("Min salary is required.", 0)
+      this.commonService.onMessageHandler(this.labelList.validmsg19, 0)
       return false;
     } else if (this.createJobRequest.ExpectedMaxSalary == undefined || this.createJobRequest.ExpectedMaxSalary == "") {
-      this.commonService.onMessageHandler("Max salary is required.", 0)
+      this.commonService.onMessageHandler(this.labelList.validmsg20, 0)
       return false
     } else {
       return true;

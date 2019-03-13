@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { ViewController } from 'ionic-angular';
 import { CommonServices } from '../../providers/common.service';
 import { DataContext } from '../../providers/dataContext.service';
+import { EnLanguageServices } from '../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../providers/frlanguage.service';
 
 @IonicPage()
 @Component({
@@ -43,6 +45,7 @@ export class FilterPage {
   activeTab: number = 0;
   jobTasks: any = [];
   title:any="";
+  labelList:any = [];
   constructor(
     public platform: Platform,
     public navParam: NavParams,
@@ -50,7 +53,21 @@ export class FilterPage {
     public _dataContext: DataContext,
     public navParams: NavParams,
     private commonService: CommonServices,
+    private enLanguageServices:EnLanguageServices,
+    private frLanguageServices:FrLanguageServices
   ) {
+    //this.labelList = enLanguageServices.getLabelLists();
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+    .then((result) => {
+      if (result && result.language) {
+        if (result.language == "en") {
+          this.labelList = this.enLanguageServices.getLabelLists();
+        } else {
+          this.labelList = this.frLanguageServices.getLabelLists();
+        }
+        
+      }
+    });
     this.specificCrieteria.Job = this.navParam.get("Job");
     this.title = this.navParam.get("JobName");
     this.getActiveJobTasks();
@@ -88,10 +105,10 @@ export class FilterPage {
           //this.getActiveDistricts();
         }
         else
-          this.commonService.onMessageHandler("Failed to retrieve cities.", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg4, 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve cities. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg4, 0);
         });
   }
 
@@ -102,10 +119,10 @@ export class FilterPage {
           this.districts = responnse;
         }
         else
-          this.commonService.onMessageHandler("Failed to retrieve districts.", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg5, 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve districts. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg5, 0);
         });
   }
   onToggleChange(value) {
@@ -189,7 +206,7 @@ export class FilterPage {
           this.viewCtrl.dismiss(response);
         },
           error => {
-            this.commonService.onMessageHandler("Failed to retrieve cities. Please try again", 0);
+            this.commonService.onMessageHandler(this.labelList.errormsg15, 0);
           });
     }
     else {
@@ -198,7 +215,7 @@ export class FilterPage {
           this.viewCtrl.dismiss(response);
         },
           error => {
-            this.commonService.onMessageHandler("Failed to retrieve cities. Please try again", 0);
+            this.commonService.onMessageHandler(this.labelList.errormsg15, 0);
           });
     }
 
@@ -210,10 +227,10 @@ export class FilterPage {
           this.jobTasks = response.JobTasks;
         }
         else
-          this.commonService.onMessageHandler("Failed to retrieve job tasks.", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg16, 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve job tasks. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg16, 0);
         });
   }
 }

@@ -13,7 +13,7 @@
       <ion-card class="details-card">
         <ion-item class="">
           <ion-avatar item-start class="avatar-top">
-            <img class="img-size" src="data:image/png;base64,{{publishedJobRequestDesc.Candidate.ProfilePicUrl}}" />
+            <img class="img-size" src="{{publishedJobRequestDesc.Candidate.ProfilePicUrl}}" />
           </ion-avatar>
           <div class="card">
             <h4 class="para-overflow-hidden margin-bottom-5">
@@ -56,83 +56,88 @@
         <ion-item class="border-bottom-1 margin-top--10"
           *ngIf="publishedJobRequestDesc.JobRequestDescription && publishedJobRequestDesc.JobRequestDescription!=''">
           <p class="block-with-text">
-            <span class="sub-header-title">Description: </span>
+            <span class="sub-header-title">{{labelList.label53}}: </span>
             <span class="font-size-13 white-space-initial">{{publishedJobRequestDesc.JobRequestDescription}}</span>
           </p>
         </ion-item>
         <ion-item class="border-bottom-1" *ngIf="publishedJobRequestDesc.Candidate">
           <p>
-            <span class="float-left sub-header-title">Gender</span>
-            <span class="float-right font-size-13" *ngIf="publishedJobRequestDesc.Candidate.Gender == 1">Male</span>
-            <span class="float-right font-size-13" *ngIf="publishedJobRequestDesc.Candidate.Gender == 2">Female</span>
+            <span class="float-left sub-header-title">{{labelList.label14}}</span>
+            <span class="float-right font-size-13" *ngIf="publishedJobRequestDesc.Candidate.Gender == 1">{{labelList.label16}}</span>
+            <span class="float-right font-size-13" *ngIf="publishedJobRequestDesc.Candidate.Gender == 2">{{labelList.label15}}</span>
           </p>
         </ion-item>
         <ion-item class="border-bottom-1" *ngIf="publishedJobRequestDesc.Candidate">
           <p>
-            <span class="float-left sub-header-title">Type of Staff</span>
-            <span class="float-right font-size-13">{{publishedJobRequestDesc.Candidate.StaffType}}</span>
+            <span class="float-left sub-header-title">{{labelList.label66}}</span>
+            <span class="float-right font-size-13" *ngIf="publishedJobRequestDesc.Candidate.StaffType==1">{{labelList.label48}}</span>label103
+            <span class="float-right font-size-13" *ngIf="publishedJobRequestDesc.Candidate.StaffType==2">{{labelList.label10}}</span>
+            <span class="float-right font-size-13" *ngIf="publishedJobRequestDesc.Candidate.StaffType==0">{{labelList.label76}}</span>
             <!-- <span class="float-right font-size-13" *ngIf="publishedJobRequestDesc.Candidate.StaffTypeDesc !=null && publishedJobRequestDesc.Candidate.StaffTypeDesc!=''">{{publishedJobRequestDesc.Candidate.StaffTypeDesc}}</span>
             <span class="float-right font-size-13" *ngIf="publishedJobRequestDesc.Candidate.StaffTypeDesc ==null || publishedJobRequestDesc.Candidate.StaffTypeDesc==''">Not Available</span> -->
           </p>
         </ion-item>
         <ion-item class="border-bottom-1" *ngIf="publishedJobRequestDesc.Candidate">
           <p>
-            <span class="float-left sub-header-title">Age</span>
-            <span class="float-right font-size-13">{{publishedJobRequestDesc.Candidate.Age}} Years</span>
+            <span class="float-left sub-header-title">{{labelList.label50}}</span>
+            <span class="float-right font-size-13">{{publishedJobRequestDesc.Candidate.Age}} {{labelList.label93}}</span>
           </p>
         </ion-item>
         <ion-item class="border-bottom-1" *ngIf="publishedJobRequestDesc.Candidate">
           <p>
-            <span class="float-left sub-header-title">Year of Experience</span>
+            <span class="float-left sub-header-title">{{labelList.label65}}</span>
             <span class="float-right font-size-13">
               <span
                 *ngIf="publishedJobRequestDesc.Candidate.ExperienceInYears > 0 && publishedJobRequestDesc.Candidate.ExperienceInYears!=null">{{publishedJobRequestDesc.Candidate.ExperienceInYears}}
-                Years</span>
+                {{labelList.label146}}</span>
               <span
                 *ngIf="publishedJobRequestDesc.Candidate.ExperienceInMonths > 0 && publishedJobRequestDesc.Candidate.ExperienceInMonths!=null">{{publishedJobRequestDesc.Candidate.ExperienceInMonths}}
-                Months</span>
+                {{labelList.label147}}</span>
             </span>
           </p>
         </ion-item>
         <ion-item class="border-bottom-1" *ngIf="publishedJobRequestDesc.Candidate">
           <p>
-            <span class="float-left sub-header-title">Read</span>
-            <span class="float-right font-size-13">{{publishedJobRequestDesc.Candidate.CanRead?'Yes':'No'}}</span>
+            <span class="float-left sub-header-title">{{labelList.label153}}</span>
+            <span class="float-right font-size-13" *ngIf="publishedJobRequestDesc.Candidate.CanRead">{{labelList.label60}}</span>
+            <span class="float-right font-size-13" *ngIf="!publishedJobRequestDesc.Candidate.CanRead">{{labelList.label59}}</span>
           </p>
         </ion-item>
         <ion-item class="border-bottom-1" *ngIf="publishedJobRequestDesc.Candidate">
           <p>
-            <span class="float-left sub-header-title">Write</span>
-            <span class="float-right font-size-13">{{publishedJobRequestDesc.Candidate.CanWrite?'Yes':'No'}}</span>
+            <span class="float-left sub-header-title">{{labelList.label154}}</span>
+            <span class="float-right font-size-13" *ngIf="publishedJobRequestDesc.Candidate.CanWrite">{{labelList.label60}}</span>
+            <span class="float-right font-size-13" *ngIf="!publishedJobRequestDesc.Candidate.CanWrite">{{labelList.label59}}</span>
           </p>
         </ion-item>
         <ion-item class="border-bottom-1" *ngIf="publishedJobRequestDesc.Candidate">
           <p>
-            <span class="float-left sub-header-title">Sleep on Site</span>
-            <span class="float-right font-size-13">{{publishedJobRequestDesc.Candidate.SleepOnSite?'Yes':'No' }}</span>
+            <span class="float-left sub-header-title">{{labelList.label129}}</span>
+            <span class="float-right font-size-13" *ngIf="publishedJobRequestDesc.Candidate.SleepOnSite">{{labelList.label60}}</span>
+            <span class="float-right font-size-13" *ngIf="!publishedJobRequestDesc.Candidate.SleepOnSite">{{labelList.label59}}</span>
           </p>
         </ion-item>
         <ion-item class="border-bottom-1" *ngIf="publishedJobRequestDesc.Candidate">
           <p>
-            <span class="float-left sub-header-title">Disponibility</span>
+            <span class="float-left sub-header-title">{{labelList.label67}}</span>
             <span class="float-right font-size-13">{{publishedJobRequestDesc.Candidate.Disponibility}}</span>
           </p>
         </ion-item>
         <ion-item class="border-bottom-1" *ngIf="publishedJobRequestDesc.Candidate">
           <p>
-            <span class="float-left sub-header-title">Number of Adults</span>
+            <span class="float-left sub-header-title">{{labelList.label144}}</span>
             <span class="float-right font-size-13">{{publishedJobRequestDesc.Candidate.Adult}}</span>
           </p>
         </ion-item>
         <ion-item class="border-bottom-1" *ngIf="publishedJobRequestDesc.Candidate">
           <p>
-            <span class="float-left sub-header-title">Number of Children</span>
+            <span class="float-left sub-header-title">{{labelList.label145}}</span>
             <span class="float-right font-size-13">{{publishedJobRequestDesc.Candidate.Children}}</span>
           </p>
         </ion-item>
         <ion-item class="border-bottom-1" *ngIf="publishedJobRequestDesc.Candidate">
           <p>
-            <span class="float-left sub-header-title">Localization</span>
+            <span class="float-left sub-header-title">{{labelList.label69}}</span>
             <span class="float-right font-size-13">
               <span *ngIf="publishedJobRequestDesc.Candidate.Country">{{publishedJobRequestDesc.Candidate.Country}},
               </span>
@@ -144,7 +149,7 @@
         </ion-item>
         <ion-item class="border-bottom-1" *ngIf="publishedJobRequestDesc.Candidate">
           <p>
-            <span class="float-left sub-header-title">Salary Between</span>
+            <span class="float-left sub-header-title">{{labelList.label70}}</span>
             <span class="float-right font-size-13">
               <span
                 *ngIf="publishedJobRequestDesc.Candidate.ExpectedMaxSalary > 0">{{publishedJobRequestDesc.Candidate.ExpectedMaxSalary}}
@@ -158,7 +163,7 @@
             <ion-col col-12>
               <ion-col col-12>
                 <p>
-                  Canditate Skills
+                  {{labelList.label152}}
                 </p>
               </ion-col>
               <div class="categories">
@@ -191,6 +196,7 @@
                           <ion-checkbox [checked]="checkIfExists(job)" item-left class="margin-right-15" name="job_task_{{job.JobTaskId}}" disabled="disabled" [(ngModel)]="job.Selected">
                           </ion-checkbox>
                           <span>{{job.JobTaskName}}</span>
+                           <p>{{job.TaskResponse}}</p> 
                           <ul>
                             <ng-template #recursiveList let-list>
                               <li *ngFor="let subTask of list">
@@ -198,6 +204,7 @@
                                   <ion-checkbox item-left class="margin-right-15" [checked]="checkIfExists(subTask)" disabled="disabled" name="job_task_{{subTask.JobTaskId}}" [(ngModel)]="subTask.Selected">
                                   </ion-checkbox>
                                   <span>{{subTask.JobTaskName}}</span>
+                                  <!-- <p>{{job.TaskResponse}}</p> -->
                                 </div>
                                 <ul *ngIf="subTask.SubTasks?.length > 0">
                                   <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: subTask.SubTasks }"></ng-container>
@@ -214,32 +221,32 @@
             </ion-col>
           </ion-row>
         <ion-item class="border-bottom-1"
-          *ngIf="publishedJobRequestDesc.JobRequestNotes && publishedJobRequestDesc.JobRequestNotes!=''">
+          *ngIf="publishedJobRequestDesc.Candidate.AdditionalDescription && publishedJobRequestDesc.Candidate.AdditionalDescription!=''">
           <p>
-            <span class="float-left sub-header-title">Additional Description</span>
+            <span class="float-left sub-header-title">{{labelList.label131}}</span>
           </p>
           <p class="font-size-13 white-space-initial">
-            {{publishedJobRequestDesc.JobRequestNotes}}
+            {{publishedJobRequestDesc.JobRequestDescription}}
           </p>
         </ion-item>
         <ion-row>
           <ion-col col-4 text-center>
-            <img *ngIf="publishedJobRequestDesc.SkillPic1 == null" src="assets/imgs/nouser.jpg" />
-            <img *ngIf="publishedJobRequestDesc.SkillPic1 != null"
-              src="data:image/png;base64,{{publishedJobRequestDesc.SkillPic1}}" />
+            <img class="skillimg" *ngIf="publishedJobRequestDesc.SkillPic1 == null" src="assets/imgs/nouser.jpg" />
+            <img class="skillimg" *ngIf="publishedJobRequestDesc.SkillPic1 != null"
+              src="{{publishedJobRequestDesc.SkillPic1}}" />
           </ion-col>
           <ion-col col-4 text-center>
-            <img *ngIf="publishedJobRequestDesc.SkillPic2 == null" src="assets/imgs/nouser.jpg" />
-            <img *ngIf="publishedJobRequestDesc.SkillPic2 != null" src="data:image/png;base64,{{publishedJobRequestDesc.SkillPic2}}" />
+            <img class="skillimg" *ngIf="publishedJobRequestDesc.SkillPic2 == null" src="assets/imgs/nouser.jpg" />
+            <img class="skillimg" *ngIf="publishedJobRequestDesc.SkillPic2 != null" src="{{publishedJobRequestDesc.SkillPic2}}" />
           </ion-col>
           <ion-col col-4 text-center>
-            <img *ngIf="publishedJobRequestDesc.SkillPic3 == null" src="assets/imgs/nouser.jpg" />
-            <img *ngIf="publishedJobRequestDesc.SkillPic3 != null"
-              src="data:image/png;base64,{{publishedJobRequestDesc.SkillPic3}}" />
+            <img class="skillimg" *ngIf="publishedJobRequestDesc.SkillPic3 == null" src="assets/imgs/nouser.jpg" />
+            <img class="skillimg" *ngIf="publishedJobRequestDesc.SkillPic3 != null"
+              src="{{publishedJobRequestDesc.SkillPic3}}" />
           </ion-col>
         </ion-row>
         <div class="job-btn-con" *ngIf="userDetails.type == 'Admin'">
-            <button ion-button round full pr class="job-button" (click)="Verify()">Verify</button>
+            <button ion-button round full pr class="job-button" (click)="Verify()">{{labellist.label96}}</button>
         </div>
        
       </ion-card>
@@ -247,7 +254,7 @@
   </ion-row>
   <ion-row *ngIf="!isAvailable">
     <ion-col col-12 text-center>
-      <p class="not-found-text">Empty Result!</p>
+      <p class="not-found-text">{{labellist.errormsg17}}!</p>
     </ion-col>
   </ion-row>
 </ion-content>

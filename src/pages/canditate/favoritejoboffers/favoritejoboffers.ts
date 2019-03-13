@@ -2,7 +2,8 @@ import { Component, ViewChild, Injector } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides, AlertController, ModalController } from 'ionic-angular';
 import { DataContext } from '../../../providers/dataContext.service';
 import { CommonServices } from '../../../providers/common.service';
-
+import { EnLanguageServices } from '../../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../../providers/frlanguage.service';
 /**
  * Generated class for the FavoritejoboffersPage page.
  *
@@ -28,19 +29,32 @@ export class FavoritejoboffersPage {
   myFavListByCategoryId: any = {};
   allMyFavouriteList: any = [];
   loggedInUserDetails: any = {};
-
+  labelList:any = [];
   constructor(
     public injector: Injector,
     public navCtrl: NavController,
     public navParams: NavParams,
     public _dataContext: DataContext,
     public modalCtrl: ModalController,
-    private commonService: CommonServices,public alerCtrl: AlertController) {
+    private commonService: CommonServices,public alerCtrl: AlertController,private enLanguageServices:EnLanguageServices,
+    private frLanguageServices:FrLanguageServices) {
+      //this.labelList = enLanguageServices.getLabelLists();
     this.publishedJobResult = [];
     this.tabValue = 0;
   }
   // ...
   ionViewWillEnter() {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+    .then((result) => {
+      if (result && result.language) {
+        if (result.language == "en") {
+          this.labelList = this.enLanguageServices.getLabelLists();
+        } else {
+          this.labelList = this.frLanguageServices.getLabelLists();
+        }
+        
+      }
+    });
     this.getLoggedInUserDetailsFromCache();
   }
   getLoggedInUserDetailsFromCache() {
@@ -65,10 +79,10 @@ export class FavoritejoboffersPage {
           this.getMyFavOffers();
         }
         else
-          this.commonService.onMessageHandler("No category found.", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg11, 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve categories. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg10, 0);
         });
   }
   public filterDataBySelectedCategory(categoryId: number): void {
@@ -94,38 +108,38 @@ export class FavoritejoboffersPage {
         else {
           this.myFavListByCategoryId = [];
           this.isAvailable = false;
-          this.commonService.onMessageHandler("No result found.", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg17, 0);
         }
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve favourite job offers. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg19, 0);
         });
   }
   deleteFavouriteJobOffer(id, index) {
     let method = this.alerCtrl.create({
-      title: "Please Confirm!",
-      message: "Do you want to delete ?",
+      title: this.labelList.label78,
+      message: this.labelList.label79,
       cssClass: 'alert-header-back-style',
       buttons: [
         {
-          text: 'CANCEL',
+          text: this.labelList.label80,
           cssClass: 'cancel-btn-style',
           handler: () => {
             // return false;
           }
         },
         {
-          text: "DELETE",
+          text: this.labelList.label77,
           cssClass: 'ok-btn-style',
           handler: () => {
             this._dataContext.DeleteFavourite(this.loggedInUserDetails.userId, id)
             .subscribe(response => {
               this.myFavListByCategoryId.splice(index, 1);
               this.getActiveCategories();
-              this.commonService.onMessageHandler("You have successfully removed.", 0);
+              this.commonService.onMessageHandler(this.labelList.successmsg3, 1);
             },
               error => {
-                this.commonService.onMessageHandler("Failed to remove. Please try again", 0);
+                this.commonService.onMessageHandler(this.labelList.errormsg15, 0);
               });
           }
         }

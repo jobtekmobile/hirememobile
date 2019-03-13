@@ -33,6 +33,7 @@
                     [src]="item.Image && item.Image!=null?item.Image:'assets/imgs/maledefault.svg'" />
                   <img class="img-size" *ngIf="item.Gender == 2"
                     [src]="item.Image && item.Image!=null?item.Image:'assets/imgs/femaledefault.svg'" />
+                    <img src="assets/imgs/verified.png" class="verified-img" *ngIf="item.ProfileVerified" alt="">
                 </ion-avatar>
                 <div class="card">
                   <h4 class="para-overflow-hidden margin-bottom-5">
@@ -40,6 +41,7 @@
                       <span>
                         <img src="assets/imgs/woman.svg" *ngIf="item.Gender == 2" class="card-name-geneder-icon">
                         <img src="assets/imgs/male.svg" *ngIf="item.Gender == 1" class="card-name-geneder-icon">
+                        
                       </span>
                       <span *ngIf="item.FirstName && item.FirstName !=''">{{item.FirstName }} </span>
                       <!-- <span *ngIf="item.LastName && item.LastName !=''">{{item.LastName }}</span> -->
@@ -51,9 +53,10 @@
                       <img src="assets/imgs/usertype.svg" class="img-sub-size">
                     </span>
                     <span class="req-type-color">
-                      <span *ngIf="item.StaffType && item.StaffType == 0">Agency</span>
-                      <span *ngIf="item.StaffType && item.StaffType == 1">Independant</span>
-                      <span *ngIf="item.StaffType && item.StaffType == 2">Doesn't Matter</span>
+                      <!-- <span *ngIf="item.StaffType && item.StaffType == 0">Agency</span> -->
+                      <span *ngIf="item.StaffType && item.StaffType == 1">{{labelList.label48}}</span>
+                      <span *ngIf="item.StaffType && item.StaffType == 2" (click)="gotoAgencydetailsPage(item)" >{{labelList.label10}}</span> 
+                      <span>  <ion-icon *ngIf="item.StaffType && item.StaffType == 2" (click)="gotoAgencydetailsPage(item)" name="information-circle"></ion-icon></span>
                     </span>
                   </p>
                   <p class="card-job-item-name">{{item.JobName}}</p>
@@ -67,7 +70,7 @@
                     <span>
                       <img src="assets/imgs/salary.svg" class="img-sub-size">
                     </span>
-                    <span class=""> Exp. Salary: {{item.ExpectedMinSalary}} - {{item.ExpectedMaxSalary}}</span>
+                    <span class=""> {{labelList.label49}}: {{item.ExpectedMinSalary}} - {{item.ExpectedMaxSalary}}</span>
                   </p>
                   <!-- <p class="para-overflow-hidden">
                     <span>
@@ -86,7 +89,7 @@
                       <span>
                         <img src="assets/imgs/age.svg" class="img-sub-size">
                       </span>
-                      <span class=""> Age: {{item.Age}} Yrs</span>
+                      <span class=""> {{labelList.label50}}: {{item.Age}} Yrs</span>
                     </span>
                     <span class="" *ngIf="item.ExperienceInYears > 0">
 
@@ -94,7 +97,7 @@
                         <img src="assets/imgs/experience.svg" class="img-sub-size">
                       </span>
 
-                      <span> Exp.: {{item.ExperienceInYears}} Yrs.</span>
+                      <span> {{labelList.label51}}: {{item.ExperienceInYears}} Yrs.</span>
                     </span>
                   </p>
                   <p class="para-overflow-hidden" *ngIf="item.PublishedDate">
@@ -102,7 +105,7 @@
                       <img src="assets/imgs/date.svg" class="img-sub-size">
                     </span>
                     <span>
-                      Published: {{item.PublishedDate}}
+                      {{labelList.label52}}: {{item.PublishedDate}}
                     </span>
                   </p>
                 </div>
@@ -110,7 +113,7 @@
               <ion-item class="border-bottom-1 margin-top--10"
                 *ngIf="item.JobRequestDescription && item.JobRequestDescription!=''">
                 <p class="block-with-text">
-                  <span class="sub-header-title">Description: </span>
+                  <span class="sub-header-title">{{labelList.label53}}: </span>
                   <span
                     class="font-size-13 white-space-initial ">{{item.JobRequestDescription}}</span>
                 </p>
@@ -126,7 +129,7 @@
                 <ion-col text-right class="action-con-inner" (click)="selectedJobRequestDetails(item)">
                   <button ion-button clear small icon-start class="action-btn">
                     <ion-icon name="information-circle"></ion-icon>
-                    Detail
+                    {{labelList.label54}}
                   </button>
                 </ion-col>
               </ion-row>
@@ -142,6 +145,7 @@
                     [src]="item.Image && item.Image!=null?item.Image:'assets/imgs/maledefault.svg'" />
                   <img class="img-size" *ngIf="item.Gender == 2"
                     [src]="item.Image && item.Image!=null?item.Image:'assets/imgs/femaledefault.svg'" />
+                    <img src="assets/imgs/verified.png" class="verified-img" *ngIf="item.ProfileVerified==1" alt="">
                 </ion-avatar>
                 <div class="card">
                   <h4 class="para-overflow-hidden margin-bottom-5">
@@ -161,9 +165,11 @@
                       <img src="assets/imgs/usertype.svg" class="img-sub-size">
                     </span>
                     <span class="req-type-color">
-                      <span *ngIf="item.StaffType && item.StaffType == 2">Agency</span>
+                      <!-- <span *ngIf="item.StaffType && item.StaffType == 2">Agency</span>
                       <span *ngIf="item.StaffType && item.StaffType == 1">Independant</span>
-                      <span *ngIf="item.StaffType && item.StaffType == 0">Doesn't Matter</span>
+                      <span *ngIf="item.StaffType && item.StaffType == 0">Doesn't Matter</span> -->
+                      <span *ngIf="item.StaffType && item.StaffType == 1">{{labelList.label48}}</span>
+                      <span *ngIf="item.StaffType && item.StaffType == 2">{{labelList.label10}}</span> 
                     </span>
                   </p>
                   <p class="card-job-item-name">{{item.JobName}}</p>
@@ -182,7 +188,7 @@
                     <span>
                       <img src="assets/imgs/salary.svg" class="img-sub-size">
                     </span>
-                    <span class=""> Salary Proposed: {{item.ExpectedMinSalary}} - {{item.ExpectedMaxSalary}}</span>
+                    <span class=""> {{labelList.label55}}: {{item.ExpectedMinSalary}} - {{item.ExpectedMaxSalary}}</span>
                   </p>
                   <!-- <p class="para-overflow-hidden">
                     <span>
@@ -201,7 +207,7 @@
                       <span>
                         <img src="assets/imgs/age.svg" class="img-sub-size">
                       </span>
-                      <span> Age: {{item.Age}} Yrs.</span>
+                      <span> {{labelList.label50}}: {{item.Age}} Yrs.</span>
 
                     </span>
                   </p>
@@ -210,7 +216,7 @@
                       <img src="assets/imgs/date.svg" class="img-sub-size">
                     </span>
                     <span>
-                      Published: {{item.PublishedDate}}
+                      {{labelList.label52}}: {{item.PublishedDate}}
                     </span>
                   </p>
                 </div>
@@ -218,7 +224,7 @@
               <ion-item class="border-bottom-1 margin-top--10"
                 *ngIf="item.AdditionalDescription && item.AdditionalDescription!=''">
                 <p class="block-with-text">
-                  <span class="sub-header-title">Description: </span>
+                  <span class="sub-header-title">{{labelList.label53}}: </span>
                   <span
                     class="font-size-13 white-space-initial ">{{item.AdditionalDescription}}</span>
                 </p>
@@ -227,13 +233,13 @@
                 <ion-col class="action-con-inner" (click)="makeFavourite(item.JobofferId)">
                   <button ion-button clear small icon-start class="action-btn">
                     <ion-icon name="heart"></ion-icon>
-                    Favourite
+                    {{labelList.label56}}
                   </button>
                 </ion-col>
                 <ion-col text-right class="action-con-inner" (click)="selectedJobOfferDetails(item)">
                   <button ion-button clear small icon-start class="action-btn">
                     <ion-icon name="information-circle"></ion-icon>
-                    Detail
+                    {{labelList.label54}}
                   </button>
                 </ion-col>
               </ion-row>

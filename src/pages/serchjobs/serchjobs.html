@@ -4,7 +4,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Search Jobs</ion-title>
+    <ion-title>{{labelList.pagetitle2}}</ion-title>
   </ion-navbar>
   <ion-toolbar class="segment-toolbar">
     <ion-row class="filters">
@@ -26,7 +26,7 @@
   </div>
   <div>
     <ion-item>
-      <ion-label>Browse Categories</ion-label>
+      <ion-label>{{labelList.label46}}</ion-label>
     </ion-item>
     <ion-grid>
       <ion-row *ngIf="selectedJobByCategoryId.length > 0 && categories.length > 0">
@@ -39,7 +39,7 @@
       </ion-row>
       <ion-row *ngIf="!isAvailable && (categories.length == 0 || selectedJobByCategoryId.length == 0)">
         <ion-col col-12>
-          <p class="not-available">No result found!</p>
+          <p class="not-available">{{labelList.label47}}!</p>
         </ion-col>
       </ion-row>
     </ion-grid>

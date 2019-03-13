@@ -3,7 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DataContext } from '../../../providers/dataContext.service';
 import { CommonServices } from '../../../providers/common.service';
 import moment from 'moment';
-
+import { EnLanguageServices } from '../../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../../providers/frlanguage.service';
 @IonicPage()
 @Component({
   selector: 'page-agencydetails',
@@ -13,7 +14,12 @@ export class AgencydetailsPage {
   agencyId: any;
   agencyDetails: any = {};
   loggedInUserDetails:any={};
-  constructor(public navCtrl: NavController, public navParams: NavParams, public _dataContext: DataContext, private commonService: CommonServices) {
+  labelList:any = [];
+  constructor(public navCtrl: NavController, public navParams: NavParams, public _dataContext: DataContext, private commonService: CommonServices,
+    private enLanguageServices:EnLanguageServices,
+    private frLanguageServices:FrLanguageServices
+  ) {
+   // this.labelList = enLanguageServices.getLabelLists();
     this.agencyId = this.navParams.get("AgencyId");
    
 
@@ -31,10 +37,21 @@ export class AgencydetailsPage {
         // });
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve countries details. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg15, 0);
         });
   }
   ionViewDidLoad() {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+        .then((result) => {
+          if (result && result.language) {
+            if (result.language == "en") {
+              this.labelList = this.enLanguageServices.getLabelLists();
+            } else {
+              this.labelList = this.frLanguageServices.getLabelLists();
+            }
+            
+          }
+        });
     this.getLoggedInUserDetailsFromCache();
   }
   getLoggedInUserDetailsFromCache() {

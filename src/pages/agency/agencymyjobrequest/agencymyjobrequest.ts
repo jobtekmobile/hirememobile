@@ -4,6 +4,8 @@ import { CommonServices } from '../../../providers/common.service';
 import { DataContext } from '../../../providers/dataContext.service';
 import { ImageViewerController } from 'ionic-img-viewer';
 import moment from 'moment';
+import { EnLanguageServices } from '../../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../../providers/frlanguage.service';
 /**
  * Generated class for the AgencymyjobrequestPage page.
  *
@@ -29,13 +31,29 @@ export class AgencymyjobrequestPage {
   public showRightButton: boolean;
   selectedJobByCategoryId: Array<any> = [];
   public modalCtrl: ModalController
-  loggedInUserDetails:any={};
-  constructor(public alerCtrl: AlertController,public navCtrl: NavController, public navParams: NavParams,
-    public _dataContext: DataContext, private commonService: CommonServices, imageViewerCtrl: ImageViewerController) {
+  loggedInUserDetails: any = {};
+  labelList:any = [];
+  constructor(public alerCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams,
+    public _dataContext: DataContext, private commonService: CommonServices, imageViewerCtrl: ImageViewerController,
+    private enLanguageServices:EnLanguageServices,
+    private frLanguageServices:FrLanguageServices
+  ) {
+   // this.labelList = enLanguageServices.getLabelLists();
     this._imageViewerCtrl = imageViewerCtrl;
   }
 
   ionViewWillEnter() {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+    .then((result) => {
+      if (result && result.language) {
+        if (result.language == "en") {
+          this.labelList = this.enLanguageServices.getLabelLists();
+        } else {
+          this.labelList = this.frLanguageServices.getLabelLists();
+        }
+        
+      }
+    });
     this.getLoggedInUserDetailsFromCache();
   }
   getLoggedInUserDetailsFromCache() {
@@ -60,10 +78,10 @@ export class AgencymyjobrequestPage {
           this.getMyJobRequests();
         }
         else
-          this.commonService.onMessageHandler("No category found.", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg11, 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve categories. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg10, 0);
         });
   }
   public filterDataBySelectedCategory(categoryId: number): void {
@@ -85,8 +103,8 @@ export class AgencymyjobrequestPage {
         this.allJobRequestList = response;
         this.allJobRequestList.forEach(element => {
           element.PublishedDate = moment(element.PublishedDate).format("DD-MMM-YYYY");
-          
-        });  
+
+        });
         this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
         // if (response.length > 0) {
         //   this.categories = response;
@@ -97,7 +115,7 @@ export class AgencymyjobrequestPage {
         //   this.commonService.onMessageHandler("No category found.", 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve categories. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg15, 0);
         });
   }
   // Method executed when the slides are changed
@@ -131,26 +149,37 @@ export class AgencymyjobrequestPage {
     this.navCtrl.push("JobRequestDescDetails", { jobRequestId: item.JobRequestId });
   }
   gotoCreate() {
-    this.navCtrl.push("JobCategory", { category: this.categories,fromPage:"agencyJobRequest" });
+    this.navCtrl.push("JobCategory", { category: this.categories, fromPage: "agencyJobRequest" });
   }
   deleteSelectedJobRequests(id, index) {
     let method = this.alerCtrl.create({
-      title: "Please Confirm!",
-      message: "Do you want to delete ?",
+      title: this.labelList.label78,
+      message: this.labelList.label79,
       cssClass: 'alert-header-back-style',
       buttons: [
         {
-          text: 'CANCEL',
+          text: this.labelList.label80,
           cssClass: 'cancel-btn-style',
           handler: () => {
             // return false;
           }
         },
         {
-          text: "DELETE",
+          text: this.labelList.label77,
           cssClass: 'ok-btn-style',
           handler: () => {
-            this.commonService.onMessageHandler("API not implemented",1)
+            this._dataContext.DeleteJobRequestForAdmin(this.loggedInUserDetails.userId,id)
+              .subscribe(responnse => {
+                if (responnse.Status == "OK") {
+                  this.commonService.onMessageHandler(responnse.Message, 1);
+                  this.getMyJobRequests();
+                }
+                else
+                  this.commonService.onMessageHandler(this.labelList.errormsg18, 0);
+              },
+                error => {
+                  this.commonService.onMessageHandler(this.labelList.errormsg18, 0);
+                });
           }
         }
       ]

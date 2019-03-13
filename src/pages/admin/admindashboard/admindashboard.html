@@ -10,7 +10,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Admin Dashboard</ion-title>
+    <ion-title>{{labelList.pagetitle10}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -29,18 +29,18 @@
         <div>
           <ion-list>
             <ion-item>
-              <ion-label>Year</ion-label>
+              <ion-label>{{labelList.label93}}</ion-label>
               <ion-select [(ngModel)]="year">
                 <ion-option value="2018">2018</ion-option>
               </ion-select>
             </ion-item>
           </ion-list>
           <div>
-            <p class="graph-header" text-center>Dashboard Members</p>
+            <p class="graph-header" text-center>{{labelList.label94}}</p>
             <canvas #lineCanvas height="280vh"></canvas>
           </div>
           <div>
-            <p class="graph-header" text-center>Our Members</p>
+            <p class="graph-header" text-center>{{labelList.label95}}</p>
             <canvas #doughnutCanvas height="280vh"></canvas>
           </div>
         </div>

@@ -5,6 +5,8 @@ import { DataContext } from '../../../providers/dataContext.service';
 import { CommonServices } from '../../../providers/common.service';
 import moment from 'moment';
 import { AlertController } from 'ionic-angular';
+import { EnLanguageServices } from '../../../providers/enlanguage.service';
+import { FrLanguageServices } from '../../../providers/frlanguage.service';
 
 @IonicPage()
 @Component({
@@ -22,14 +24,28 @@ export class VerifyjobrequestprofilePage {
   jobrequests: any = [];
   allJobRequestList : any = [];
   loggedInUserDetails:any={};
+  labelList:any = [];
   constructor(public navCtrl: NavController, public navParams: NavParams,imageViewerCtrl: ImageViewerController,
-    public _dataContext: DataContext, private commonService: CommonServices, public alertCtrl: AlertController,public events:Events) {
+    public _dataContext: DataContext, private commonService: CommonServices, public alertCtrl: AlertController,public events:Events,private enLanguageServices:EnLanguageServices,
+    private frLanguageServices:FrLanguageServices) {
+    //this.labelList = enLanguageServices.getLabelLists();
     this._imageViewerCtrl = imageViewerCtrl;
     this.events.subscribe('reloadPage1',(time) => {
       this.getUnverifiedJobRequestsForAdmin();
      });
   }
   ionViewDidLoad() {
+    this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+        .then((result) => {
+          if (result && result.language) {
+            if (result.language == "en") {
+              this.labelList = this.enLanguageServices.getLabelLists();
+            } else {
+              this.labelList = this.frLanguageServices.getLabelLists();
+            }
+            
+          }
+        });
     this.getLoggedInUserDetailsFromCache();
   }
   getLoggedInUserDetailsFromCache() {
@@ -62,7 +78,7 @@ export class VerifyjobrequestprofilePage {
         this.filterDataBySelectedCategory(this.categories[0].JobCategoryId);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve unverified job request. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg15, 0);
         });
   }
   validateJobRequest(item) {
@@ -74,23 +90,23 @@ export class VerifyjobrequestprofilePage {
         }
       },
         error => {
-          this.commonService.onMessageHandler("Failed to verify job request. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg29, 0);
         });
   }
 
   verify(item) {
     const confirm = this.alertCtrl.create({
-      title: 'Verify Job Request?',
-      message: 'Do you want to verify this job request?',
+      title: this.labelList.label104,
+      message: this.labelList.label105,
       buttons: [
         {
-          text: 'No',
+          text: this.labelList.label59,
           handler: () => {
             console.log('Disagree clicked');
           }
         },
         {
-          text: 'Yes',
+          text: this.labelList.label60,
           handler: () => {
             this.validateJobRequest(item);
           }
@@ -112,10 +128,10 @@ export class VerifyjobrequestprofilePage {
          this.getUnverifiedJobRequestsForAdmin();
         }
         else
-          this.commonService.onMessageHandler("No category found.", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg11, 0);
       },
         error => {
-          this.commonService.onMessageHandler("Failed to retrieve categories. Please try again", 0);
+          this.commonService.onMessageHandler(this.labelList.errormsg10, 0);
         });
   }
   public filterDataBySelectedCategory(categoryId: number): void {

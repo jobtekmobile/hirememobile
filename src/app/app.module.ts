@@ -16,6 +16,8 @@ import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CacheModule } from 'ionic-cache';
 import { HttpService } from '../providers/http.service';
+import { EnLanguageServices } from '../providers/enlanguage.service';
+import { FrLanguageServices } from '../providers/frlanguage.service';
 @NgModule({
   declarations: [
     MyApp
@@ -44,6 +46,8 @@ import { HttpService } from '../providers/http.service';
     CommonServices,
     DataContext,
     HttpService,
+    EnLanguageServices,
+    FrLanguageServices,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
