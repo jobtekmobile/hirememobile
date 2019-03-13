@@ -245,33 +245,37 @@
             {{labelList.label73}}
         </ion-list-header>
     </ion-list>
-    <ion-row class="padding-left-15" *ngIf="jobTasks.length > 0">
+    <ion-row class="" *ngIf="jobTasks.length > 0" style="margin: -20px 10px 0px 15px;">
         <ion-col col-12>
-          <div class="categories">
-            <div *ngFor="let job of (jobTasks | jobTaskPipe)">
-              <ion-checkbox item-left class="margin-right-15" name="job_task_{{job.JobTaskId}}" [(ngModel)]="job.Selected">
-              </ion-checkbox>
-              <span>{{job.JobTaskName}}</span>
-              <!-- <ul>
-                <ng-template #recursiveList let-list>
-                  <li *ngFor="let subTask of list">
-                    <div>
-                      <ion-checkbox item-left class="margin-right-15" name="job_task_{{subTask.JobTaskId}}" [(ngModel)]="subTask.Selected">
-                      </ion-checkbox>
-                      <span>{{subTask.JobTaskName}}</span>
-                    </div>
-                    <ul *ngIf="subTask.SubTasks?.length > 0">
-                      <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: subTask.SubTasks }"></ng-container>
-                    </ul>
-                  </li>
-                </ng-template>
-                <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: job.SubTasks }"></ng-container>
-              </ul> -->
-            </div>
-          </div>
+            <p class="form-header">
+                {{labelList.label130}}
+            </p>
         </ion-col>
-      </ion-row>
-
+        <ion-col col-12>
+            <div class="categories">
+                <div *ngFor="let job of (jobTasks | jobTaskPipe)">
+                    <ion-checkbox item-left class="margin-right-15" name="job_task_{{job.JobTaskId}}" [(ngModel)]="job.Selected">
+                    </ion-checkbox>
+                    <span>{{job.JobTaskName}}</span>
+                    <ul style="padding-left: 10px;">
+                        <ng-template #recursiveList let-list>
+                            <li *ngFor="let subTask of list">
+                                <div>
+                                    <ion-checkbox item-left class="margin-right-15" name="job_task_{{subTask.JobTaskId}}" [(ngModel)]="subTask.Selected">
+                                    </ion-checkbox>
+                                    <span>{{subTask.JobTaskName}}</span>
+                                </div>
+                                <ul *ngIf="subTask.SubTasks?.length > 0" style="padding-left: 10px;">
+                                    <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: subTask.SubTasks }"></ng-container>
+                                </ul>
+                            </li>
+                        </ng-template>
+                        <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: job.SubTasks }"></ng-container>
+                    </ul>
+                </div>
+            </div>
+        </ion-col>
+    </ion-row>
     <ion-fab right bottom class="jobtek-fab-btn">
         <button ion-fab mini color="danger" (click)="onFilterSearch()">
             <ion-icon name="search"></ion-icon>

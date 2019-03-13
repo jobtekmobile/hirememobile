@@ -37,6 +37,7 @@ export class FilterPage {
     Job: 1,
     Tasks: ""
   };
+  taskIds: any='';
   cities: any = [];
   districts: any = [];
   minAge: any = [];
@@ -44,8 +45,8 @@ export class FilterPage {
   experiences: any = [];
   activeTab: number = 0;
   jobTasks: any = [];
-  title:any="";
-  labelList:any = [];
+  title: any = "";
+  labelList: any = [];
   constructor(
     public platform: Platform,
     public navParam: NavParams,
@@ -53,21 +54,21 @@ export class FilterPage {
     public _dataContext: DataContext,
     public navParams: NavParams,
     private commonService: CommonServices,
-    private enLanguageServices:EnLanguageServices,
-    private frLanguageServices:FrLanguageServices
+    private enLanguageServices: EnLanguageServices,
+    private frLanguageServices: FrLanguageServices
   ) {
     //this.labelList = enLanguageServices.getLabelLists();
     this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
-    .then((result) => {
-      if (result && result.language) {
-        if (result.language == "en") {
-          this.labelList = this.enLanguageServices.getLabelLists();
-        } else {
-          this.labelList = this.frLanguageServices.getLabelLists();
+      .then((result) => {
+        if (result && result.language) {
+          if (result.language == "en") {
+            this.labelList = this.enLanguageServices.getLabelLists();
+          } else {
+            this.labelList = this.frLanguageServices.getLabelLists();
+          }
+
         }
-        
-      }
-    });
+      });
     this.specificCrieteria.Job = this.navParam.get("Job");
     this.title = this.navParam.get("JobName");
     this.getActiveJobTasks();
@@ -196,10 +197,27 @@ export class FilterPage {
         }
       }
     }
+    this.taskIds = "";
     this.jobTasks.forEach(element => {
-      if (element.Selected)
-        url = url + "&Tasks=" + element.JobTaskId;
+      if (element.Selected) {
+        this.taskIds = this.taskIds + "&Tasks=" + element.JobTaskId;
+        if (element.SubTasks.length > 0) {
+          element.SubTasks.forEach(element1 => {
+            if (element1.Selected) {
+              this.taskIds = this.taskIds + "&Tasks=" + element1.JobTaskId;
+              if (element1.SubTasks.length > 0) {
+                element1.SubTasks.forEach(element2 => {
+                  if (element2.Selected) {
+                    this.taskIds = this.taskIds + "&Tasks=" + element2.JobTaskId;
+                  }
+                });
+              }
+            }
+          });
+        }
+      }
     });
+    url = url + this.taskIds;
     if (this.activeTab == 0) {
       this._dataContext.GetSearchPublishedJobRequest(url)
         .subscribe(response => {
