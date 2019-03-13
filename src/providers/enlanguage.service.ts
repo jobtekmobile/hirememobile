@@ -52,7 +52,7 @@ export class EnLanguageServices {
         this.labelList["label45"]   = "Reset Password";
         this.labelList["label46"]   = "Browse Categories";
         this.labelList["label47"]   = "No result found";
-        this.labelList["label48"]   = "Independant";
+        this.labelList["label48"]   = "Independent";
         this.labelList["label49"]   = "Exp. Salary";
         this.labelList["label50"]   = "Age";
         this.labelList["label51"]   = "Experience";
