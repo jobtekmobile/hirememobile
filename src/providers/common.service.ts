@@ -27,9 +27,9 @@ export class CommonServices {
     public alerCtrl: AlertController,
     private cache: CacheService,
   ) {
-    this.apiServiceUrl = "http://localhost:60114/"; //Local Api
+    // this.apiServiceUrl = "http://localhost:60114/"; //Local Api
 
-      //this.apiServiceUrl = "http://40.89.160.98/";
+      this.apiServiceUrl = "http://40.89.160.98/";
     this.appTtitle = "";
     this._appVersion = "1.0.6";
 
