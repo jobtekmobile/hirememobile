@@ -29,20 +29,10 @@ export class JobOfferDetails {
     private frLanguageServices:FrLanguageServices
   ) {
    // this.labelList = enLanguageServices.getLabelLists();
-   this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
-   .then((result) => {
-     if (result && result.language) {
-       if (result.language == "en") {
-         this.labelList = this.enLanguageServices.getLabelLists();
-       } else {
-         this.labelList = this.frLanguageServices.getLabelLists();
-       }
-       
-     }
-   });
+
     this.jobOfferId = this.navParam.get("jobOfferId");
 
-    this.userDetails = this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+    //this.userDetails = this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
   }
   ionViewDidEnter() {
     this.getLoggedInUserDetailsFromCache();
@@ -53,7 +43,22 @@ export class JobOfferDetails {
       .then((result) => {
         if (result && result.userId) {
           this.loggedInUserDetails = result;
-          this.getJobOfferDescription();
+          this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+          .then((result) => {
+            if (result && result.language) {
+              if (result.language == "en") {
+                this.labelList = this.enLanguageServices.getLabelLists();
+              } else {
+                this.labelList = this.frLanguageServices.getLabelLists();
+              }
+
+              this.getJobOfferDescription();
+              
+            }
+          });
+
+
+         
         }
         else {
           this.navCtrl.setRoot("LoginPage");

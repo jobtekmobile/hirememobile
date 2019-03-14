@@ -47,24 +47,24 @@ export class JobCategory {
        
      }
    });
-    this.categories = this.navParam.get("category");
+    //this.categories = this.navParam.get("category");
     this.fromPage = this.navParam.get("fromPage");
   }
   ionViewWillEnter() {
     if (this.categories.length == 0)
       this.getActiveCategories();
-    else {
-      this.categories.forEach(element => {
-        element.IconImage = element.IconImage.substr(1, element.IconImage.length)
-        if (element.Jobs.length > 0) {
-          element.Jobs.forEach(element1 => {
-            element1.IconImage = element1.IconImage.substr(1, element1.IconImage.length)
-          });
-        }
-      });
-      this.selectedCategory = this.categories[0];
-      this.filterDataBySelectedCategory(this.categories[0].JobCategoryId, this.categories[0].CategoryName);
-    }
+    // else {
+    //   this.categories.forEach(element => {
+    //     element.IconImage = element.IconImage.substr(1, element.IconImage.length)
+    //     if (element.Jobs.length > 0) {
+    //       element.Jobs.forEach(element1 => {
+    //         element1.IconImage = element1.IconImage.substr(1, element1.IconImage.length)
+    //       });
+    //     }
+    //   });
+    //   this.selectedCategory = this.categories[0];
+    //   this.filterDataBySelectedCategory(this.categories[0].JobCategoryId, this.categories[0].CategoryName);
+    // }
   }
   //Get all active categories for search job
   getActiveCategories() {

@@ -58,6 +58,7 @@ export class CreateJobRequestForm {
 
   loggedInUserDetails: any = {};
   labelList:any = [];
+  languageSelected="";
   constructor(
     public navCtrl: NavController,
     public _dataContext: DataContext,
@@ -108,8 +109,10 @@ export class CreateJobRequestForm {
       if (result && result.language) {
         if (result.language == "en") {
           this.labelList = this.enLanguageServices.getLabelLists();
+          this.languageSelected = "en";
         } else {
           this.labelList = this.frLanguageServices.getLabelLists();
+          this.languageSelected = "fr";
         }
         
       }
@@ -117,7 +120,7 @@ export class CreateJobRequestForm {
     this.getLoggedInUserDetailsFromCache();
     this.showSelectedDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
     this.minDate = "1900-12-31";
-    this.maxDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
+    this.maxDate = "2050-12-31";//moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
   }
 
   //Get logged in user details from cache.
@@ -158,6 +161,7 @@ export class CreateJobRequestForm {
         if (responnse.length > 0) {
           this.cities = responnse;
           // this.getActiveDistricts();
+          this.createJobRequest.DistrictId = 0;
         }
         else
           this.commonService.onMessageHandler(this.labelList.errormsg4, 0);
@@ -201,6 +205,7 @@ export class CreateJobRequestForm {
       //       Note: "Sample task note"
       //     });
       // });
+      this.createJobRequest.Disponibility = moment(this.showSelectedDate).format("DD-MMM-YYYY");
       this.createJobRequest.JobRequestSkillPic1Base64 = this.images[0].file.substr(this.images[0].file.indexOf(',') + 1, this.images[0].file.length);
       this.createJobRequest.JobRequestSkillPic2Base64 = this.images[1].file.substr(this.images[1].file.indexOf(',') + 1, this.images[1].file.length);
       this.createJobRequest.JobRequestSkillPic3Base64 = this.images[2].file.substr(this.images[2].file.indexOf(',') + 1, this.images[2].file.length);

@@ -23,6 +23,7 @@ export class MyApp {
   userDetails: any = {};
   labelList: any = [];
   languageSelected = "en";
+  profileimg:string="";
   constructor(private commonService: CommonServices, public platform: Platform, public statusBar: StatusBar,
     public splashScreen: SplashScreen, public events: Events, private enLanguageServices: EnLanguageServices,
     private frLanguageServices: FrLanguageServices
@@ -43,9 +44,9 @@ export class MyApp {
 
         }
         else {
-          this.languageSelected = "en";
+          this.languageSelected = "fr";
           this.labelList = enLanguageServices.getLabelLists();
-          this.commonService.setStoreDataIncache(this.commonService.getCacheKeyUrl("getLanguageSelected"), { language: "en" }).then(res => {
+          this.commonService.setStoreDataIncache(this.commonService.getCacheKeyUrl("getLanguageSelected"), { language: "fr" }).then(res => {
             //this.gotoDashboard();
             // this.events.publish('user1:languagechanged', "en", Date.now());
             this.setmenu();
@@ -92,12 +93,17 @@ setmenu(){
         { title: this.labelList.menu13, component: "VerifyjobofferprofilePage", imagepath: "assets/imgs/menu/check.png" },
         { title: this.labelList.menu14, component: "ExportPage", imagepath: "assets/imgs/menu/export.png" }
       ];
+      this.events.publish('profilepic', this.userDetails.profile_pic_base64, Date.now());
+      this.events.subscribe('profilepic', (img, time) => {
+        this.profileimg = img;
+      });
       this.events.subscribe('user:loginsuccessfully', (role, time) => {
         this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
           .then((result) => {
             this.userDetails = result;
             if (result && result.userId) {
               if (result.type == "Admin") {
+                this.profileimg = "";
                 this.pages = this.adminpages;
                 // this.rootPage = "AdmindashboardPage";
               }

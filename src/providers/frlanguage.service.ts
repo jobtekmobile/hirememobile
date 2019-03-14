@@ -119,8 +119,8 @@ export class FrLanguageServices {
         this.labelList["label111"]  = "Selectionnez un emploi";
         this.labelList["label112"]  = "Choisir un emploi";
         this.labelList["label113"]  = "Profil vérifié";
-        this.labelList["label114"]  = "Gérer prénom";
-        this.labelList["label115"]  = "Gérer nom de famille";
+        this.labelList["label114"]  = "Prénom du Responsable";
+        this.labelList["label115"]  = "Nom de famille  du Responsable";
         this.labelList["label116"]  = "Gérer date de naissance";
         this.labelList["label117"]  = "Description des activités de l'entreprise";
         this.labelList["label118"]  = "Date de création";
@@ -162,6 +162,14 @@ export class FrLanguageServices {
         this.labelList["label154"]  = "Écrire";
         this.labelList["label155"]  = "Titre de l'emploi";
         this.labelList["label156"]  = "Choisir candidats";
+        this.labelList["label157"] = "SECTION D'AGENCE";
+        this.labelList["label158"] = "Nom de la compagnie";
+        this.labelList["label159"] = "Nom du responsable";
+        this.labelList["label160"] = "URL de site web";
+        this.labelList["label161"] = "Image de profil";
+        this.labelList["label162"] = "Preuve d'identité (devant)";
+        this.labelList["label163"] = "Preuve d'identité (retour)";
+        this.labelList["label164"] = "ans";
 
         this.labelList["validmsg1"]   = "Choisir le type d'enregistrement";
         this.labelList["validmsg2"]   = "Choisir le sexe";

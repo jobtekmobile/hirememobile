@@ -335,5 +335,9 @@ class Register {
   profile_pic_base64: string;
   id_proof_base64: string;
   id_proof_back_base64: string;
+  CompanyName:string;
+  ResponsibleName:string;
+  WebSiteUrl:string;
+  CompanyActivity:string;
   
 }

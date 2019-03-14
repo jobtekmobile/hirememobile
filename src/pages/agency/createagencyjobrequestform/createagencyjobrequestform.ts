@@ -222,6 +222,7 @@ export class CreateAgencyJobRequestForm {
         }
       });
       this.createJobRequest.CandidateIds = selectedCandidates;
+      this.createJobRequest.Disponibility = moment(this.showSelectedDate).format("DD-MMM-YYYY");
       this.createJobRequest.JobRequestSkillPic1Base64 = this.images[0].file.substr(this.images[0].file.indexOf(',') + 1, this.images[0].file.length);
       this.createJobRequest.JobRequestSkillPic2Base64 = this.images[1].file.substr(this.images[1].file.indexOf(',') + 1, this.images[1].file.length);
       this.createJobRequest.JobRequestSkillPic3Base64 = this.images[2].file.substr(this.images[2].file.indexOf(',') + 1, this.images[2].file.length);

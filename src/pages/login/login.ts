@@ -48,6 +48,8 @@ export class LoginPage {
           this.commonService.setStoreDataIncache(this.commonService.getCacheKeyUrl("getLanguageSelected"), { language: result.language });
         });
         
+      }else{
+        this.labelList = this.frLanguageServices.getLabelLists();
       }
     });
 

@@ -39,13 +39,14 @@
         </ion-col>
         <ion-col col-6>
           <ion-select class="margin-left-10" [(ngModel)]="createJobRequest.CityId" (ionChange)="onSelectedCity()">
-            <ion-option value="0">--{{labelList.label22}}--</ion-option>
+            <ion-option value="0">{{labelList.label21}}</ion-option>
             <ion-option *ngFor="let item of cities" value="{{item.CityId}}">{{item.CityName}}</ion-option>
           </ion-select>
         </ion-col>
         <ion-col col-6>
-          <ion-select class="margin-left-10" [(ngModel)]="createJobRequest.DistrictId" [disabled]="createJobRequest.CityId == 0">
-            <ion-option value="0">--{{labelList.label24}}--</ion-option>
+          <ion-select class="margin-left-10" [(ngModel)]="createJobRequest.DistrictId">
+            <ion-option *ngIf="languageSelected=='en'" value="0">District</ion-option>
+            <ion-option *ngIf="languageSelected=='fr'" value="0">Quartier</ion-option>
             <ion-option *ngFor="let item of districts" value="{{item.DistrictId}}">{{item.DistrictName}}</ion-option>
           </ion-select>
         </ion-col>

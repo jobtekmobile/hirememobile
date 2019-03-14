@@ -9,7 +9,7 @@
 
 <ion-content padding>
   <ion-row>
-    <ion-col col-12 class="dash-card">
+    <ion-col col-12 class="dash-card" *ngIf="lanuageSelected=='en'">
       <div class="dash-card-header">
         <img src="assets/imgs/tuto-image.jpg">
       </div>
@@ -17,38 +17,83 @@
         <p class="label-text">All the Tuto in Video</p>
         <ion-list>
           <ion-item>
-            <ion-icon name="logo-youtube" class="youtube-color" item-start></ion-icon>
+            <ion-icon name="logo-youtube" class="youtube_color" item-start></ion-icon>
             The saga of AYA
           </ion-item>
           <ion-item>
-            <ion-icon name="logo-youtube" class="youtube-color" item-start></ion-icon>
+            <ion-icon name="logo-youtube" class="youtube_color" item-start></ion-icon>
             How JOBTEK came to Aya life?
           </ion-item>
           <ion-item>
-            <ion-icon name="logo-youtube" class="youtube-color" item-start></ion-icon>
+            <ion-icon name="logo-youtube" class="youtube_color" item-start></ion-icon>
             How Aya daily use JOBTEK?
           </ion-item>
           <ion-item>
-            <ion-icon name="logo-youtube" class="youtube-color" item-start></ion-icon>
+            <ion-icon name="logo-youtube" class="youtube_color" item-start></ion-icon>
             How to search a profile?
           </ion-item>
           <ion-item>
-            <ion-icon name="logo-youtube" class="youtube-color" item-start></ion-icon>
+            <ion-icon name="logo-youtube" class="youtube_color" item-start></ion-icon>
             How to manage favorite?
           </ion-item>
           <ion-item>
-            <ion-icon name="logo-youtube" class="youtube-color" item-start></ion-icon>
+            <ion-icon name="logo-youtube" class="youtube_color" item-start></ion-icon>
             How to give a Note & Recommandation?
           </ion-item>
           <ion-item>
-            <ion-icon name="logo-youtube" class="youtube-color" item-start></ion-icon>
+            <ion-icon name="logo-youtube" class="youtube_color" item-start></ion-icon>
             How to publish a Job offer/ Job request?
           </ion-item>
         </ion-list>
       </div>
     </ion-col>
 
-    <ion-col col-12 class="dash-card">
+    <ion-col col-12 class="dash-card" *ngIf="lanuageSelected=='fr'">
+      <div class="dash-card-header">
+        <img src="assets/imgs/tuto-image.jpg">
+      </div>
+      <div>
+        <p class="label-text">Tuto en vidéo
+        </p>
+        <ion-list>
+          <ion-item>
+            <ion-icon name="logo-youtube" class="youtube_color" item-start></ion-icon>
+            <a style="color: #000;text-decoration: none;" href="https://youtu.be/eyT6BpafTQM" target="_blank">Comment faire une recherche d’offre/Demande d’emploi?</a>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="logo-youtube" class="youtube_color" item-start></ion-icon>
+            <a style="color: #000;text-decoration: none;" href="https://youtu.be/uDOn5mzOYcc" target="_blank">Comment Créer une Offre d’emploi?</a>
+            
+          </ion-item>
+          <ion-item>
+            <ion-icon name="logo-youtube" class="youtube_color" item-start></ion-icon>
+            Comment créer une demande d’emploi?
+          </ion-item>
+          <ion-item>
+            <ion-icon name="logo-youtube" class="youtube_color" item-start></ion-icon>
+            Comment mettre un commentaire à un profil?
+          </ion-item>
+          <ion-item>
+            <ion-icon name="logo-youtube" class="youtube_color" item-start></ion-icon>
+            Comment gérer la visibilité de ses contacts (Tel/Email) sur JOBTEK?
+          </ion-item>
+        </ion-list>
+        <ion-list>
+          <p class="label-text">La saga d’AYA
+          </p>
+          <ion-item>
+            <ion-icon name="logo-youtube" class="youtube_color" item-start></ion-icon>
+            Comment JOBTEK est rentré dans la vie d’AYA?
+          </ion-item>
+          <ion-item>
+            <ion-icon name="logo-youtube" class="youtube_color" item-start></ion-icon>
+            Comment AYA utilise JOBTEK au quotidien?
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-col>
+
+    <ion-col col-12 class="dash-card" *ngIf="lanuageSelected=='en'">
 
       <div class="dash-card-header">
         <img src="assets/imgs/rules1.jpg">
@@ -67,7 +112,30 @@
       </div>
     </ion-col>
 
-    <ion-col col-12 class="dash-card">
+    <ion-col col-12 class="dash-card" *ngIf="lanuageSelected=='fr'">
+
+      <div class="dash-card-header">
+        <img src="assets/imgs/rules1.jpg">
+      </div>
+      <div>
+        <p class="label-text">Quelles sont les règles à suivre dans la communauté?
+        </p>
+        <strong>Se respecter les uns les autres:
+        </strong>
+        <ul class="bullet-list">
+          <li>Une fois que vous avez trouvé une offre ou une annonce qui vous intéresse, contacter poliment le profil  et n’insistez pas si le profil n’est pas intéressé
+          </li>
+        </ul>
+        <strong>Détournement de l’utilisation du site:
+        </strong>
+        <ul class="bullet-list">
+          <li>Ne pas utiliser le site à des fins commerciales. Vous risquez d’être supprimé de la plateforme si l’admin constate ce genre de comportement lors de la validation des offres et demandes
+          </li>
+        </ul>
+      </div>
+    </ion-col>
+
+    <ion-col col-12 class="dash-card" *ngIf="lanuageSelected=='en'">
 
       <div class="dash-card-header">
         <img src="assets/imgs/search-profile.jpg">
@@ -87,7 +155,38 @@
       </div>
     </ion-col>
 
-    <ion-col col-12 class="dash-card">
+    <ion-col col-12 class="dash-card" *ngIf="lanuageSelected=='fr'">
+
+      <div class="dash-card-header">
+        <img src="assets/imgs/search-profile.jpg">
+      </div>
+      <div>
+        <p class="label-text">Quelques conseils pour une bonne expérience sur la plateforme?
+        </p>
+        <strong>Facilité votre accès à la plateforme:
+        </strong>
+        <ul class="bullet-list">
+          <li>L’application est disponible sur téléphone mobile. L’appli mobile vous simplifiera l’accès à la plateforme où que vous soyez et vous permettra de gagner du temps dans vos recherches
+          </li>
+        </ul>
+        <strong>Gérer ses options de contact:
+        </strong>
+        <ul class="bullet-list">
+          <li>Si vous souhaiter garder une certaine confidentialité de vos contacts enregistrés sur la plateforme (Tel/email), vous pouvez décider de n’afficher que votre email dans vos annonces et partager votre numéro de tel uniquement lorsque vous faites confiance aux profils.
+          </li>
+          <li>Pour gérer ses options de contact, allez dans la section « Gérer mes réglages »
+          </li>
+        </ul>
+        <strong>Notes et recommandation:
+        </strong>
+        <ul class="bullet-list">
+          <li>N’oubliez pas de laisser une note et un commentaire après avoir reçu un service d’un candidat. Cela sera très utile pour les autres membres souhaitant embaucher plus tard ce même candidat
+          </li>
+        </ul>
+      </div>
+    </ion-col>
+
+    <ion-col col-12 class="dash-card" *ngIf="lanuageSelected=='en'">
 
       <div class="dash-card-header">
         <img src="assets/imgs/publish.jpg">
@@ -104,6 +203,32 @@
         <ul class="bullet-list">
           <li>Once the form is submitted, an admin will check you form (text &amp; pictures) and validate it to make it
             visible by the othter members</li>
+        </ul>
+      </div>
+    </ion-col>
+
+    <ion-col col-12 class="dash-card" *ngIf="lanuageSelected=='fr'">
+
+      <div class="dash-card-header">
+        <img src="assets/imgs/publish.jpg">
+      </div>
+      <div>
+        <p class="label-text">Comment créer une demande d’emploi attractive?</p>
+        <strong>FMettre une photo de profil à son annonce:</strong>
+        <ul class="bullet-list">
+          <li>En mettant une photo de profil à votre compte, vous aurez plus de chance d’être remarqué par les profils employeurs. N’hésitez pas à mettre une photo où vous être souriant...</li>
+          <!-- <li>Fill a short form to define your profile criterias &amp; expectations</li>
+          <li>Submit the form</li> -->
+        </ul>
+        <strong>Créer une offre détaillée:</strong>
+        <ul class="bullet-list">
+          <li>Plus votre annonce sera détaillée, plus elle aura de chance d’intéresser les employeurs . N’hésitez donc pas à bien décrire le service que vous proposer et définir tous les critères demandés (Disponibilité, Salaire attendus…)
+          </li>
+        </ul>
+        <strong>Ajouter des images illustratives à sa demande</strong>
+        <ul class="bullet-list">
+          <li>Lorsque vous créer une annonce, il est possible d’y insérer jusqu’à 3 images. Cela peut rajouter des informations visuelles intéressantes pour les profils employeurs. (Exemple: Si vous êtes coiffeuse/tresseuse, vous pouvez rajouter quelques photos de coiffures (Tissage, tresses…) que vous savez faire
+          </li>
         </ul>
       </div>
     </ion-col>

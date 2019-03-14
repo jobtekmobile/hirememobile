@@ -101,14 +101,34 @@
         <ion-row>
           <ion-col col-12>
             <ion-row>
-              <ion-col col-4 *ngFor="let item of images">
+              <ion-col col-4 *ngFor="let item of images;">
+                  <p style="height: 25px;" *ngIf="item.id==0" style="margin: 0;text-align: center;font-size: 12px;color: #f65f6e;">{{labelList.label161}}</p>
+                  <p style="height: 25px;" *ngIf="item.id==1" style="margin: 0;text-align: center;font-size: 12px;color: #f65f6e;">{{labelList.label162}}</p>
+                  <p style="height: 25px;" *ngIf="item.id==2" style="margin: 0;text-align: center;font-size: 12px;color: #f65f6e;">{{labelList.label163}}</p> 
                 <img class="img-size" [src]="item.file && item.file!=''? item.file:'assets/imgs/upload.png'" (click)="uploadImage(item)"
                 />
+                
                 <p style="margin: 0;text-align: center;font-size: 12px;color: #f65f6e;">{{labelList.label30}}</p>
               </ion-col>
             </ion-row>
           </ion-col>
         </ion-row>
+        <p class="register-label-text" *ngIf="registerObj.UserRoles=='Agency'">{{labelList.label157}}</p>
+        <ion-list *ngIf="registerObj.UserRoles=='Agency'">
+          <ion-item>
+            <ion-input type="text" [placeholder]="labelList.label158" [(ngModel)]="registerObj.CompanyName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input type="text" [placeholder]="labelList.label159" [(ngModel)]="registerObj.ResponsibleName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input type="text" [placeholder]="labelList.label160" [(ngModel)]="registerObj.WebSiteUrl"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-textarea [placeholder]="labelList.label53" [(ngModel)]="registerObj.CompanyActivity"></ion-textarea>
+          </ion-item>
+        </ion-list>
+  
         <p class="register-label-text">{{labelList.label31}}</p>
         <ion-list>
           <ion-item>

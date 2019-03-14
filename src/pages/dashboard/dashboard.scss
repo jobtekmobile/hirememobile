@@ -8,7 +8,7 @@ page-dashboard {
         background: white;
         margin-bottom: 5px;
     }
-.youtube-color{
+.youtube_color{
     color: #FE005Aed;
 }
 .item-md {
@@ -37,5 +37,9 @@ page-dashboard {
     .bullet-list {
         list-style: none;
         padding-inline-start: 10px !important;
+    }
+    .label-md {
+       
+        white-space: normal !important;
     }
 }

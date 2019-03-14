@@ -6,11 +6,12 @@ import { DataContext } from '../../../providers/dataContext.service';
 import { CommonServices } from '../../../providers/common.service';
 import { EnLanguageServices } from '../../../providers/enlanguage.service';
 import { FrLanguageServices } from '../../../providers/frlanguage.service';
-
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 @IonicPage()
 @Component({
   selector: 'page-export',
   templateUrl: 'export.html',
+  providers: [InAppBrowser]
 })
 export class ExportPage {
   members = [];
@@ -18,7 +19,7 @@ export class ExportPage {
   labelList:any = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, private _http: Http,
     public _dataContext: DataContext, private commonService: CommonServices,private enLanguageServices:EnLanguageServices,
-    private frLanguageServices:FrLanguageServices) {
+    private frLanguageServices:FrLanguageServices,private iab: InAppBrowser) {
    // this.labelList = enLanguageServices.getLabelLists();
 
     this.searchMembersForAdmin();
@@ -74,7 +75,11 @@ export class ExportPage {
         }
       }
     }
-    console.log(url);
-    window.open(url);
+   // alert(url);
+    //window.open(url,"_system");
+    const browser = this.iab.create(url,"_system");
+    browser.on('loadstop').subscribe(event => {
+      //browser.insertCSS({ code: "body{color: red;" });
+   });
   }
 }

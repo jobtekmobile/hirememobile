@@ -5,43 +5,38 @@ import { CommonServices } from '../../providers/common.service';
 import moment from 'moment';
 import { EnLanguageServices } from '../../providers/enlanguage.service';
 import { FrLanguageServices } from '../../providers/frlanguage.service';
-
+import { ImageViewerController } from 'ionic-img-viewer';
 @IonicPage()
 @Component({
   selector: 'page-jobrequestdetails',
   templateUrl: 'jobrequestdetails.html'
 })
 export class JobRequestDescDetails {
+  _imageViewerCtrl: ImageViewerController;
   isAvailable: boolean = true;
   jobRequestId: number;
   publishedJobRequestDesc: any = null;
   title: string;
   userDetails: any = {};
-  jobTasks:any=[];
-  labelList:any = [];
+  jobTasks: any = [];
+  labelList: any = [];
+  phone: any;
+  email: any;
   constructor(
     public navCtrl: NavController,
     public navParam: NavParams,
     public _dataContext: DataContext,
     private commonService: CommonServices,
     public alertCtrl: AlertController,
-    public events: Events,private enLanguageServices:EnLanguageServices,
-    private frLanguageServices:FrLanguageServices
+    public events: Events, private enLanguageServices: EnLanguageServices,
+    private frLanguageServices: FrLanguageServices,
+    imageViewerCtrl: ImageViewerController
   ) {
-   // this.labelList = enLanguageServices.getLabelLists();
-   this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
-   .then((result) => {
-     if (result && result.language) {
-       if (result.language == "en") {
-         this.labelList = this.enLanguageServices.getLabelLists();
-       } else {
-         this.labelList = this.frLanguageServices.getLabelLists();
-       }
-       
-     }
-   });
+    this._imageViewerCtrl = imageViewerCtrl;
+    // this.labelList = enLanguageServices.getLabelLists();
+
     this.jobRequestId = this.navParam.get("jobRequestId");
-    this.userDetails = this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
+    //this.userDetails = this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
   }
   ionViewDidEnter() {
     this.getLoggedInUserDetailsFromCache();
@@ -52,7 +47,18 @@ export class JobRequestDescDetails {
       .then((result) => {
         if (result && result.userId) {
           this.userDetails = result;
-          this.getJobRequestDescription();
+          this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLanguageSelected"))
+            .then((result) => {
+              if (result && result.language) {
+                if (result.language == "en") {
+                  this.labelList = this.enLanguageServices.getLabelLists();
+                } else {
+                  this.labelList = this.frLanguageServices.getLabelLists();
+                }
+                this.getJobRequestDescription();
+              }
+            });
+
         }
         else {
           this.navCtrl.setRoot("LoginPage");
@@ -65,6 +71,27 @@ export class JobRequestDescDetails {
         if (response && response != null) {
           this.publishedJobRequestDesc = response;
           this.title = this.publishedJobRequestDesc.Job.JobName;
+          if(this.publishedJobRequestDesc.Candidate.ContactOption!=null){
+            let contactInfo = this.publishedJobRequestDesc.Candidate.ContactOption.split(",");
+            if (contactInfo.length > 1) {
+              if (this.publishedJobRequestDesc.Candidate.ContactOption.split(",")[0] == "Phone")
+                this.phone = this.publishedJobRequestDesc.Candidate.ContactOption.split(",")[0];
+              if (this.publishedJobRequestDesc.Candidate.ContactOption.split(",")[1] == "Phone")
+                this.phone = this.publishedJobRequestDesc.Candidate.ContactOption.split(",")[1];
+              if (this.publishedJobRequestDesc.Candidate.ContactOption.split(",")[0] == "Email")
+                this.email = this.publishedJobRequestDesc.Candidate.ContactOption.split(",")[0];
+              if (this.publishedJobRequestDesc.Candidate.ContactOption.split(",")[1] == "Email")
+                this.email = this.publishedJobRequestDesc.Candidate.ContactOption.split(",")[1];
+            }
+            else if (contactInfo.length == 1) {
+              if (this.publishedJobRequestDesc.Candidate.ContactOption == "Phone")
+                this.phone = this.publishedJobRequestDesc.Candidate.ContactOption;
+              else
+                this.email = this.publishedJobRequestDesc.Candidate.ContactOption;
+            }
+          }
+          
+
           if (this.publishedJobRequestDesc.Candidate)
             this.publishedJobRequestDesc.Candidate.Disponibility = moment(this.publishedJobRequestDesc.Candidate.Disponibility).format("DD-MMM-YYYY");
 
@@ -119,14 +146,22 @@ export class JobRequestDescDetails {
     confirm.present();
   }
   checkIfExists(job) {
-   
-    var arr = this.publishedJobRequestDesc.JobRequestJobTasks.map(t => {return t.TaskResponse});
+
+    var arr = this.publishedJobRequestDesc.JobRequestJobTasks.map(t => { return t.TaskResponse });
     console.log(arr);
-    if(this.publishedJobRequestDesc.JobRequestJobTasks.map(t => {return t.JobTaskId}).indexOf(job.JobTaskId) !== -1){
+    if (this.publishedJobRequestDesc.JobRequestJobTasks.map(t => { return t.JobTaskId }).indexOf(job.JobTaskId) !== -1) {
       //job["TaskResponse"] = ""
-        job.Selected = true;
+      job.Selected = true;
     };
     job["TaskResponse"] = arr[0];
     return true;
+  }
+  presentImage(myImage) {
+
+    const imageViewer = this._imageViewerCtrl.create(myImage);
+    imageViewer.present();
+
+    // setTimeout(() => imageViewer.dismiss(), 1000);
+    // imageViewer.onDidDismiss(() => alert('Viewer dismissed'));
   }
 }

@@ -153,13 +153,13 @@
     <ion-item>
       <ion-input type="text" [placeholder]="labelList.label85" [(ngModel)]="userDetails.PhoneNumber"></ion-input>
     </ion-item>
-    <p class="contactoption">{{labelList.label86}}</p>
-    <ion-item>
+    <p class="contactoption" *ngIf="userDetails.ContactOption.length !=0">{{labelList.label86}}</p>
+    <ion-item *ngIf="userDetails.ContactOption.length !=0">
       <ion-label>{{labelList.label27}}</ion-label>
       <ion-checkbox [(ngModel)]="isEmailSelected"></ion-checkbox>
     </ion-item>
 
-    <ion-item>
+    <ion-item *ngIf="userDetails.ContactOption.length !=0">
       <ion-label>Phone</ion-label>
       <ion-checkbox [(ngModel)]="isPhoneSelected"></ion-checkbox>
     </ion-item>

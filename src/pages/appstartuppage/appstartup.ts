@@ -39,7 +39,12 @@ export class AppStartUp {
 
                 }
                 else {
-                    this.navCtrl.setRoot("LoginPage");
+                    this.commonService.setStoreDataIncache(this.commonService.getCacheKeyUrl("getLanguageSelected"), { language: "fr" }).then(res => {
+                        //this.gotoDashboard();
+                        // this.events.publish('user1:languagechanged', "en", Date.now());
+                        this.navCtrl.setRoot("LoginPage");
+                      });
+                    
                 }
             });
     }

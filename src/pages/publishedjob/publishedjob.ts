@@ -53,8 +53,11 @@ export class PublishedJob {
 
   }
   ionViewDidEnter() {
-    this.tabValue = "JobRequest";
-    this.getLoggedInUserDetailsFromCache();
+    if(this.publishedJobResult.length ==0){
+      this.tabValue = "JobRequest";
+      this.getLoggedInUserDetailsFromCache();
+    }
+    
   }
   getLoggedInUserDetailsFromCache() {
     this.commonService.getStoreDataFromCache(this.commonService.getCacheKeyUrl("getLoggedInUserDetails"))
@@ -72,8 +75,14 @@ export class PublishedJob {
     this._dataContext.GetPublishedJobRequestByJobId(this.searchFilterData)
       .subscribe(response => {
         if (response.length > 0) {
+
           this.isAvailable = true;
-          this.publishedJobResult = response;
+          response.forEach(element => {
+            if(element.VerifiedByAdmin){
+              this.publishedJobResult.push(element);
+            }
+          });
+          
           this.publishedJobResult.forEach(element => {
             element.PublishedDate = moment(element.PublishedDate).format("DD-MMM-YYYY");
           });

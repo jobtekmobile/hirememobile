@@ -25,7 +25,7 @@ import { FrLanguageServices } from '../../providers/frlanguage.service';
 export class ManagemysettingPage {
   _imageViewerCtrl: ImageViewerController;
 
-  userDetails: any = {};
+  userDetails: any = {ContactOption:[]};
   countries: any = [];
   cities = [];
   districts = [];

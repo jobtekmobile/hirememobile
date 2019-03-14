@@ -13,7 +13,8 @@
 <ion-menu [content]="content">
   <ion-content class="menu-content">
     <div class="menu-img-con">
-      <img class="menu-img" src="assets/imgs/maledefault.svg">
+      <img class="menu-img" *ngIf="profileimg==''" src="assets/imgs/maledefault.svg">
+      <img class="menu-img" *ngIf="profileimg!=''" src="{{profileimg}}">
       <p class="menu-img-text">{{userDetails.userName}}</p>
       <!-- <p class="menu-img-text">{{userDetails.email}}</p> -->
     </div>
@@ -38,11 +39,8 @@
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
 <ion-nav [root]="rootPage" #content swipeBackEnabled="false" class="page-body"></ion-nav>
-<ion-fab left bottom class="jobtek-fab-btn">
+<!-- <ion-fab left bottom class="jobtek-fab-btn">
   <button ion-fab mini color="danger" (click)="changeLanguage()">
     <img src="assets/imgs/language.png">
   </button>
-  <!-- <ion-fab-list side="top">
-    <button ion-fab>ththth</button>
-  </ion-fab-list> -->
-</ion-fab>
+</ion-fab> -->

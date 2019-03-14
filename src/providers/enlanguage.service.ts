@@ -119,7 +119,7 @@ export class EnLanguageServices {
         this.labelList["label112"]  = "Choose Job";
         this.labelList["label113"]  = "Profile Verified";
         this.labelList["label114"]  = "Manager first name";
-        this.labelList["label115"]  = " Manager last name";
+        this.labelList["label115"]  = "Manager last name";
         this.labelList["label116"]  = "Manager DOB";
         this.labelList["label117"]  = "Company Activity Desc";
         this.labelList["label118"]  = "Created Date";
@@ -161,6 +161,14 @@ export class EnLanguageServices {
         this.labelList["label154"]  = "Write";
         this.labelList["label155"]  = "Job Title";
         this.labelList["label156"]  = " Select Candidates";
+        this.labelList["label157"] = "AGENCY SECTION";
+        this.labelList["label158"] = "Company Name";
+        this.labelList["label159"] = "Responsible Name";
+        this.labelList["label160"] = "WebSite Url";
+        this.labelList["label161"] = "Profile Picture";
+        this.labelList["label162"] = "Proof of ID(Front)";
+        this.labelList["label163"] = "Proof of ID(Back)";
+        this.labelList["label164"] = "Years";
 
         this.labelList["validmsg1"]   = "Select Register Type";
         this.labelList["validmsg2"]   = "Select Gender";

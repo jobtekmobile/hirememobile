@@ -54,10 +54,10 @@
           </div>
         </ion-item>
         <ion-item class="border-bottom-1 margin-top--10"
-          *ngIf="publishedJobOfferDesc.JobRequestDescription && publishedJobOfferDesc.JobRequestDescription!=''">
-          <p class="block-with-text">
+          *ngIf="publishedJobOfferDesc.AdditionalDescription && publishedJobOfferDesc.AdditionalDescription!=''">
+          <p class="">
             <span class="sub-header-title">{{labelList.label53}}: </span>
-            <span class="font-size-13 white-space-initial">{{publishedJobOfferDesc.JobRequestDescription}}</span>
+            <span class="font-size-13 white-space-initial">{{publishedJobOfferDesc.AdditionalDescription}}</span>
           </p>
         </ion-item>
         <ion-item class="border-bottom-1" *ngIf="publishedJobOfferDesc.Employer">
@@ -70,15 +70,17 @@
         <ion-item class="border-bottom-1" *ngIf="publishedJobOfferDesc.Employer">
           <p>
             <span class="float-left sub-header-title">{{labelList.label66}}</span>
-            <span class="float-right font-size-13">{{publishedJobOfferDesc.StaffType}}</span>
+            <span class="float-right font-size-13" *ngIf="publishedJobOfferDesc.StaffType==1">{{labelList.label48}}</span>label103
+            <span class="float-right font-size-13" *ngIf="publishedJobOfferDesc.StaffType==2">{{labelList.label10}}</span>
+            <span class="float-right font-size-13" *ngIf="publishedJobOfferDesc.StaffType==0">{{labelList.label76}}</span>
 
           </p>
         </ion-item>
         <ion-item class="border-bottom-1" *ngIf="publishedJobOfferDesc.Employer">
           <p>
             <span class="float-left sub-header-title">{{labelList.label50}}</span>
-            <span class="float-right font-size-13">{{publishedJobOfferDesc.MinAge}} {{labelList.label93}} -
-              {{publishedJobOfferDesc.MinAge}} {{labelList.label93}}</span>
+            <span class="float-right font-size-13">{{publishedJobOfferDesc.MinAge}} {{labelList.label164}} -
+              {{publishedJobOfferDesc.MinAge}} {{labelList.label164}}</span>
           </p>
         </ion-item>
         <ion-item class="border-bottom-1" *ngIf="publishedJobOfferDesc.Employer">
@@ -87,10 +89,10 @@
             <span class="float-right font-size-13">
               <span
                 *ngIf="publishedJobOfferDesc.ExperienceInYears > 0 && publishedJobOfferDesc.ExperienceInYears!=null">{{publishedJobOfferDesc.ExperienceInYears}}
-                {{labelList.label146}}</span>
+                {{labelList.label164}}</span>
               <span
                 *ngIf="publishedJobOfferDesc.ExperienceInMonths > 0 && publishedJobOfferDesc.ExperienceInMonths!=null">{{publishedJobOfferDesc.ExperienceInMonths}}
-                {{labelList.label147}}</span>
+                {{labelList.label164}}</span>
             </span>
           </p>
         </ion-item>
@@ -231,23 +233,23 @@
             </div>
           </ion-col>
         </ion-row> -->
-        <!-- <ion-item class="border-bottom-1" *ngIf="publishedJobOfferDesc.AdditionalDescription && publishedJobOfferDesc.AdditionalDescription!=''">
+         <!-- <ion-item class="border-bottom-1" *ngIf="publishedJobOfferDesc.AdditionalDescription && publishedJobOfferDesc.AdditionalDescription!=''">
           <p>
-            <span class="float-left sub-header-title">{{labellist.label131}}</span>
+            <span class="float-left sub-header-title">{{labelList.label131}}</span>
           </p>
           <p class="font-size-13 white-space-initial">
             {{publishedJobOfferDesc.AdditionalDescription}}
           </p>
-        </ion-item> -->
+        </ion-item>  -->
         <div class="job-btn-con" *ngIf="loggedInUserDetails.type=='Admin'">
-          <button ion-button round full pr class="job-button" (click)="Verify()">{{labellist.label96}}</button>
+          <button ion-button round full pr class="job-button" (click)="Verify()">{{labelList.label96}}</button>
         </div>
       </ion-card>
     </ion-col>
   </ion-row>
   <ion-row *ngIf="!isAvailable">
     <ion-col col-12 text-center>
-      <p class="not-found-text">{{labellist.errormsg17}}!</p>
+      <p class="not-found-text">{{labelList.errormsg17}}!</p>
     </ion-col>
   </ion-row>
 </ion-content>

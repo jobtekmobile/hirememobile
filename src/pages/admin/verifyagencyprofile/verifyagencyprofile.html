@@ -25,10 +25,9 @@
             <ion-card class="job-card-con" *ngFor="let item of agencyDetails">
               <ion-item class="">
                 <ion-avatar item-start class="avatar-top">
-                  <img class="img-size" *ngIf="item.Gender == 1" [src]="item.ProfilePicUrl && item.ProfilePicUrl!=null?item.ProfilePicUrl:'assets/imgs/maledefault.svg'"
+                  <img class="img-size" [src]="item.ProfilePicUrl && item.ProfilePicUrl!=null?item.ProfilePicUrl:'assets/imgs/maledefault.svg'"
                   />
-                  <img class="img-size" *ngIf="item.Gender == 2" [src]="item.ProfilePicUrl && item.ProfilePicUrl!=null?item.ProfilePicUrl:'assets/imgs/femaledefault.svg'"
-                  />
+                 
                   <img src="assets/imgs/verified.png" class="verified-img" *ngIf="item.ProfileVerified" alt="">
                 </ion-avatar>
                 <div class="card">
@@ -43,11 +42,11 @@
                   </h4>
 
 
-                  <p class="para-overflow-hidden">
+                  <p class="">
                     <span>
                       <img src="assets/imgs/web.svg" class="img-sub-size">
                     </span>
-                    <span class=""> {{item.AgencyWebsiteURL}}</span>
+                    <span class="" style="white-space: normal;"><a style="color: inherit;" href="{{item.AgencyWebsiteURL}}" target="_blank">{{item.AgencyWebsiteURL}}</a></span>
                   </p>
                   <p class="para-overflow-hidden">
                     <span>
@@ -71,16 +70,16 @@
               </ion-item>
               <ion-row no-padding class="action-con">
                 <ion-col class="action-con-image margin-auto">
-                  <img src="{{item.AgencyLogo}}" *ngIf="item.AgencyLogo != ''" #idcardfront (click)="presentImage(idcardfront)"
+                  <img src="{{item.IdProofDoc}}" *ngIf="item.IdProofDoc != ''" #idcardfront (click)="presentImage(idcardfront)"
                     class="action-con-image-size">
-                  <img src="assets/imgs/noidcard.jpg" *ngIf="item.AgencyLogo == ''" class="action-con-image-size">
+                  <img src="assets/imgs/noidcard.jpg" *ngIf="item.IdProofDoc == ''" class="action-con-image-size">
 
                 </ion-col>
 
                 <ion-col text-right class="action-con-image margin-auto">
-                  <img src="{{item.IdProofDoc}}" *ngIf="item.IdProofDoc != ''" #idcardback (click)="presentImage(idcardback)"
+                  <img src="{{item.IdProofDoc1}}" *ngIf="item.IdProofDoc1 != ''" #idcardback (click)="presentImage(idcardback)"
                     class="action-con-image-size">
-                  <img src="assets/imgs/noidcard.jpg" *ngIf="item.IdProofDoc == ''" class="action-con-image-size">
+                  <img src="assets/imgs/noidcard.jpg" *ngIf="item.IdProofDoc1 == ''" class="action-con-image-size">
                 </ion-col>
               </ion-row>
               <ion-row no-padding class="action-con">

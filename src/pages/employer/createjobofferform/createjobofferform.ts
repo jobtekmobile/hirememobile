@@ -94,7 +94,7 @@ export class CreateJobOfferForm {
     this.getLoggedInUserDetailsFromCache();
     this.showSelectedDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
     this.minDate = "1900-12-31";
-    this.maxDate = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
+    this.maxDate = "2050-12-31";//moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
   }
 
   //Get logged in user details from cache.
@@ -173,6 +173,7 @@ export class CreateJobOfferForm {
   onCreateJobResponse() {
     if (this.validateJobResponseForm()) {
       this.jobCriteria.JobTasks = this.jobTasks;
+      this.jobCriteria.Disponibility = moment(this.showSelectedDate).format("DD-MMM-YYYY");
       // this.jobCriteria.JobRequestSkillPic1Base64 = this.images[0].file.substr(this.images[0].file.indexOf(',') + 1, this.images[0].file.length);
       // this.jobCriteria.JobRequestSkillPic2Base64 = this.images[1].file.substr(this.images[1].file.indexOf(',') + 1, this.images[1].file.length);
       // this.jobCriteria.JobRequestSkillPic3Base64 = this.images[2].file.substr(this.images[2].file.indexOf(',') + 1, this.images[2].file.length);
